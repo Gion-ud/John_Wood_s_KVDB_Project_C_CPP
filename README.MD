@@ -2,7 +2,7 @@
 
 ## DB File internal layout
 
-[DBFileHeader]
+### [DBFileHeader]
 ```
 struct DBFileHeader {
     ubyte_t     Magic[MAGIC_SIZE];  // 8 bytes; { 'K', 'V', 'D', 'B', '\r', '\n', ' ', '\0' };
@@ -22,3 +22,16 @@ struct DBFileHeader {
 };
 ```
 
+### [DBIndexEntry]
+(IndexTableEntry)
+
+```
+struct DBIndexEntry {
+    hash_t      KeyHash;    // 8 bytes; FNV-1a hash
+    ulong_t     EntryID;    // 4 bytes; Index of Record
+    ulong_t     Flags;      // 4 bytes; FLAG_UNUSED, FLAG_VALID, FLAG_DELETED
+    size32_t    Size;       // 4 bytes; sizeof Record[EntryID] in [DataSection]
+    off64_t     Offset;     // 8 bytes; offset of record in [DataSection]
+    ulong_t     Reserved;   // pad to 8 byte aligned
+};
+```
