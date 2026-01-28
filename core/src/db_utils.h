@@ -116,17 +116,13 @@ struct Val {
 };
 */
 struct DBObject {
-    FILE*           fp;
-    FILE*           fp_hash; // fp for hash_table on disk
-    Key*            key_arr;
-    int*            EntryID_arr_htidx;
-    HTObject*       htObj;
-//  FILE*           fp_mem;
-//  void*           membuf;
-    hash_t*         HashTable;  // Old hash arr
+    FILE           *fp;
+    Key            *key_arr;    
+    int            *EntryID_arr_htidx;
+    HTObject       *htObj;
     char*           filepath;
     DBFileHeader    Header;
-    DBIndexEntry*   IndexTable;
+    DBIndexEntry   *IndexTable;
     uint64_t        OffsetPtr;
     char            db_modified;    // 0 or 1
 };
