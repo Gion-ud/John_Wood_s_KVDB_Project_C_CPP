@@ -16,6 +16,7 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
     fputs("# db.FileHeader\n", fp);
     fputs("db.FileHeader.Magic=", fp);
 #define Header (dbp->Header)
+
 {
     char* tmp = (char*)conv_bytes_hex(Header.Magic, MAGIC_SIZE);
     fputs(tmp, fp);
@@ -27,27 +28,27 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
         "db.FileHeader.ByteOrder=0x%.02x\n"
         "db.FileHeader.HeaderSize=%u\n"
         "db.FileHeader.IndexEntrySize=%u\n"
-        "db.FileHeader.IndexTableOffset=0x%.08x\n"
+        "db.FileHeader.EntryCapacity=%u\n"
         "db.FileHeader.EntryCount=%u\n"
         "db.FileHeader.ValidEntryCount=%u\n"
-        "db.FileHeader.EntryCapacity=%u\n"
-        "db.FileHeader.DataSectionOffset=0x%.08x\n"
         "db.FileHeader.DataEntryHeaderSize=%u\n"
-        "db.FileHeader.EOFHeaderOffset=0x%.08x\n"
-        "\n"
-    //  "Header.LastModified=\n"
-        ,
+        "db.FileHeader.IndexTableOffset=0x%.16llx\n"
+        "db.FileHeader.DataSectionOffset=0x%.16llx\n"
+        "db.FileHeader.EOFHeaderOffset=0x%.16llx\n"
+        "db.FileHeader.LastModified=0x%.16llx\n"
+        "\n",
         Header.Version,
         Header.ByteOrder,
         Header.HeaderSize,
         Header.IndexEntrySize,
-        Header.IndexTableOffset,
+        Header.EntryCapacity,
         Header.EntryCount,
         Header.ValidEntryCount,
-        Header.EntryCapacity,
-        Header.DataSectionOffset,
         Header.DataEntryHeaderSize,
-        Header.EOFHeaderOffset
+        (uqword_t)Header.IndexTableOffset,
+        (uqword_t)Header.DataSectionOffset,
+        (uqword_t)Header.EOFHeaderOffset,
+        (uqword_t)Header.LastModified
     );
     if (fp == stdout) { printf(ESC RESET_COLOUR); }
     if (fp == stderr) { print_dbg_msg(ESC RESET_COLOUR); }
@@ -62,12 +63,12 @@ static inline void PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
         "IndexEntry%.4u.Flags=0x%.08x\n"
         "IndexEntry%.4u.EntryID=%.4u\n"
         "IndexEntry%.4u.Size=0x%.08x\n"
-        "IndexEntry%.4u.Offset=0x%.08x\n\n",
-        EntryID, (unsigned long long)dbp->IndexTable[EntryID].KeyHash,
+        "IndexEntry%.4u.Offset=0x%.16llx\n\n",
+        EntryID, (uqword_t)dbp->IndexTable[EntryID].KeyHash,
         EntryID, dbp->IndexTable[EntryID].Flags,
         EntryID, dbp->IndexTable[EntryID].EntryID,
         EntryID, dbp->IndexTable[EntryID].Size,
-        EntryID, dbp->IndexTable[EntryID].Offset
+        EntryID, (uqword_t)dbp->IndexTable[EntryID].Offset
     );
     if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
 }
@@ -127,8 +128,6 @@ void close_file_hash_table(DBObject* dbp);
 
 
 hash_t kvdb_hash(const unsigned char* key, size_t len);
-long int kvdb_search_key(DBObject db, Key key);
-
 
 KVPair *ReadDBEntry(DBObject* dbp, uint32_t EntryID);
 void PrintKvPair(KVPair *kv);

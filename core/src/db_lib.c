@@ -78,7 +78,6 @@ static inline long get_db_size(DBObject db) {
     fseek(db.fp, db.OffsetPtr, SEEK_SET);
     return db_size;
 }
-// static inline void print_hash_table(DBObject db);
 
 // # Below is an FNV hash function
 #define FNV_OFFSET_BASIS    14695981039346656037ULL
@@ -95,26 +94,6 @@ hash_t kvdb_hash(const unsigned char* key, size_t len) {
 #undef HASH_INIT_NUM
 #undef HASH_MUL_NUM
 
-
-long int kvdb_search_key(DBObject db, Key key) { // old
-#define HASH_TABLE_SIZE db.Header.EntryCapacity
-    hash_t h = kvdb_hash((unsigned char*)key.data, (uint32_t)key.size);
-    size_t idx = h % HASH_TABLE_SIZE;
-    for (int i = 0; i < db.Header.EntryCapacity; i++) {
-        if (db.HashTable[i] == h) {
-            // printf("Matching\n");
-            // Matching hash table idx
-            if (key.size != db.key_arr[i].size) continue;
-            if (key.type != db.key_arr[i].type) continue;
-            //if (memcmp(&db.key_arr[i], &key, sizeof(Key)) == 0) {
-            if (memcmp(db.key_arr[i].data, key.data, db.key_arr[i].size) == 0) {
-                return i;
-            }
-        }
-    }
-    return -1;  // key not found
-#undef HASH_TABLE_SIZE 
-}
 
 int kvdb_search_key_id(DBObject* dbp, Key key) {
 #define db (*dbp)
@@ -164,10 +143,6 @@ DBObject* DBInit(const char* filepath, uint32_t EntryCapacity) {
     db.Header.EntryCapacity = EntryCapacity;
     db.Header.DataSectionOffset = HEADER_SIZE;
     db.Header.DataEntryHeaderSize = DATA_ENTRY_HEADER_SIZE;
-    //memcpy(db.Header._pad0, (ubyte_t*)pad_arr, sizeof(db.Header._pad0));
-    //memcpy(db.Header._pad1, (ubyte_t*)pad_arr, sizeof(db.Header._pad1));
-
-    //PrintHeader(stderr, db.Header);
 
     db.IndexTable = (DBIndexEntry*)calloc(EntryCapacity, INDEX_ENTRY_SIZE); //\
     # This line allocates the IndexTable in db obj;\
@@ -191,8 +166,6 @@ DBObject* DBInit(const char* filepath, uint32_t EntryCapacity) {
     for (uint32_t i = 0; i < db.Header.EntryCapacity; i++) {
         db.EntryID_arr_htidx[i] = -1;
     }
-
-    db.HashTable = NULL;
 
     db.htObj = (HTObject*)malloc(sizeof(HTObject));
     if (!db.htObj) {
@@ -352,28 +325,6 @@ void CloseDB(DBObject* dbp) {
 }
 
 
-/*
-    if (i >= DB.Header.EntryCapacity) {
-        ulong_t newCap = DB.Header.EntryCapacity + INIT_INDEX_TABLE_CAP;
-        DBIndexEntry *DB_IndexTable_tmpPtr = (DBIndexEntry*)realloc(DB.IndexTable, INDEX_ENTRY_SIZE * newCap);
-        if (!DB_IndexTable_tmpPtr) {
-            print_err_msg("(DBIndexEntry*)realloc(newCap, INDEX_ENTRY_SIZE * newCap) failed\n");
-            return -1;
-        }
-        DB.IndexTable = DB_IndexTable_tmpPtr;
-        Key *DB_key_arr_tmpPtr = (Key*)realloc(DB.key_arr, sizeof(key) * newCap);
-        if (!DB_key_arr_tmpPtr) {
-            print_err_msg("(Key*)realloc(DB.key_arr, sizeof(key) * newCap) failed\n");
-            return -1;
-        }
-        DB.key_arr = DB_key_arr_tmpPtr;
-        //print_err_msg(ESC COLOUR_RED "Error: DB full\n" ESC RESET_COLOUR);
-        //return -1;
-        DB.Header.EntryCapacity = newCap;
-    }
-
-*/
-
 int InsertEntry(DBObject* dbp, Key key, Val val) {
 #define i (uint32_t)DB.Header.EntryCount
     PRINT_DBG_MSG(ESC COLOUR_YELLOW "i=%u;max=%u\n" ESC RESET_COLOUR, i, DB.Header.EntryCapacity);
@@ -420,18 +371,10 @@ int InsertEntry(DBObject* dbp, Key key, Val val) {
 
         free(key_data);
     } else {
-        // DBGPrint
-        //printf("%d\n", *(int*)key.data);
         fwrite((unsigned char*)key.data, 1, (size_t)key.size, (FILE*)DB.fp);
     }
 
-    /*
-    if (DB.HashTable != NULL) {
-        DB.HashTable[i] = kvdb_hash(key.data, key.size);
-        printf("DB.HashTable[%.4u]=0x%.16llx;idx=%.4llu\n", i, DB.HashTable[i], DB.HashTable[i] % DB.Header.EntryCapacity);
-        fwrite(&DB.HashTable[i], HASH_SIZE, 1, DB.fp_hash);
-    }
-    */
+
     if (DB.key_arr != NULL) {
         DB.key_arr[i].size = key.size;
         DB.key_arr[i].type = key.type;
@@ -441,7 +384,6 @@ int InsertEntry(DBObject* dbp, Key key, Val val) {
             print_err_msg("(unsigned char*)malloc(key.size) failed\n");return-1;
         }
         memcpy(DB.key_arr[i].data, key.data, key.size);
-        // memcpy(&DB.key_arr[i], &key, sizeof(Key)); 
     }
     if (DB.htObj != NULL) {
         hidx_t idx = insert_entry(DB.htObj, key.data, key.size);
@@ -479,15 +421,11 @@ int InsertEntry(DBObject* dbp, Key key, Val val) {
     DB.IndexTable[i].Size = DataEntrySize;
     DB.IndexTable[i].Offset = DB.OffsetPtr;
 
-    //PrintIndexEntry(stderr, DB, i);
-//  fwrite(&DB.IndexTable[i], sizeof(DBIndexEntry), 1, (FILE*)DB.fp);
-
     DB.OffsetPtr += DataEntrySize;  // legacy?
     DB.Header.ValidEntryCount++;
     DB.db_modified = 1;
     DB.Header.IndexTableOffset += DataEntrySize;
     return i++;
-    // printf("afteri++\n");
 #undef i
 }
 
@@ -498,15 +436,7 @@ int DeleteEntry(DBObject* dbp, uint32_t EntryID) {
         return -1;
     }
     DB.db_modified = 1;
-    // if (EntryID >= DB.Header.EntryCapacity) // BUGS in cpp!!!
 
-    /*
-    if (DB.HashTable != NULL) {
-        DB.HashTable[EntryID] = 0;
-        fseek(DB.fp_hash, EntryID * HASH_SIZE, SEEK_SET);
-        fwrite(&DB.HashTable[EntryID], HASH_SIZE, 1, DB.fp_hash);
-    }
-    */
     if (DB.htObj != NULL) {
         hidx_t idx = delete_entry(DB.htObj, DB.key_arr[EntryID].data, DB.key_arr[EntryID].size);
         DB.EntryID_arr_htidx[idx] = -1;
@@ -522,9 +452,7 @@ int DeleteEntry(DBObject* dbp, uint32_t EntryID) {
     DB.IndexTable[EntryID].Flags = FLAG_DELETED;
     DB.IndexTable[EntryID].Offset = 0;
     DB.IndexTable[EntryID].Size = 0;
-    //fseek(DB.fp, IndexEntryOffset, SEEK_SET);
-    //fwrite(&DB.IndexTable[EntryID], sizeof(DBIndexEntry), 1, DB.fp);
-    //printf(ESC COLOUR_RED "Entry[%u] got deleted\n" ESC RESET_COLOUR, EntryID);
+
     DB.Header.ValidEntryCount--;
     return EntryID;
 }
@@ -539,7 +467,6 @@ void WriteDBEOFHeader(DBObject* dbp) {
 }
 void WriteDBHeader(DBObject* dbp) {
     PRINT_DBG_MSG("WriteDBHeader(%p);\n", (void*)dbp);
-    //PrintHeader(stdout, db.Header);
     fseek(db.fp, 0, SEEK_SET);
     fwrite(&db.Header, HEADER_SIZE, 1, db.fp);
 }
@@ -570,7 +497,6 @@ KVPair *ReadDBEntry(DBObject* dbp, uint32_t EntryID) {
         print_err_msg("[ERROR] fread(&RecordHeader, sizeof(DataEntryHeader), 1, DB.fp) != 1\n");
         return NULL;
     }
-    //PrintRecordHeader(stdout, RecordHeader, EntryID);
     if (RecordHeader.KeySize > MAX_KEY_SIZE) {
         print_err_msg("[ERROR] Invalid Entry: RecordHeader.KeySize > MAX_KEY_SIZE\n");
         return NULL;
@@ -669,8 +595,7 @@ void DestroyKVPair(KVPair *kv) {
 KVPair* ReadDBEntryKey(DBObject* dbp, Key key) {
     // This function searches an entry by reading the key
     uint32_t id;
-    //int ret;
-    //ret = db_key_to_id(&DB, key, &id); // conv key into id (idx of index table)
+
     id = kvdb_search_key_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error
@@ -682,8 +607,7 @@ KVPair* ReadDBEntryKey(DBObject* dbp, Key key) {
 void DeleteDBEntryKey(DBObject* dbp, Key key) {
     // This function searches an entry by reading the key
     uint32_t id;
-    //int ret;
-    //ret = db_key_to_id(&DB, key, &id); // conv key into id (idx of index table)
+
     id = kvdb_search_key_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error

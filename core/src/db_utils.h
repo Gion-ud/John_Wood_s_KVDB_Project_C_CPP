@@ -66,12 +66,12 @@ struct DBFileHeader {
     ubyte_t     ByteOrder;          // 1 byte
     size32_t    HeaderSize;         // 4 bytes
     size32_t    IndexEntrySize;     // 4 bytes
-    off64_t     IndexTableOffset;   // 8 bytes
     ulong_t     EntryCapacity;      // 4 bytes
     ulong_t     EntryCount;         // 4 bytes
     ulong_t     ValidEntryCount;    // 4 bytes
-    off64_t     DataSectionOffset;  // 8 bytes
     size32_t    DataEntryHeaderSize;// 4 bytes
+    off64_t     IndexTableOffset;   // 8 bytes
+    off64_t     DataSectionOffset;  // 8 bytes
     off64_t     EOFHeaderOffset;    // 8 bytes
     qword_t     LastModified;       // 8 bytes
     ubyte_t     Reserved[5];        // 5 bytes of padding...
