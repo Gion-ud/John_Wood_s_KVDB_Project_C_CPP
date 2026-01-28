@@ -62,12 +62,13 @@ core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.
 
 
 # dll for kvdb
-bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o def/kvdb_lib.def | build core/lib bin
-	gcc -O2 -s -shared -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o
-#	-Wl,--kill-at
-#	def/kvdb_lib.def 
-#	-Wl,--output-def,core/lib/kvdb_lib_exports.def
-	dlltool -D $@ -d def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
+bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o core/def/kvdb_lib.def | build core/lib bin
+	gcc -O2 -s -shared build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o core/def/kvdb_lib.def \
+		-o bin/kvdb_lib.dll \
+		-Wl,--kill-at \
+		-Wl,--out-implib,core/lib/libkvdb_lib.dll.a
+#		-Wl,--output-def,core/lib/kvdb_lib_exports.def
+#	dlltool -D $@ -d core/def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
 
 # so for kvdb
 bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o | build core/lib bin
@@ -84,10 +85,10 @@ bin/read: core/src/read.c core/lib/libkvdb_lib.a | core/lib bin tests
 
 # dynamic linking implicit
 mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll | core/lib bin tests
-	gcc tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o bin/mkdb
+	gcc tests/mkdb.c -O2 -s -L./core/lib -lkvdb_lib -o bin/mkdb
 
 read_ldll: tests/read.c bin/kvdb_lib.dll | core/lib bin tests
-	gcc tests/read.c -O2 -s -Llib -lkvdb_lib -o bin/read
+	gcc tests/read.c -O2 -s -L./core/lib -lkvdb_lib -o bin/read
 
 mkdb_lso: tests/mkdb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | bin tests
 	gcc tests/mkdb.c -O2 core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/mkdb

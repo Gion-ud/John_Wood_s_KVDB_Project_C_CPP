@@ -71,7 +71,7 @@ int main() {
 
         val.size = 0;
         ubyte_t data_blob[BUFFER_SIZE] = {0};
-        ptr_t data_blob_p = (ubyte_t*)data_blob;
+        ubyte_t *data_blob_p = (ubyte_t*)data_blob;
         val.data = data_blob_p;
         //ptrdiff_t data_blob_cur = 0;
         for (int j = 0; j < col_cnt; ++j) {

@@ -12,12 +12,10 @@ int main() {
         if (!kv) continue;
 
         printf("\n%d\n", *(int*)kv->key.data);
-        printf("%.*s\n", kv->val.size - 15 * 8, (char*)kv->val.data + 15 * 8);
-        PrintKvPair(kv);
+        printf("%.*s\n\n", kv->val.size - 15 * 8, (char*)kv->val.data + 15 * 8);
+        //PrintKvPair(kv);
         DestroyKVPair(kv);
     }
-
-
 
     CloseDB(&db);
 

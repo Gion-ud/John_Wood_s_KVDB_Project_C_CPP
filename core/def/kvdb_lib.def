@@ -1,4 +1,5 @@
 LIBRARY KVDB_LIB
+; db_key_to_id
 EXPORTS
 	DBInit
 	DBOpen
@@ -13,7 +14,7 @@ EXPORTS
 
 	DeleteEntry
 
-	db_key_to_id
+
 	kvdb_search_key_id
 
 	hash
