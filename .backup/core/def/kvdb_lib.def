@@ -1,0 +1,33 @@
+LIBRARY KVDB_LIB
+EXPORTS
+	DBInit
+	DBOpen
+	CloseDB
+
+	InsertEntry
+	ReadDBEntry
+
+	ReadDBEntryKey
+	PrintKvPair
+	DestroyKVPair
+
+	DeleteEntry
+
+	db_key_to_id
+	kvdb_search_key_id
+
+	hash
+	search_key
+
+	InitHashTableObject
+	DestroyHashTableObject
+	insert_entry
+	search_key
+	delete_entry
+
+	
+	CntTok
+	MarkTokPosMeta
+	CpyTokSrc
+	lstrip
+	rstrip

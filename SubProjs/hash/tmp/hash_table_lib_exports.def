@@ -1,0 +1,9 @@
+LIBRARY "hash_table_lib.dll" BASE=0x261110000
+EXPORTS
+    DestroyHashTableObject @1
+    HTLib_FNV_1a_hash @2
+    HashTableObject_delete_entry @3
+    HashTableObject_get_key_hash @4
+    HashTableObject_insert_entry @5
+    HashTableObject_search_key @6
+    InitHashTableObject @7

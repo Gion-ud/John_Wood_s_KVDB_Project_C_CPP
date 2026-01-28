@@ -1,0 +1,9 @@
+LIBRARY kv_dat_lib
+EXPORTS
+    InitKVPairObj
+    KVObject_put_kv_pair
+    KVObject_get_kv
+    DestroyKVPairObj
+    KVObject_save_kv_dat
+    KVObject_load_kv_dat
+

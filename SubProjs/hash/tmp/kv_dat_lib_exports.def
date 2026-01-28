@@ -1,0 +1,8 @@
+LIBRARY "kv_dat_lib.dll" BASE=0x274610000
+EXPORTS
+    DestroyKVPairObj @1
+    InitKVPairObj @2
+    KVObject_get_kv @3
+    KVObject_load_kv_dat @4
+    KVObject_put_kv_pair @5
+    KVObject_save_kv_dat @6

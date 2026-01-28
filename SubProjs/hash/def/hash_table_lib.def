@@ -1,0 +1,9 @@
+LIBRARY hash_table_lib
+EXPORTS
+    HTLib_FNV_1a_hash
+    InitHashTableObject
+    DestroyHashTableObject
+    HashTableObject_insert_entry
+    HashTableObject_search_key
+    HashTableObject_delete_entry
+    HashTableObject_get_key_hash
