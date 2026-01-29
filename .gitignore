@@ -5,6 +5,10 @@
 /bin/
 /logs/
 /.vscode
-/release_build
-/thumnails/
-database/*
+/release_build/*
+/thumnails/*
+/database/*
+nul
+.bat
+__pycache__
+
