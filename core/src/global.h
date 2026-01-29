@@ -16,7 +16,7 @@
 #include <time.h>
 #include <stddef.h>
 #include <ctype.h>
-
+#include <dirent.h>
 
 #define print_err_msg(...) fprintf(stderr, __VA_ARGS__)
 #define printerrf(...) fprintf(stderr, __VA_ARGS__)

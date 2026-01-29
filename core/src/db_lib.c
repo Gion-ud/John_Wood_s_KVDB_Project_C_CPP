@@ -129,7 +129,7 @@ DBObject* DBInit(const char* filepath, uint32_t EntryCapacity) {
 
     db.fp = fopen(db.filepath, "wb+");
     // This opens on disk db file
-    if (!db.fp) { print_err_msg("fopen failed\n"); CloseDB(&db); return NULL; }
+    if (!db.fp) { print_err_msg("fopen failed\n"); return NULL; }
 
     // Write known metadata to header
     memcpy((ubyte_t*)db.Header.Magic, DBFileMagic, MAGIC_SIZE);
@@ -197,7 +197,7 @@ DBObject* DBOpen(const char* filepath) {
     db.fp = fopen(db.filepath, "rb+");
     if (!db.fp) {
         perror("fopen(db.filepath, \"rb+\")");
-        goto DBopen_failed_cleanup;
+        return NULL;
     }
 
     rewind(db.fp);
@@ -300,7 +300,7 @@ void WriteDBIndexTable(DBObject* dbp);
 void WriteDBEOFHeader(DBObject* dbp);
 void CloseDB(DBObject* dbp) {
     PRINT_DBG_MSG("CloseDB(%p);\n", (void*)dbp);
-
+    if (!dbp) return;
     if (DB.db_modified) { WriteDBIndexTable(&DB); WriteDBEOFHeader(&DB); WriteDBHeader(&DB); }
 
     for (uint32_t i = 0; i < DB.Header.EntryCapacity; i++) {

@@ -1,3 +1,4 @@
+#include "../core/src/global.h"
 #include "../core/src/kvdb_lib.h"
 #include "../core/src/txt_tok_lib.h"
 
@@ -44,7 +45,14 @@ int main() {
     char *line = (char*)line_buf;
     ulong_t line_len = 0;
 
+    DIR *dir = opendir("database");
+    if (!dir) {
+        perror("opendir failed");
+        return 1;
+    }
+    closedir(dir);
     DBObject* dbp = (DBObject*)DBInit("database/table0002.db", DB_ENTRY_CAP);
+    if (!dbp) return -1;
 #define db (*dbp)
     Key key = {0};
     Val val = {0};
