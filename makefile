@@ -56,14 +56,17 @@ build/hash_table_lib.o: core/src/hash_table_lib.c | build
 build/txt_tok_lib.o: core/src/txt_tok_lib.c | build
 	gcc -O2 -fPIC -c core/src/txt_tok_lib.c -o $@
 
+build/global_func.o: core/src/global_func.c | build
+	gcc -O2 -fPIC -c core/src/global_func.c -o $@
+
 # static lib for kvdb
 core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o | core/lib
 	ar rcs core/lib/libkvdb_lib.a build/db_lib.o build/hash_table_lib.o
 
 
 # dll for kvdb
-bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o core/def/kvdb_lib.def | build core/lib bin
-	gcc -O2 -s -shared build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o core/def/kvdb_lib.def \
+bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def | build core/lib bin
+	gcc -O2 -s -shared build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def \
 		-o bin/kvdb_lib.dll \
 		-Wl,--kill-at \
 		-Wl,--out-implib,core/lib/libkvdb_lib.dll.a
@@ -71,8 +74,8 @@ bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o core
 #	dlltool -D $@ -d core/def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
 
 # so for kvdb
-bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o | build core/lib bin
-	gcc -O2 -s -fPIC -shared -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o
+bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o | build core/lib bin
+	gcc -O2 -s -fPIC -shared -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o
 
 
 # static linking

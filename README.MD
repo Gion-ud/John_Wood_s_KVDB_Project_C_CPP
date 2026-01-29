@@ -17,7 +17,7 @@ struct DBFileHeader {
     off64_t     IndexTableOffset;   // 8 bytes; located after all data entries; before EOF
     off64_t     DataSectionOffset;  // 8 bytes; after DBFileHeader
     off64_t     EOFHeaderOffset;    // 8 bytes; FileEOF - sizeof(DBEOFMarker)
-    qword_t     LastModified;       // 8 bytes; unix time; haven't inplemented yet
+    qword_t     LastModified;       // 8 bytes; unix time
     ubyte_t     Reserved[5];        // 5 bytes of padding, pad struct to 8 byte aligned
 };
 ```

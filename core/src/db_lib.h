@@ -16,12 +16,13 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
     fputs("# db.FileHeader\n", fp);
     fputs("db.FileHeader.Magic=", fp);
 #define Header (dbp->Header)
-
 {
     char* tmp = (char*)conv_bytes_hex(Header.Magic, MAGIC_SIZE);
     fputs(tmp, fp);
     free(tmp);
 }
+    char timestr[TIME_STR_SIZE] = {0};
+    conv_time_str_modptr(&timestr, (uqword_t)Header.LastModified);
     fprintf(
         fp,
         "db.FileHeader.Version=%u\n"
@@ -35,7 +36,7 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
         "db.FileHeader.IndexTableOffset=0x%.16llx\n"
         "db.FileHeader.DataSectionOffset=0x%.16llx\n"
         "db.FileHeader.EOFHeaderOffset=0x%.16llx\n"
-        "db.FileHeader.LastModified=0x%.16llx\n"
+        "db.FileHeader.LastModified=%s\n"
         "\n",
         Header.Version,
         Header.ByteOrder,
@@ -48,7 +49,7 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
         (uqword_t)Header.IndexTableOffset,
         (uqword_t)Header.DataSectionOffset,
         (uqword_t)Header.EOFHeaderOffset,
-        (uqword_t)Header.LastModified
+        timestr
     );
     if (fp == stdout) { printf(ESC RESET_COLOUR); }
     if (fp == stderr) { print_dbg_msg(ESC RESET_COLOUR); }

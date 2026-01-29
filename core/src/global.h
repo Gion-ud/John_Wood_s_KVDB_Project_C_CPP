@@ -52,6 +52,7 @@ typedef unsigned int    uint_t;
 
 typedef signed char     byte_t;
 typedef unsigned char   ubyte_t;
+typedef unsigned char   uchar_t;
 
 
 typedef void*           ptr_t;
@@ -72,6 +73,7 @@ typedef uint32_t off32_t;
 typedef uint64_t off64_t;
 #endif
 
+#define TIME_STR_SIZE 32
 
 #define ESC "\x1b"
 //;[
@@ -90,5 +92,6 @@ static inline void strputc(char c, char* str) {
     str[len++] = c;
     str[len] = '\0';
 }
+void conv_time_str_modptr(char (*timestr_p_p)[TIME_STR_SIZE], time_t time_var);
 
 #endif

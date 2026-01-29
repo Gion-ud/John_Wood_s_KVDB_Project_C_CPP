@@ -143,6 +143,7 @@ DBObject* DBInit(const char* filepath, uint32_t EntryCapacity) {
     db.Header.EntryCapacity = EntryCapacity;
     db.Header.DataSectionOffset = HEADER_SIZE;
     db.Header.DataEntryHeaderSize = DATA_ENTRY_HEADER_SIZE;
+    db.Header.LastModified = 0; // PlaceHolder
 
     db.IndexTable = (DBIndexEntry*)calloc(EntryCapacity, INDEX_ENTRY_SIZE); //\
     # This line allocates the IndexTable in db obj;\
@@ -468,6 +469,7 @@ void WriteDBEOFHeader(DBObject* dbp) {
 void WriteDBHeader(DBObject* dbp) {
     PRINT_DBG_MSG("WriteDBHeader(%p);\n", (void*)dbp);
     fseek(db.fp, 0, SEEK_SET);
+    db.Header.LastModified = (qword_t)time(NULL);
     fwrite(&db.Header, HEADER_SIZE, 1, db.fp);
 }
 
