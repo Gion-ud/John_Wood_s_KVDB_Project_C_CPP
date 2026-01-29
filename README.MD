@@ -21,9 +21,42 @@ struct DBFileHeader {
     ubyte_t     Reserved[5];        // 5 bytes of padding, pad struct to 8 byte aligned
 };
 ```
+and its followed by [DBDataSection]
 
-### [DBIndexEntry]
-(IndexTableEntry)
+### [DBDataSection]
+This section contains data of each record.  
+On disk layout:
+```
+# db.DataSection
+[Record_0][Record_1][Record_2] ... [Record n]
+# each Record_n has length IndexTable[n].Size
+# (a.k.a. sizeof(DataEntryHeader) + Record[n].KeySize + Record[n].ValSize)
+```
+#### [DataEntryHeader]
+
+```
+struct DataEntryHeader {
+    size32_t    KeySize;    // 4 bytes
+    uint32_t    KeyType;    // 4 bytes
+    off32_t     KeyOffset;  // 8 bytes
+    size32_t    ValSize;    // 4 bytes 
+    uint32_t    ValType;    // 4 bytes
+    off32_t     ValOffset;  // 8 bytes
+};
+```
+(followed by key raw bytes and val raw bytes)
+
+on disk layout:
+```
+# Record[n]
+[DataEntryHeader][key_data][val_data]
+
+```
+
+### [DBIndexTable]
+(DBIndexEntry[EntryCapacity])  
+This is followed after [DBDataSection]
+#### [DBIndexEntry]
 
 ```
 struct DBIndexEntry {
@@ -34,4 +67,18 @@ struct DBIndexEntry {
     off64_t     Offset;     // 8 bytes; offset of record in [DataSection]
     ulong_t     Reserved;   // pad to 8 byte aligned
 };
+```
+
+On disk layout:
+
+```
+# db.IndexTable
+[IndexTableEntry_0][IndexTableEntry_1][IndexTableEntry_2] ... [IndexTableEntry_n]
+```
+
+### [DBEOF]
+
+This marks EOF of the db file.  
+```
+static const ubyte_t DBEOFMagic[MAGIC_SIZE] = { '\n', '.', 'D', 'B', 'E', 'O', 'F', '\0' };
 ```
