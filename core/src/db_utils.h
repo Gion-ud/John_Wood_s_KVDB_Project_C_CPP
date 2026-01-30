@@ -113,7 +113,7 @@ struct Val {
 */
 struct DBObject {
     FILE           *fp;
-    Key            *key_arr;    
+    Key            *key_arr;
     int            *EntryID_arr_htidx;
     HTObject       *htObj;
     char*           filepath;

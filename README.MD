@@ -38,10 +38,8 @@ On disk layout:
 struct DataEntryHeader {
     size32_t    KeySize;    // 4 bytes
     uint32_t    KeyType;    // 4 bytes
-    off32_t     KeyOffset;  // 8 bytes
     size32_t    ValSize;    // 4 bytes 
     uint32_t    ValType;    // 4 bytes
-    off32_t     ValOffset;  // 8 bytes
 };
 ```
 (followed by key raw bytes and val raw bytes)
@@ -63,9 +61,7 @@ struct DBIndexEntry {
     hash_t      KeyHash;    // 8 bytes; FNV-1a hash
     ulong_t     EntryID;    // 4 bytes; Index of Record
     ulong_t     Flags;      // 4 bytes; FLAG_UNUSED, FLAG_VALID, FLAG_DELETED
-    size32_t    Size;       // 4 bytes; sizeof Record[EntryID] in [DataSection]
     off64_t     Offset;     // 8 bytes; offset of record in [DataSection]
-    ulong_t     Reserved;   // pad to 8 byte aligned
 };
 ```
 

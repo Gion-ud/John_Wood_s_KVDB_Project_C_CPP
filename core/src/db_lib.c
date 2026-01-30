@@ -301,7 +301,7 @@ void WriteDBEOFHeader(DBObject* dbp);
 void CloseDB(DBObject* dbp) {
     PRINT_DBG_MSG("CloseDB(%p);\n", (void*)dbp);
     if (!dbp) return;
-    if (DB.db_modified) { WriteDBIndexTable(&DB); WriteDBEOFHeader(&DB); WriteDBHeader(&DB); }
+    if (DB.db_modified) { WriteDBIndexTable(&DB); WriteDBEOFHeader(&DB); WriteDBHeader(&DB); PrintDBFileHeader(stdout, dbp); }
 
     for (uint32_t i = 0; i < DB.Header.EntryCapacity; i++) {
         if (DB.key_arr[i].data) { free(DB.key_arr[i].data); DB.key_arr[i].data = NULL; }
@@ -319,7 +319,6 @@ void CloseDB(DBObject* dbp) {
     if (DB.filepath) { free(DB.filepath); DB.filepath = NULL; }
     if (DB.fp) { fclose(DB.fp); DB.fp = NULL; }
 
-    PrintDBFileHeader(stdout, dbp);
     free(dbp);
     dbp = NULL;
 }
