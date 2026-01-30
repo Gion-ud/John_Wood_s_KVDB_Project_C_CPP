@@ -63,12 +63,10 @@ static inline void PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
         "IndexEntry%.4u.KeyHash=0x%.16llx\n"
         "IndexEntry%.4u.Flags=0x%.08x\n"
         "IndexEntry%.4u.EntryID=%.4u\n"
-        "IndexEntry%.4u.Size=0x%.08x\n"
         "IndexEntry%.4u.Offset=0x%.16llx\n\n",
         EntryID, (uqword_t)dbp->IndexTable[EntryID].KeyHash,
         EntryID, dbp->IndexTable[EntryID].Flags,
         EntryID, dbp->IndexTable[EntryID].EntryID,
-        EntryID, dbp->IndexTable[EntryID].Size,
         EntryID, (uqword_t)dbp->IndexTable[EntryID].Offset
     );
     if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
@@ -95,16 +93,12 @@ static inline void PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
         fp,
         "Record%.4u.KeySize=%u\n"
         "Record%.4u.KeyType=0x%.08x\n"
-        "Record%.4u.KeyOffset=0x%.08x\n"
         "Record%.4u.ValSize=%u\n"
-        "Record%.4u.ValType=0x%.08x\n"
-        "Record%.4u.ValOffset=0x%.08x\n",
+        "Record%.4u.ValType=0x%.08x\n",
         EntryID,RecordHeader.KeySize,
         EntryID,RecordHeader.KeyType,
-        EntryID,RecordHeader.KeyOffset,
         EntryID,RecordHeader.ValSize,
-        EntryID,RecordHeader.ValType,
-        EntryID,RecordHeader.ValOffset
+        EntryID,RecordHeader.ValType
     );
     if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
 }

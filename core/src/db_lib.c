@@ -254,7 +254,6 @@ DBObject* DBOpen(const char* filepath) {
         db.key_arr[i].data = (char*)malloc(RecHeader.KeySize);
         if (!db.key_arr[i].data) { PRINT_DBG_MSG("(char*)malloc(RecHeader.KeySize) failed\n"); goto DBopen_failed_cleanup; }
 
-        fseek(db.fp, RecHeader.KeyOffset, SEEK_SET);
         fread_cnt = fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp);
         if (fread_cnt != 1) {
             print_err_msg("fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp) != 1\n");
@@ -342,10 +341,8 @@ int InsertEntry(DBObject* dbp, Key key, Val val) {
     DataEntryHeader RecordHeader = {0};
     RecordHeader.KeySize = key.size;
     RecordHeader.KeyType = key.type;
-    RecordHeader.KeyOffset = DB.OffsetPtr + DB.Header.DataEntryHeaderSize;
     RecordHeader.ValSize = val.size;
     RecordHeader.ValType = val.type;
-    RecordHeader.ValOffset = DB.OffsetPtr + DB.Header.DataEntryHeaderSize + key.size;
 
     fseek(DB.fp, DB.OffsetPtr, SEEK_SET);
 
@@ -419,7 +416,6 @@ int InsertEntry(DBObject* dbp, Key key, Val val) {
     DB.IndexTable[i].KeyHash = kvdb_hash(key.data, key.size);
     DB.IndexTable[i].EntryID = i;
     DB.IndexTable[i].Flags |= FLAG_VALID;
-    DB.IndexTable[i].Size = DataEntrySize;
     DB.IndexTable[i].Offset = DB.OffsetPtr;
 
     DB.OffsetPtr += DataEntrySize;  // legacy?
@@ -452,7 +448,6 @@ int DeleteEntry(DBObject* dbp, uint32_t EntryID) {
     DB.IndexTable[EntryID].KeyHash = 0;
     DB.IndexTable[EntryID].Flags = FLAG_DELETED;
     DB.IndexTable[EntryID].Offset = 0;
-    DB.IndexTable[EntryID].Size = 0;
 
     DB.Header.ValidEntryCount--;
     return EntryID;

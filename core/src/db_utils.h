@@ -80,17 +80,13 @@ struct DBIndexEntry {
     hash_t      KeyHash;    // 8 bytes
     ulong_t     EntryID;    // 4 bytes
     ulong_t     Flags;      // 4 bytes
-    size32_t    Size;       // 4 bytes
     off64_t     Offset;     // 8 bytes
-    ulong_t     Reserved;   // pad to 4 bytes
 };
 struct DataEntryHeader {
     size32_t    KeySize;    // 4 bytes
     uint32_t    KeyType;    // 4 bytes
-    off32_t     KeyOffset;  // 8 bytes
     size32_t    ValSize;    // 4 bytes 
     uint32_t    ValType;    // 4 bytes
-    off32_t     ValOffset;  // 8 bytes
 };
 struct DBEOFHeader {
     ubyte_t     EOFMagic[MAGIC_SIZE];
