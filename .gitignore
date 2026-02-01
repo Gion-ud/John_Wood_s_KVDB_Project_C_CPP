@@ -10,4 +10,5 @@
 nul
 .bat
 __pycache__
+/tmp
 
