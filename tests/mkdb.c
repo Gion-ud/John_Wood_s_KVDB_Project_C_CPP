@@ -51,19 +51,24 @@ int main() {
         return 1;
     }
     closedir(dir);
+
     DBObject* dbp = (DBObject*)DBInit("database/table0002.db", DB_ENTRY_CAP);
     if (!dbp) return -1;
+
 #define db (*dbp)
     Key key = {0};
     Val val = {0};
 
     rewind(fpcsv);
     ulong_t ulong_t_size = sizeof(ulong_t);
+    ubyte_t data_blob[BUFFER_SIZE] = {0};
+    ubyte_t *data_blob_p = (ubyte_t*)data_blob;
     for (int i = 0; i < row_cnt; ++i) {
         if (!fgets(line, BUFFER_SIZE, fpcsv)) break;
         line_len = strlen(line);
         line_len = lstrip(&line, line_len);
         line_len = rstrip(&line, line_len);
+    
         tokmeta_t *tok_info_arr = MarkTokPosMeta(line, line_len, col_cnt, ',');
         if (!tok_info_arr) {
             printerrf("MarkTokPosMeta(line, line_len, col_cnt, ',') failed\n");
@@ -72,27 +77,21 @@ int main() {
 
         key.size = 4;
         key.data = &i;
-        //key.data = (qword_t*)alloca(sizeof(qword_t));
-        //*(qword_t*)key.data = i;
         key.type = INT;
 
 
-        val.size = 0;
-        ubyte_t data_blob[BUFFER_SIZE] = {0};
-        ubyte_t *data_blob_p = (ubyte_t*)data_blob;
-        val.data = data_blob_p;
-        //ptrdiff_t data_blob_cur = 0;
-        for (int j = 0; j < col_cnt; ++j) {
-            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_off, ulong_t_size);
-            data_blob_p += ulong_t_size;
-            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_len, ulong_t_size);
-            data_blob_p += ulong_t_size;
-            val.size += 2 * ulong_t_size;
-        }
-        memcpy((ubyte_t*)data_blob_p, (ubyte_t*)line, line_len);
-        data_blob_p += line_len;
-        val.size += line_len;
 
+        data_blob_p = (ubyte_t*)data_blob;
+
+        for (int j = 0; j < col_cnt; ++j) {
+            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_len, ulong_t_size);
+            data_blob_p += ulong_t_size; // [data_len] at idx j
+
+            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)line + tok_info_arr[j].tok_off, tok_info_arr[j].tok_len);
+            data_blob_p += tok_info_arr[j].tok_len;
+        }
+
+        val.size = data_blob_p - (ubyte_t*)data_blob;
         val.data = (void*)data_blob;
         val.type = BLOB;
 

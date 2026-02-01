@@ -21,22 +21,22 @@ const char *keys[] = {
 #define KEY_CNT sizeof(keys) / sizeof(char*)
 
 const char *vals[] = {
-    "John_Wood",
-    "John",
-    "Wu",
+    "dfgbdfsvfd",
+    "fgdfv",
+    "fdgfdv",
     "16904120",
-    "2009-04-04",
-    "CN",
-    "China",
-    "East Asian/Chinese",
-    "New Zealand",
+    "44545",
+    "gfdg",
+    "dfgfdsg",
+    "fdsgfdsgdfgtrhtgh",
+    "rgrttigd",
     "Unknown",
-    "Pakuranga College",
-    "Auckland",
-    "Howick",
-    "Male",
-    "true",
-    "C Programing, osu!"
+    "66",
+    "Athththd",
+    "ghgrh",
+    "mnnn",
+    "ghgfh",
+    "C htgfh"
 };
 #define VAL_CNT sizeof(vals) / sizeof(char*)
 
