@@ -8,13 +8,13 @@
     #error "BE systems are NOT supported"
 #endif
 
+#include <stddef.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
 #include <time.h>
-#include <stddef.h>
 #include <ctype.h>
 #include <dirent.h>
 
@@ -43,35 +43,45 @@ typedef int                 hidx_t;
 typedef unsigned int        keysize_t;
 
 
-typedef signed short    word_t;
-typedef unsigned short  uword_t;
+typedef signed char         byte_t;
+typedef unsigned char       ubyte_t;
+typedef unsigned char       uchar_t;
 
-typedef signed int      long_t;
-typedef unsigned int    ulong_t;
-typedef unsigned int    uint_t;
+typedef signed short        short_t;
+typedef unsigned short      ushort_t;
+typedef signed short        word_t;
+typedef unsigned short      uword_t;
 
-typedef signed char     byte_t;
-typedef unsigned char   ubyte_t;
-typedef unsigned char   uchar_t;
+typedef signed int          dword_t;
+typedef unsigned int        udword_t;
+typedef signed int          long_t;
+typedef unsigned int        ulong_t;
+
+typedef signed long long    longlong_t;
+typedef signed long long    qword_t;
+typedef unsigned long long  ulonglong_t;
+typedef unsigned long long  uqword_t;
+
+typedef ulong_t             size32_t;
+typedef size_t              size64_t;
+
+#ifndef _WIN32
+typedef ulong_t             off32_t;
+typedef ulonglong_t         off64_t;
+#endif
+
 
 
 typedef void*           ptr_t;
 #define PRIptr          ".16llx"
 //\
 typedef unsigned long long  ptr_t;
+typedef unsigned int        uint_t;
 typedef unsigned char       flag_t;
-typedef signed long long    qword_t;
-typedef unsigned long long  uqword_t;
 typedef unsigned long long  ull_t;
 
 typedef uint64_t offptr_t;
 
-typedef uint64_t size64_t;
-typedef uint32_t size32_t;
-#ifndef _WIN32
-typedef uint32_t off32_t;
-typedef uint64_t off64_t;
-#endif
 
 #define TIME_STR_SIZE 32
 
