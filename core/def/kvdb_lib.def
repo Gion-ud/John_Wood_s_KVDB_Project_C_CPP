@@ -1,20 +1,18 @@
 LIBRARY KVDB_LIB
 ; db_key_to_id
 EXPORTS
+	conv_bytes_hex
+	conv_time_str_modptr
+
 	DBInit
 	DBOpen
 	CloseDB
-
 	InsertEntry
 	ReadDBEntry
-
 	ReadDBEntryKey
 	PrintKvPair
 	DestroyKVPair
-
 	DeleteEntry
-
-
 	kvdb_search_key_id
 
 	hash

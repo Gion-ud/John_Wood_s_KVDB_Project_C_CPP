@@ -97,6 +97,7 @@ typedef uint64_t offptr_t;
 #define COLOUR_WHITE   "[37m"
 #define RESET_COLOUR   "[0m"
 
+char* conv_bytes_hex(const unsigned char* bytes, size_t size);
 static inline void strputc(char c, char* str) {
     size_t len = strlen(str);
     str[len++] = c;

@@ -1,6 +1,7 @@
 *.o
 *.obj
 *.exe
+*.dll.a
 /build/
 /bin/
 /logs/

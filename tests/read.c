@@ -1,3 +1,4 @@
+#include "../core/src/global.h"
 #include "../core/src/kvdb_lib.h"
 
 int main() {
