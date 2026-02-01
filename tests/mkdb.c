@@ -60,7 +60,7 @@ int main() {
     Val val = {0};
 
     rewind(fpcsv);
-    ulong_t ulong_t_size = sizeof(ulong_t);
+
     ubyte_t data_blob[BUFFER_SIZE] = {0};
     ubyte_t *data_blob_p = (ubyte_t*)data_blob;
     for (int i = 0; i < row_cnt; ++i) {
@@ -84,8 +84,8 @@ int main() {
         data_blob_p = (ubyte_t*)data_blob;
 
         for (int j = 0; j < col_cnt; ++j) {
-            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_len, ulong_t_size);
-            data_blob_p += ulong_t_size; // [data_len] at idx j
+            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_len, sizeof(ulong_t));
+            data_blob_p += sizeof(ulong_t); // [data_len] at idx j
 
             memcpy((ubyte_t*)data_blob_p, (ubyte_t*)line + tok_info_arr[j].tok_off, tok_info_arr[j].tok_len);
             data_blob_p += tok_info_arr[j].tok_len;
