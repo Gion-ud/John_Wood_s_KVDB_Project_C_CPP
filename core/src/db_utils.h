@@ -40,7 +40,7 @@ enum EntryFlags {
     FLAG_VALID   = (1u << 0),
     FLAG_DELETED = (1u << 1),
 };
-enum TypeFlags {
+enum KVDBTypeFlags {
     CHAR        = (1u << 0),
     INT         = (1u << 1),
     SHORT       = (1u << 2),
