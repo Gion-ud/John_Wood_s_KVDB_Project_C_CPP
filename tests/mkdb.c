@@ -99,7 +99,7 @@ int main() {
 
         free(tok_info_arr); tok_info_arr = NULL;
     }
-
+    PrintIndexTable(stdout, dbp);
 
     //WriteDBHeader(&db);
 
