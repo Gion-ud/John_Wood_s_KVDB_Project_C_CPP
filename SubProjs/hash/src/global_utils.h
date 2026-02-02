@@ -6,7 +6,6 @@
 #include <string.h>
 #include <errno.h>
 #include <stddef.h>
-#include <unistd.h>
 
 #define print_err_msg(...) fprintf(stderr, __VA_ARGS__)
 
@@ -19,12 +18,11 @@
 #endif
 #define LOOP_RUNNING 1
 
-typedef unsigned long long hash_t;
-typedef int hidx_t;
-typedef unsigned int keysize_t;
-typedef unsigned int ulong_t;
-typedef unsigned char byte_t;
-typedef unsigned char flag_t;
+typedef unsigned long long  hash_t;
+typedef int                 hidx_t;
+typedef unsigned int        ulong_t;
+typedef unsigned char       ubyte_t;
+typedef unsigned char       flag_t;
 
 typedef unsigned long long ptr_t;
 #define PRIptr ".16llx"
