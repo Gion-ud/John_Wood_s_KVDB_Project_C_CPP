@@ -8,13 +8,13 @@ SHELL := /usr/bin/sh
 
 ifeq ($(OS),Windows_NT)
 	BUILD_DLL_TARGETS = bin/kvdb_lib.dll
-	BUILD_LDYN_EXEC_TARGETS = mkdb_ldll read_ldll
+	BUILD_LDYN_EXEC_TARGETS = mkdb_ldll rddb_ldll
 else
 	BUILD_DLL_TARGETS = bin/libkvdb_lib.so
-	BUILD_LDYN_EXEC_TARGETS = mkdb_lso read_lso
+	BUILD_LDYN_EXEC_TARGETS = mkdb_lso rddb_lso
 endif
 
-BUILD_LSTATIC_EXEC_TARGETS = bin/mkdb bin/read
+BUILD_LSTATIC_EXEC_TARGETS = mkdb_lstatic rddb_lstatic
 
 
 ifeq ($(LD_METHOD),static)
@@ -61,16 +61,18 @@ build/txt_tok_lib.o: core/src/txt_tok_lib.c | build core/src core/include
 build/global_func.o: core/src/global_func.c | build core/src core/include
 	gcc -O2 -fPIC -I./core/include -c core/src/global_func.c -o $@
 
+MODULE_OBJ = build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o
+
 # static lib for kvdb
-core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o | core/lib
-	ar rcs core/lib/libkvdb_lib.a build/db_lib.o build/hash_table_lib.o
+core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o | core/lib
+	ar rcs core/lib/libkvdb_lib.a $(MODULE_OBJ)
 
 
 # dll for kvdb
-bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def | build core/src core/lib core/include bin
+bin/kvdb_lib.dll: $(MODULE_OBJ) core/def/kvdb_lib.def | build core/src core/lib core/include core/def bin
 	gcc -O2 -s -shared \
 		-I./core/include \
-		build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def \
+		$(MODULE_OBJ) core/def/kvdb_lib.def \
 		-o bin/kvdb_lib.dll \
 		-Wl,--kill-at \
 		-Wl,--out-implib,core/lib/libkvdb_lib.dll.a
@@ -78,31 +80,31 @@ bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o buil
 #	dlltool -D $@ -d core/def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
 
 # so for kvdb
-bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o | build core/src core/include bin
-	gcc -O2 -s -fPIC -shared -I./core/include -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o
+bin/libkvdb_lib.so: $(MODULE_OBJ) | build core/src core/include bin
+	gcc -O2 -s -fPIC -shared -I./core/include $(MODULE_OBJ) -o $@
 
 
 # static linking
-bin/mkdb: tests/mkdb.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
-	gcc -static -I./core/include tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o $@
+mkdb_lstatic: tests/mkdb.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
+	gcc -static -I./core/include tests/mkdb.c -O2 -s -L./core/lib  -lkvdb_lib -o bin/mkdb
 
-bin/read: core/src/read.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
-	gcc -static -I./core/include core/src/read.c -O2 -s -Llib -lkvdb_lib -o $@
+rddb_lstatic: tests/rddb.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
+	gcc -static -I./core/include tests/rddb.c -O2 -s -L./core/lib  -lkvdb_lib -o bin/rddb
 
 
 # dynamic linking implicit
 mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
 	gcc tests/mkdb.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/mkdb
 
-read_ldll: tests/read.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
-	gcc tests/read.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/read
+rddb_ldll: tests/rddb.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
+	gcc tests/rddb.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/rddb
 
 mkdb_lso: tests/mkdb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
 	gcc tests/mkdb.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/mkdb
 # -g -fsanitize=address
 
-read_lso: tests/read.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
-	gcc tests/read.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/read
+rddb_lso: tests/rddb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
+	gcc tests/rddb.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/rddb
 
 
 cpp-main: core/src/main.cpp core/src/kvdb_lib.cpp bin/kvdb_lib.dll
@@ -122,7 +124,7 @@ new-db: | bin res
 
 read-db: | bin res
 #	gcc core/src/read.c -O2 -s -Llib -lkvdb_lib -o bin/read
-	./bin/read database/table0001.db logs/read.txt
+	./bin/rddb database/table0001.db logs/table0001.db.dump.txt
 
 
 clean:
