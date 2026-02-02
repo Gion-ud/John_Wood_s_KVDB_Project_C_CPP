@@ -46,18 +46,20 @@ build bin lib:
 #	mkdir -p build bin lib
 
 # kvdb core lib
-build/db_lib.o: core/src/db_lib.c | build
-	gcc -O2 -fPIC -c core/src/db_lib.c -o $@
+build/db_lib.o: core/src/db_lib.c | build core/src core/include
+	gcc -O2 -fPIC -I./core/include -c core/src/db_lib.c -o $@
 
 # HTObject core lib
-build/hash_table_lib.o: core/src/hash_table_lib.c | build
-	gcc -O2 -fPIC -c core/src/hash_table_lib.c -o $@
+build/hash_table_lib.o: core/src/hash_table_lib.c | build core/src core/include
+	gcc -O2 -fPIC -I./core/include -c core/src/hash_table_lib.c -o $@
 
-build/txt_tok_lib.o: core/src/txt_tok_lib.c | build
-	gcc -O2 -fPIC -c core/src/txt_tok_lib.c -o $@
+# for parsing and tokenising text
+build/txt_tok_lib.o: core/src/txt_tok_lib.c | build core/src core/include
+	gcc -O2 -fPIC -I./core/include -c core/src/txt_tok_lib.c -o $@
 
-build/global_func.o: core/src/global_func.c | build
-	gcc -O2 -fPIC -c core/src/global_func.c -o $@
+# global utils
+build/global_func.o: core/src/global_func.c | build core/src core/include
+	gcc -O2 -fPIC -I./core/include -c core/src/global_func.c -o $@
 
 # static lib for kvdb
 core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o | core/lib
@@ -65,8 +67,10 @@ core/lib/libkvdb_lib.a: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.
 
 
 # dll for kvdb
-bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def | build core/lib bin
-	gcc -O2 -s -shared build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def \
+bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def | build core/src core/lib core/include bin
+	gcc -O2 -s -shared \
+		-I./core/include \
+		build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o core/def/kvdb_lib.def \
 		-o bin/kvdb_lib.dll \
 		-Wl,--kill-at \
 		-Wl,--out-implib,core/lib/libkvdb_lib.dll.a
@@ -74,31 +78,31 @@ bin/kvdb_lib.dll: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o buil
 #	dlltool -D $@ -d core/def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
 
 # so for kvdb
-bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o | build core/lib bin
-	gcc -O2 -s -fPIC -shared -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o
+bin/libkvdb_lib.so: build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o | build core/src core/include bin
+	gcc -O2 -s -fPIC -shared -I./core/include -o $@ build/db_lib.o build/hash_table_lib.o build/txt_tok_lib.o build/global_func.o
 
 
 # static linking
-bin/mkdb: tests/mkdb.c core/lib/libkvdb_lib.a | core/lib bin tests
-	gcc -static tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o $@
+bin/mkdb: tests/mkdb.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
+	gcc -static -I./core/include tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o $@
 
-bin/read: core/src/read.c core/lib/libkvdb_lib.a | core/lib bin tests
-	gcc -static core/src/read.c -O2 -s -Llib -lkvdb_lib -o $@
+bin/read: core/src/read.c core/lib/libkvdb_lib.a | core/lib core/include bin tests
+	gcc -static -I./core/include core/src/read.c -O2 -s -Llib -lkvdb_lib -o $@
 
 
 # dynamic linking implicit
-mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll | core/lib bin tests
-	gcc tests/mkdb.c -O2 -s -L./core/lib -lkvdb_lib -o bin/mkdb
+mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
+	gcc tests/mkdb.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/mkdb
 
-read_ldll: tests/read.c bin/kvdb_lib.dll | core/lib bin tests
-	gcc tests/read.c -O2 -s -L./core/lib -lkvdb_lib -o bin/read
+read_ldll: tests/read.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
+	gcc tests/read.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/read
 
-mkdb_lso: tests/mkdb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | bin tests
-	gcc tests/mkdb.c -O2 core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/mkdb
+mkdb_lso: tests/mkdb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
+	gcc tests/mkdb.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/mkdb
 # -g -fsanitize=address
 
-read_lso: tests/read.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | bin tests
-	gcc tests/read.c -O2 core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/read
+read_lso: tests/read.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
+	gcc tests/read.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/read
 
 
 cpp-main: core/src/main.cpp core/src/kvdb_lib.cpp bin/kvdb_lib.dll
@@ -112,13 +116,13 @@ cpp-main-linux: core/src/main.cpp core/src/kvdb_lib.cpp bin/libkvdb_lib.so
 	./bin/main
 
 
-new-db: | bin
+new-db: | bin res
 #	gcc tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o bin/mkdb
-	./bin/mkdb
+	./bin/mkdb res/Pokemon.csv database/table0001.db
 
-read-db: | bin
+read-db: | bin res
 #	gcc core/src/read.c -O2 -s -Llib -lkvdb_lib -o bin/read
-	./bin/read
+	./bin/read database/table0001.db logs/read.txt
 
 
 clean:

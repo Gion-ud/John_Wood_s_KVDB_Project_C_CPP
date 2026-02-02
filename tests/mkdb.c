@@ -1,6 +1,5 @@
-#include "../core/src/global.h"
-#include "../core/src/kvdb_lib.h"
-#include "../core/src/txt_tok_lib.h"
+#include "kvdb_lib.h"
+#include "txt_tok_lib.h"
 
 #define DB_ENTRY_CAP 4096
 
@@ -32,10 +31,19 @@ static inline int count_csv_cols(FILE *fp) {
     return col_cnt;
 }
 
-int main() {
-    FILE *fpcsv = fopen("res/Pokemon.csv", "r");
+int main(int argc, char *argv[]) {
+    if (argc < 3 || argc > 4) {
+        printerrf(
+            "Error: Invalid argc (argc=%d)\n"
+            "Usage: %s <import csv path> <export db path> (<dbg file>)\n",
+            argc, argv[0]
+        );
+        return -1;
+    }
+
+    FILE *fpcsv = fopen(argv[1], "r");
     if (!fpcsv) {
-        perror("fopen res/Pokemon.csv failed");
+        perror("failed to open <import csv>");
         return EXIT_FAILURE;
     }
     int row_cnt = count_csv_rows(fpcsv);
@@ -45,14 +53,7 @@ int main() {
     char *line = (char*)line_buf;
     ulong_t line_len = 0;
 
-    DIR *dir = opendir("database");
-    if (!dir) {
-        perror("opendir failed");
-        return 1;
-    }
-    closedir(dir);
-
-    DBObject* dbp = (DBObject*)DBInit("database/table0002.db", DB_ENTRY_CAP);
+    DBObject* dbp = (DBObject*)DBInit(argv[2], DB_ENTRY_CAP);
     if (!dbp) return -1;
 
 #define db (*dbp)
@@ -99,7 +100,7 @@ int main() {
 
         free(tok_info_arr); tok_info_arr = NULL;
     }
-    PrintIndexTable(stdout, dbp);
+    //PrintIndexTable(stdout, dbp);
 
     //WriteDBHeader(&db);
 

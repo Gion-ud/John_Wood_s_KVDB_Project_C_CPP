@@ -1,10 +1,12 @@
 *.o
 *.obj
 *.exe
+*.dll
+*.so
 *.dll.a
 /build/
 /bin/
-/logs/
+/logs/*
 /.vscode
 /release_build/*
 /thumnails/*
