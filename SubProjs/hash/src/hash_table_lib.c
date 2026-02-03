@@ -85,7 +85,9 @@ HTObject* HASH_TABLE_LIB_ResizeHashTable(HTObject **ht_obj, int new_cap) {
     return *ht_obj;
 }
 
-int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *ht_entry) {
+
+int HASH_TABLE_LIB_InsertHashTableEntry(HTObject **ht_obj_p, const HashTableEntry *ht_entry) {
+#define ht_obj (*ht_obj_p)
     if (!ht_obj) return -1;
     if (ht_obj->ht_size >= ht_obj->ht_cap) {
         HTObject *ht_obj_tmp = HASH_TABLE_LIB_ResizeHashTable(&ht_obj, ht_obj->ht_size * 2);
@@ -108,9 +110,12 @@ int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *
     ++ht_obj->ht[h_idx].bucket_size;
     ++ht_obj->ht_size;
     return h_idx;
+#undef ht_obj
 }
 
+
 DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len) {
+
     if (!ht_obj) return NULL;
     DataBuffer *val = (DataBuffer*)malloc(sizeof(DataBuffer));
     if (!val) {
