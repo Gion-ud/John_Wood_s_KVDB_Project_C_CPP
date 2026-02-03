@@ -19,7 +19,6 @@
 #define LOOP_RUNNING 1
 
 typedef unsigned long long  hash_t;
-typedef int                 hidx_t;
 typedef unsigned int        ulong_t;
 typedef unsigned char       ubyte_t;
 typedef unsigned char       flag_t;

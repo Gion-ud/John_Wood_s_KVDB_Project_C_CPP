@@ -11,7 +11,7 @@ static inline int count_csv_rows(FILE *fp) {
     int row_cnt = 0;
     while (fgets(line, BUFFER_SIZE, fp)) {
         line_len = strlen(line);
-        if (line[line_len - 1] = '\n') ++row_cnt;
+        if (line[line_len - 1] == '\n') ++row_cnt;
     }
     rewind(fp);
     return row_cnt;
