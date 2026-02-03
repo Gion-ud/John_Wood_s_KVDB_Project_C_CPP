@@ -1,0 +1,7 @@
+LIBRARY "hash_table_lib.dll" BASE=0x261110000
+EXPORTS
+    HASH_TABLE_LIB_DestroyHashTableObject @1
+    HASH_TABLE_LIB_InsertHashTableEntry @2
+    HASH_TABLE_LIB_NewHashTableObject @3
+    HASH_TABLE_LIB_ResizeHashTable @4
+    fnv_1a_hash @5

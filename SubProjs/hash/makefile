@@ -1,6 +1,6 @@
-all: bin/kv_dat_lib.dll bin/kv_dat_lib.dll
+all: bin/hash_table_lib.dll bin/kv_dat_lib.dll
 
-HT_LIB_SRC = src/hash_func_mudule.c src/hash_table_lib.c
+HT_LIB_SRC = src/hash_func_module.c src/hash_table_lib.c
 
 bin/hash_table_lib.dll: $(HT_LIB_SRC) def/hash_table_lib.def
 	gcc -shared -O2 -s -Iinclude $(HT_LIB_SRC) def/hash_table_lib.def -o $@ \

@@ -1,9 +1,11 @@
 LIBRARY hash_table_lib
 EXPORTS
-    HTLib_FNV_1a_hash
-    InitHashTableObject
-    DestroyHashTableObject
-    HashTableObject_insert_entry
-    HashTableObject_search_key
-    HashTableObject_delete_entry
-    HashTableObject_get_key_hash
+    fnv_1a_hash
+    HASH_TABLE_LIB_NewHashTableObject
+    HASH_TABLE_LIB_DestroyHashTableObject
+    HASH_TABLE_LIB_InsertHashTableEntry
+    HASH_TABLE_LIB_GetHashTableEntry
+    HASH_TABLE_LIB_DestroyDataBuffer
+    HASH_TABLE_LIB_DeleteHashTableEntry
+    HASH_TABLE_LIB_ResizeHashTable
+
