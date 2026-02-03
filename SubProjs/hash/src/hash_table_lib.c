@@ -79,7 +79,7 @@ HTObject* HASH_TABLE_LIB_ResizeHashTable(HTObject **ht_obj, int new_cap) {
     for (size_t i = 0; i < (*ht_obj)->ht_cap; ++i) {
         if (!(*ht_obj)->ht[i].bucket) continue;
         for (size_t j = 0; j < (*ht_obj)->ht[i].bucket_size; j++)
-            HASH_TABLE_LIB_InsertHashTableEntry(ht_obj_tmp, &(*ht_obj)->ht[i].bucket[j]);
+            HASH_TABLE_LIB_InsertHashTableEntry(&ht_obj_tmp, &(*ht_obj)->ht[i].bucket[j]);
     }
     HASH_TABLE_LIB_DestroyHashTableObject(*ht_obj); (*ht_obj) = ht_obj_tmp;
     return *ht_obj;
