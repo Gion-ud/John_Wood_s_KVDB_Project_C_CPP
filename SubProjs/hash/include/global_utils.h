@@ -9,7 +9,7 @@
 
 #define print_err_msg(...) fprintf(stderr, __VA_ARGS__)
 
-//#define DEBUG
+#define DEBUG
 
 #ifdef DEBUG
     #define print_dbg_msg(...) fprintf(stderr, __VA_ARGS__)

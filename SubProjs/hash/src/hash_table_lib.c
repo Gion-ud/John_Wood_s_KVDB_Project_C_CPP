@@ -1,17 +1,5 @@
 #include "hash_table_lib.h"
 
-#define HT_SLOT_SIZE    sizeof(struct _ht_slot)
-#define INIT_BUCKET_CAP 4
-
-//typedef struct _ht_slot    *HashTable;
-
-struct _ht_slot {
-    HashTableEntry *bucket;
-    size_t          bucket_cap;
-    size_t          bucket_size;
-};
-
-
 HTObject *HASH_TABLE_LIB_NewHashTableObject(int ht_cap) {
     HTObject *ht_obj = (HTObject*)malloc(HT_OBJ_SIZE);
     if (!ht_obj) {
@@ -53,47 +41,59 @@ NewHashTableObject_failed_cleanup:
 }
 
 void HASH_TABLE_LIB_DestroyHashTableObject(HTObject *ht_obj) {
+//#define ht_obj (*ht_obj_p)
+    print_dbg_msg("HASH_TABLE_LIB_DestroyHashTableObject\n");
     if (!ht_obj) return;
+    if (!ht_obj->ht) { free(ht_obj); return; }
+    print_dbg_msg("ht_obj->ht=%p\n", ht_obj->ht);
     for (size_t i = 0; i < ht_obj->ht_cap; ++i) {
         if (ht_obj->ht[i].bucket) {
+            print_dbg_msg("ht_obj->ht[%zu].bucket=%p\n", i, ht_obj->ht[i].bucket);
+            print_dbg_msg("idx=%zu\n", i);
             for (size_t j = 0; j < ht_obj->ht[i].bucket_cap; j++) {
                 if (ht_obj->ht[i].bucket[j].key_data) {
+                    print_dbg_msg("\tht[%zu][%zu]\n", i, j);
+                    print_dbg_msg("\t\tfree key\n");
                     free(ht_obj->ht[i].bucket[j].key_data);
-                    ht_obj->ht[i].bucket[j].key_data = NULL;
                 }
                 if (ht_obj->ht[i].bucket[j].val_data) {
+                    print_dbg_msg("\t\tfree val\n");
                     free(ht_obj->ht[i].bucket[j].val_data);
-                    ht_obj->ht[i].bucket[j].val_data = NULL;
                 }
             }
-            free(ht_obj->ht[i].bucket); ht_obj->ht[i].bucket = NULL;
+            free(ht_obj->ht[i].bucket);
         }
     }
-    free(ht_obj); ht_obj = NULL;
+    free(ht_obj->ht);
+    free(ht_obj);
+//#undef ht_obj
 }
 
-HTObject* HASH_TABLE_LIB_ResizeHashTable(HTObject **ht_obj, int new_cap) {
+HTObject* HASH_TABLE_LIB_ResizeHashTable(HTObject **ht_obj_p, int new_cap) {
+#define ht_obj (*ht_obj_p)
     if (!ht_obj) return NULL;
     HTObject *ht_obj_tmp = HASH_TABLE_LIB_NewHashTableObject(new_cap);
     if (!ht_obj_tmp) return NULL;
-    for (size_t i = 0; i < (*ht_obj)->ht_cap; ++i) {
-        if (!(*ht_obj)->ht[i].bucket) continue;
-        for (size_t j = 0; j < (*ht_obj)->ht[i].bucket_size; j++)
-            HASH_TABLE_LIB_InsertHashTableEntry(&ht_obj_tmp, &(*ht_obj)->ht[i].bucket[j]);
+    for (size_t i = 0; i < ht_obj->ht_cap; ++i) {
+        if (!ht_obj->ht[i].bucket) continue;
+        for (size_t j = 0; j < ht_obj->ht[i].bucket_size; j++)
+            HASH_TABLE_LIB_InsertHashTableEntry(ht_obj_tmp, &ht_obj->ht[i].bucket[j]);
     }
-    HASH_TABLE_LIB_DestroyHashTableObject(*ht_obj); (*ht_obj) = ht_obj_tmp;
-    return *ht_obj;
+    HASH_TABLE_LIB_DestroyHashTableObject(ht_obj); ht_obj = ht_obj_tmp;
+    return ht_obj;
+#undef ht_obj
 }
 
 
-int HASH_TABLE_LIB_InsertHashTableEntry(HTObject **ht_obj_p, const HashTableEntry *ht_entry) {
-#define ht_obj (*ht_obj_p)
+int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *ht_entry) {
+//#define ht_obj (*ht_obj_p)
+    print_dbg_msg("HASH_TABLE_LIB_InsertHashTableEntry\n");
     if (!ht_obj) return -1;
     if (ht_obj->ht_size >= ht_obj->ht_cap) {
-        HTObject *ht_obj_tmp = HASH_TABLE_LIB_ResizeHashTable(&ht_obj, ht_obj->ht_size * 2);
-        if (!ht_obj_tmp) return -1;
-        ht_obj = ht_obj_tmp;
+        print_err_msg("Error: HashTable full!\n");
+        return -1;
     }
+    print_dbg_msg("after resize\n");
 
     int h_idx = ht_entry->key_hash % ht_obj->ht_cap;
     if (ht_obj->ht[h_idx].bucket_size >= ht_obj->ht[h_idx].bucket_cap) {
@@ -106,16 +106,44 @@ int HASH_TABLE_LIB_InsertHashTableEntry(HTObject **ht_obj_p, const HashTableEntr
         ht_obj->ht[h_idx].bucket = bucket_new_p;
         ht_obj->ht[h_idx].bucket_cap = bucket_cap_new;
     }
-    memcpy(&ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size], ht_entry, HT_ENTRY_SIZE);
+    print_err_msg("before insert\n");
+    ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_len = ht_entry->key_len;
+    ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_hash = ht_entry->key_hash;
+    ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].val_len = ht_entry->val_len;
+
+
+    ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_data = (ubyte_t*)malloc(ht_entry->key_len);
+    if (!ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_data) {
+        print_err_msg("(ubyte_t*)malloc(ht_entry->key_len) failed\n");
+        return -1;
+    }
+    ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].val_data = (ubyte_t*)malloc(ht_entry->val_len);
+    if (!ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].val_data) {
+        print_err_msg("(ubyte_t*)malloc(ht_entry->val_len) failed\n");
+        free(ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_data);
+        ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_data = NULL;
+        return -1;
+    }
+    memcpy(
+        ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].key_data,
+        ht_entry->key_data,
+        ht_entry->key_len
+    );
+    memcpy(
+        ht_obj->ht[h_idx].bucket[ht_obj->ht[h_idx].bucket_size].val_data,
+        ht_entry->val_data,
+        ht_entry->val_len
+    );
+
     ++ht_obj->ht[h_idx].bucket_size;
     ++ht_obj->ht_size;
+    print_dbg_msg("before ret\n");
     return h_idx;
-#undef ht_obj
+//#undef ht_obj
 }
 
 
 DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len) {
-
     if (!ht_obj) return NULL;
     DataBuffer *val = (DataBuffer*)malloc(sizeof(DataBuffer));
     if (!val) {
@@ -148,7 +176,7 @@ void HASH_TABLE_LIB_DestroyDataBuffer(DataBuffer *buf) {
     if (buf->data) {
         free(buf->data); buf->data = NULL;
     }
-    free(buf); buf = NULL;
+    free(buf); //buf = NULL;
 }
 
 int HASH_TABLE_LIB_DeleteHashTableEntry(HTObject *ht_obj, void *key, size_t key_len) {

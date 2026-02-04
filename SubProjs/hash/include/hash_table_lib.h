@@ -25,6 +25,18 @@ struct _ht_entry {
     void   *val_data;
 };
 
+#define HT_SLOT_SIZE    sizeof(struct _ht_slot)
+#define INIT_BUCKET_CAP 4
+
+//typedef struct _ht_slot    *HashTable;
+
+struct _ht_slot {
+    HashTableEntry *bucket;
+    size_t          bucket_cap;
+    size_t          bucket_size;
+};
+
+
 typedef struct DataBuffer {
     size_t data_len;
     ubyte_t *data;
@@ -32,7 +44,7 @@ typedef struct DataBuffer {
 
 HTObject *HASH_TABLE_LIB_NewHashTableObject(int ht_cap);
 void HASH_TABLE_LIB_DestroyHashTableObject(HTObject *ht_obj);
-int HASH_TABLE_LIB_InsertHashTableEntry(HTObject **ht_obj, const HashTableEntry *ht_entry);
+int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *ht_entry);
 DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len);
 void HASH_TABLE_LIB_DestroyDataBuffer(DataBuffer *buf);
 int HASH_TABLE_LIB_DeleteHashTableEntry(HTObject *ht_obj, void *key, size_t key_len);
