@@ -19,7 +19,7 @@ rddb-lso: rddb.c ../release-build/KVDB/bin/libkvdb_lib.so | ../release-build/KVD
 		-o ../release-build/KVDB/bin/rddb
 
 new-db:
-	../release-build/KVDB/bin/mkdb ../res/Pokemon.csv database/table0001.db
+	../release-build/KVDB/bin/mkdb ../res/Pokemon.csv 1 database/table0001.db
 
 read-db:
 	../release-build/KVDB/bin/rddb database/table0001.db logs/table0001.db.dmp.txt

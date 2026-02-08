@@ -12,7 +12,7 @@ enum {
 typedef struct HashEntry HashEntry;
 typedef struct HashTableObject HashTableObject;
 struct HashEntry {
-    ubyte_t*     key;
+    ubyte_t*    key;
     keysize_t   key_size;
     hash_t      key_hash;
     flag_t      flag;

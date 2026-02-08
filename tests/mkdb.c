@@ -32,10 +32,10 @@ static inline int count_csv_cols(FILE *fp) {
 }
 
 int main(int argc, char *argv[]) {
-    if (argc < 3 || argc > 4) {
+    if (argc < 4 || argc > 5) {
         printerrf(
             "Error: Invalid argc (argc=%d)\n"
-            "Usage: %s <import csv path> <export db path> (<dbg file>)\n",
+            "Usage: %s <import csv path> <primary key col idx> <export db path> (<dbg file>)\n",
             argc, argv[0]
         );
         return -1;
@@ -44,16 +44,24 @@ int main(int argc, char *argv[]) {
     FILE *fpcsv = fopen(argv[1], "r");
     if (!fpcsv) {
         perror("failed to open <import csv>");
-        return EXIT_FAILURE;
+        return errno;
     }
     int row_cnt = count_csv_rows(fpcsv);
     int col_cnt = count_csv_cols(fpcsv);
+
+    int pk_col_idx = atoi(argv[2]);
+    printerrf("%d\n", pk_col_idx);
+    if (pk_col_idx < 0 || pk_col_idx > col_cnt - 1) {
+        print_err_msg("primary key col idx out of bound\n");
+        fclose(fpcsv);
+        return -1;
+    }
 
     char line_buf[BUFFER_SIZE] = {0};
     char *line = (char*)line_buf;
     ulong_t line_len = 0;
 
-    DBObject* dbp = (DBObject*)DBInit(argv[2], DB_ENTRY_CAP);
+    DBObject* dbp = (DBObject*)DBInit(argv[3], DB_ENTRY_CAP);
     if (!dbp) return -1;
 
 #define db (*dbp)
@@ -76,11 +84,12 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-        key.size = 4;
-        key.data = &i;
-        key.type = INT;
 
+        key.type = BLOB;
+        key.size = tok_info_arr[pk_col_idx].tok_len;
+        key.data = line + tok_info_arr[pk_col_idx].tok_off;
 
+        printerrf("%.*s\n", key.size, key.data);
 
         data_blob_p = (ubyte_t*)data_blob;
 

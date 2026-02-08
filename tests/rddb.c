@@ -38,7 +38,7 @@ int main(int argc, char *argv[]) {
         KVPair *kv = ReadDBEntry(&db, i);
         if (!kv) continue;
         PrintRecordHeader(of_fp, dbp, i);
-        fprintf(of_fp, "\nkey=%d\n", *(int*)kv->key.data); // keys are literal integers
+        fprintf(of_fp, "\nkey=\'%.*s\'\n", (int)kv->key.size, (char*)kv->key.data); // keys are literal integers
         val_len = kv->val.size;
         val_data_p = (ubyte_t*)kv->val.data;
 
