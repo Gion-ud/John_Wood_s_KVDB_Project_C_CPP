@@ -51,15 +51,33 @@ void DestroyKVPairObj(KVObject* pObj) {
 }
 
 
-int KVObject_save_kv_dat(const char* filepath, KVObject *kvObj) {
-    FILE *fp = fopen(filepath, "wb+");
-    if (!fp) { perror("fopen"); return -1; }
+int KVObject_save_kv_dat(const char* filename, KVObject *kvObj) {
+    ulong_t filename_len = strlen(filename);
+    char *fdat_path = (char*)alloca(strlen(filename) + 4);
+    strncpy(fdat_path, filename, filename_len);
+    strncat(fdat_path, ".dat", 4);
+    char *fidx_path = (char*)alloca(strlen(filename) + 8);
+    strncpy(fidx_path, filename, filename_len);
+    strncat(fdat_path, ".idx", 4);
+
+    FILE *fp = fopen(fdat_path, "wb+");
+    if (!fp) { perror("fopen(fdat_path, \"wb+\")"); return -1; }
+    FILE *fp_idx = fopen(fidx_path, "wb+");
+    if (!fp_idx) { perror("fopen(fidx_path, \"wb+\")"); fclose(fp_idx); return -1; }
 
     fwrite(Magic, sizeof(ubyte_t), MAGIC_LEN, fp);
     fwrite(&kvObj->kv_cnt, sizeof(kvObj->kv_cnt), 1, fp);
     ulong_t data_off = sizeof(KV_DAT_FILE_HEADER);
     fwrite(&data_off, sizeof(data_off), 1, fp);
 
+    qword_t fdat_cur = data_off;
+    qword_t *off_arr = (qword_t*)malloc(kvObj->kv_cnt * sizeof(qword_t));
+    if (!off_arr) {
+        print_err_msg("(qword_t)malloc(kvObj->kv_cnt * sizeof(qword_t)) failed\n");
+        fclose(fp);
+        fclose(fp_idx);
+        return -1;
+    };
     fseek(fp, data_off, SEEK_SET);
 //\
     # binary dat file layout: [header], then ([key_hash])[key_len][key_data][val_len][val_data]
@@ -67,18 +85,23 @@ int KVObject_save_kv_dat(const char* filepath, KVObject *kvObj) {
         KVPair kv = KVObject_get_kv(kvObj, i);
         //hash_t key_hash = HTLib_FNV_1a_hash(kv.key_data, kv.key_len);
         //fwrite(&key_hash, sizeof(key_hash), 1, fp);
+        off_arr[i] = fdat_cur;
         fwrite(&kv.key_len, sizeof(kv.key_len), 1, fp);
         fwrite(kv.key_data, sizeof(ubyte_t), kv.key_len, fp);
         fwrite(&kv.val_len, sizeof(kv.val_len), 1, fp);
         fwrite(kv.val_data, sizeof(ubyte_t), kv.val_len, fp);
+        fdat_cur += (kv.key_len + kv.val_len + 2 * sizeof(ulong_t));
     }
+    fwrite(fp_idx, sizeof(qword_t), kvObj->kv_cnt, fp_idx);
     fclose(fp);
+    fclose(fp_idx);
+    free(off_arr);
     return kvObj->kv_cnt;
 }
 
-KVObject *KVObject_load_kv_dat(const char* filepath) {
+KVObject *KVObject_load_kv_dat(const char* filename) {
     KVObject *kvObj = NULL;
-    FILE *fp = fopen(filepath, "rb");
+    FILE *fp = fopen(filename, "rb");
     if (!fp) { perror("fopen"); goto err_cleanup; }
 
     KV_DAT_FILE_HEADER kv_dat_hdr = {0};

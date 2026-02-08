@@ -1,7 +1,7 @@
 LIBRARY "hash_table_lib.dll" BASE=0x261110000
 EXPORTS
     HASH_TABLE_LIB_DeleteHashTableEntry @1
-    HASH_TABLE_LIB_DestroyDataBuffer @2
+    HASH_TABLE_LIB_DestroyDatBufObj @2
     HASH_TABLE_LIB_DestroyHashTableObject @3
     HASH_TABLE_LIB_GetHashTableEntry @4
     HASH_TABLE_LIB_InsertHashTableEntry @5

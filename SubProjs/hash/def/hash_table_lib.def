@@ -5,7 +5,7 @@ EXPORTS
     HASH_TABLE_LIB_DestroyHashTableObject
     HASH_TABLE_LIB_InsertHashTableEntry
     HASH_TABLE_LIB_GetHashTableEntry
-    HASH_TABLE_LIB_DestroyDataBuffer
+    HASH_TABLE_LIB_DestroyDatBufObj
     HASH_TABLE_LIB_DeleteHashTableEntry
     HASH_TABLE_LIB_ResizeHashTable
 

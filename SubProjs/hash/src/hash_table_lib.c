@@ -55,16 +55,19 @@ void HASH_TABLE_LIB_DestroyHashTableObject(HTObject *ht_obj) {
                     print_dbg_msg("\tht[%zu][%zu]\n", i, j);
                     print_dbg_msg("\t\tfree key\n");
                     free(ht_obj->ht[i].bucket[j].key_data);
+                    ht_obj->ht[i].bucket[j].key_data = NULL;
                 }
                 if (ht_obj->ht[i].bucket[j].val_data) {
                     print_dbg_msg("\t\tfree val\n");
                     free(ht_obj->ht[i].bucket[j].val_data);
+                    ht_obj->ht[i].bucket[j].val_data = NULL;
                 }
             }
             free(ht_obj->ht[i].bucket);
+            ht_obj->ht[i].bucket = NULL;
         }
     }
-    free(ht_obj->ht);
+    free(ht_obj->ht); ht_obj->ht = NULL;
     free(ht_obj);
 //#undef ht_obj
 }
@@ -143,11 +146,11 @@ int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *
 }
 
 
-DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len) {
+DatBufObj *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len) {
     if (!ht_obj) return NULL;
-    DataBuffer *val = (DataBuffer*)malloc(sizeof(DataBuffer));
+    DatBufObj *val = (DatBufObj*)malloc(sizeof(DatBufObj));
     if (!val) {
-        print_err_msg("(DataBuffer*)malloc(sizeof(DataBuffer)) failed\n");
+        print_err_msg("(DatBufObj*)malloc(sizeof(DatBufObj)) failed\n");
         return NULL;
     }
 
@@ -171,7 +174,7 @@ DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t
     return NULL;
 }
 
-void HASH_TABLE_LIB_DestroyDataBuffer(DataBuffer *buf) {
+void HASH_TABLE_LIB_DestroyDatBufObj(DatBufObj *buf) {
     if (!buf) return;
     if (buf->data) {
         free(buf->data); buf->data = NULL;

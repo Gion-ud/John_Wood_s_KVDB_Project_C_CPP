@@ -2,15 +2,15 @@
 #define KV_DAT_LIB_H
 //#pragma once
 
-#include "global_utils.h"
+#include "global.h"
 
 #define MAGIC_LEN 8
 
 typedef struct KVPair {
-    ulong_t key_len;
-    ubyte_t *key_data;
-    ulong_t val_len;
-    ubyte_t *val_data;
+    ulong_t     key_len;
+    ubyte_t    *key_data;
+    ulong_t     val_len;
+    ubyte_t    *val_data;
 } KVPair;
 
 typedef struct KVObject {
@@ -21,7 +21,7 @@ typedef struct KVObject {
 
 #pragma pack(push, 1)
 typedef struct KV_DAT_FILE_HEADER {
-    ubyte_t  magic[MAGIC_LEN];   // 8 bytes
+    ubyte_t  magic[MAGIC_LEN];  // 8 bytes
     ulong_t entry_cnt;          // 4 bytes
     ulong_t data_off;           // 4 bytes
 } KV_DAT_FILE_HEADER;

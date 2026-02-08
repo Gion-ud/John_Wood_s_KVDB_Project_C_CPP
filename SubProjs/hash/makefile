@@ -12,5 +12,8 @@ build:
 run:
 	./bin/main
 
+gen-uuid: scripts/gen-uuid.py | scripts
+	python3 scripts/gen-uuid.py uuid.txt 32
+
 clean: 
 	rm bin/* lib/*

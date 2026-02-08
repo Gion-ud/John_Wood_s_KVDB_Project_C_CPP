@@ -1,7 +1,7 @@
 #ifndef HASH_TABLE_LIB_H
 #define HASH_TABLE_LIB_H
 
-#include "global_utils.h"
+#include "global.h"
 #include "hash_func_module.h"
 
 
@@ -37,16 +37,16 @@ struct _ht_slot {
 };
 
 
-typedef struct DataBuffer {
+typedef struct DatBufObj {
     size_t data_len;
     ubyte_t *data;
-} DataBuffer;
+} DatBufObj;
 
 HTObject *HASH_TABLE_LIB_NewHashTableObject(int ht_cap);
 void HASH_TABLE_LIB_DestroyHashTableObject(HTObject *ht_obj);
 int HASH_TABLE_LIB_InsertHashTableEntry(HTObject *ht_obj, const HashTableEntry *ht_entry);
-DataBuffer *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len);
-void HASH_TABLE_LIB_DestroyDataBuffer(DataBuffer *buf);
+DatBufObj *HASH_TABLE_LIB_GetHashTableEntry(HTObject *ht_obj, void *key, size_t key_len);
+void HASH_TABLE_LIB_DestroyDatBufObj(DatBufObj *buf);
 int HASH_TABLE_LIB_DeleteHashTableEntry(HTObject *ht_obj, void *key, size_t key_len);
 HTObject* HASH_TABLE_LIB_ResizeHashTable(HTObject **ht_obj, int new_cap);
 
