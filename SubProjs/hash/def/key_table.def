@@ -1,0 +1,7 @@
+LIBRARY key_table
+EXPORTS
+    KEY_TABLE_KeyTableObject_create
+    KEY_TABLE_KeyTableObject_destroy
+    KEY_TABLE_KeyTableObject_insert
+    KEY_TABLE_KeyTableObject_delete
+    KEY_TABLE_KeyTableObject_get_entry_id

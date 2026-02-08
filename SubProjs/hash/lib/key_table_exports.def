@@ -1,0 +1,7 @@
+LIBRARY "key_table.dll" BASE=0x301300000
+EXPORTS
+    KEY_TABLE_KeyTableObject_create @1
+    KEY_TABLE_KeyTableObject_delete @2
+    KEY_TABLE_KeyTableObject_destroy @3
+    KEY_TABLE_KeyTableObject_get_entry_id @4
+    KEY_TABLE_KeyTableObject_insert @5

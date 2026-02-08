@@ -1,0 +1,9 @@
+LIBRARY "hash_index_lib.dll" BASE=0x39d240000
+EXPORTS
+    HASH_INDEX_LIB_HTObject_compact @1
+    HASH_INDEX_LIB_HTObject_create @2
+    HASH_INDEX_LIB_HTObject_delete @3
+    HASH_INDEX_LIB_HTObject_destroy @4
+    HASH_INDEX_LIB_HTObject_insert @5
+    HASH_INDEX_LIB_HTObject_resize @6
+    fnv_1a_hash @7
