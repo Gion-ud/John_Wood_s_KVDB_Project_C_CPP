@@ -2,7 +2,7 @@
 #ifndef DB_LIB_H
 #define DB_LIB_H
 
-#include "db.h"
+#include "db_utils.h"
 
 int kvdb_search_key_id(DBObject* dbp, Key key);
 
