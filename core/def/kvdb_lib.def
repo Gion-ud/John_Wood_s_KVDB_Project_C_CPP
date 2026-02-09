@@ -1,32 +1,13 @@
 LIBRARY KVDB_LIB
-; db_key_to_id
 EXPORTS
-	conv_bytes_hex
-	conv_time_str_modptr
-
-	DBInit
-	DBOpen
-	CloseDB
-	InsertEntry
-	ReadDBEntry
-	ReadDBEntryKey
-	PrintKvPair
-	DestroyKVPair
-	DeleteEntry
-	kvdb_search_key_id
-
-	hash
-	search_key
-
-	InitHashTableObject
-	DestroyHashTableObject
-	insert_entry
-	search_key
-	delete_entry
-
-	
-	CntTok
-	MarkTokPosMeta
-	CpyTokSrc
-	lstrip
-	rstrip
+	KVDB_conv_key_entry_id
+	KVDB_DBObject_create
+	KVDB_DBObject_open
+	KVDB_DBObject_close
+	KVDB_DBObject_insert
+	KVDB_DBObject_delete
+	KVDB_DBObject_get
+	KVDB_PrintKvPair
+	KVDB_DestroyKVPair
+	KVDB_DBObject_get_by_key
+	KVDB_DBObject_delete_by_key

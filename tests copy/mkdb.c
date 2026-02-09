@@ -60,7 +60,7 @@ int main(int argc, char *argv[]) {
     char *line = (char*)line_buf;
     ulong_t line_len = 0;
 
-    DBObject* dbp = (DBObject*)KVDB_DBObject_create(argv[3], DB_ENTRY_CAP);
+    DBObject* dbp = (DBObject*)DBInit(argv[3], DB_ENTRY_CAP);
     if (!dbp) return -1;
 
 #define db (*dbp)
@@ -100,14 +100,14 @@ section_insert_records:
         }
 
         key.type = BLOB;
-        key.len = tok_info_arr[pk_col_idx].tok_len;
+        key.size = tok_info_arr[pk_col_idx].tok_len;
         key.data = line + tok_info_arr[pk_col_idx].tok_off;
 
         if (fp_keys_txt) {
-            fwrite(key.data, 1, key.len, fp_keys_txt);
+            fwrite(key.data, 1, key.size, fp_keys_txt);
             fputc('\n', fp_keys_txt);
         } else {
-            printf("%.*s\n", key.len, key.data);
+            printf("%.*s\n", key.size, key.data);
         }
 
         data_blob_p = (ubyte_t*)data_blob;
@@ -120,11 +120,11 @@ section_insert_records:
             data_blob_p += tok_info_arr[j].tok_len;
         }
 
-        val.len = data_blob_p - (ubyte_t*)data_blob;
+        val.size = data_blob_p - (ubyte_t*)data_blob;
         val.data = (void*)data_blob;
         val.type = BLOB;
 
-        KVDB_DBObject_insert(&db, key, val);
+        InsertEntry(&db, key, val);
 
         free(tok_info_arr); tok_info_arr = NULL;
     }
@@ -136,7 +136,7 @@ section_insert_records:
     if (fp_keys_txt) fclose(fp_keys_txt);
 
     //close_file_hash_table(&db);
-    KVDB_DBObject_close(&db);
+    CloseDB(&db);
 #undef db
     return 0;
 }

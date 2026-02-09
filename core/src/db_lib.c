@@ -1,5 +1,4 @@
 #include "db_lib.h"
-#include "hash_index_lib.h"
 
 #define DB (*dbp)
 #define STACK_MEM_SIZE_MAX 1024u * 1024u
@@ -40,26 +39,24 @@ static inline long get_db_size(DBObject db) {
     return db_size;
 }
 
-// # Below is an FNV hash function
-#define FNV_OFFSET_BASIS    14695981039346656037ULL
-#define FNV_PRIME           1099511628211ULL
-#define hash_str(key) kvdb_hash(key, strlen(key) + 1)
-hash_t kvdb_hash(const unsigned char* key, size_t len) {
-    hash_t hash_val = FNV_OFFSET_BASIS;
-    for (size_t i = 0; i < len; i++) {
-        hash_val ^= key[i]; // XOR hash_val with current key byte
-        hash_val *= FNV_PRIME; // Multiply hash_val with FNV_PRIME
-    }
-    return hash_val;
-}
-#undef HASH_INIT_NUM
-#undef HASH_MUL_NUM
-
-
 int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
 #define db (*dbp)
     hash_t key_hash = fnv_1a_hash(key.data, key.len);
-    int idx = key_hash;
+    int idx = key_hash % db.htObj->ht_cap;
+#define bucket db.htObj->ht[idx].bucket
+    for (size_t i = 0; i < db.htObj->ht[idx].bucket_size; ++i) {
+        if (
+            memcmp(
+                db.key_arr[bucket[i].entry_id].data, key.data, key.len
+            ) == 0 &&
+            db.key_arr[bucket[i].entry_id].len == key.len &&
+            db.key_arr[bucket[i].entry_id].type == key.type
+        ) {
+            return bucket[i].entry_id;
+        }
+    }
+    return -1;
+#undef bucket
 #undef db 
 }
 
@@ -139,7 +136,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
         db.key_arr[i].len = RecHeader.KeySize;
         db.key_arr[i].type = RecHeader.KeyType;
         db.key_arr[i].data = (char*)malloc(RecHeader.KeySize);
-        if (!db.key_arr[i].data) { PRINT_DBG_MSG("(char*)malloc(RecHeader.KeySize) failed\n"); goto KVDB_DBObject_open_failed_cleanup; }
+        if (!db.key_arr[i].data) { PRINT_DBG_MSG("(char*)malloc(RecHeader.KeySize) failed\n"); return -1; }
 
         fread_cnt = fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp);
         if (fread_cnt != 1) {
@@ -147,16 +144,17 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
 
-        print_dbg_msg(
-            "db.key_arr[%u].data='%.*s'\n"
-            "db.key_arr[%u].size=%u\n"
-            "db.key_arr[%u].type=%u\n\n",
-            i, db.key_arr[i].size, (unsigned char*)db.key_arr[i].data,
-            i, db.key_arr[i].size,
-            i, db.key_arr[i].type
+        //print_dbg_msg(\
+            "db.key_arr[%u].data='%.*s'\n"\
+            "db.key_arr[%u].size=%u\n"\
+            "db.key_arr[%u].type=%u\n\n", \
+            i, db.key_arr[i].len, (unsigned char*)db.key_arr[i].data, \
+            i, db.key_arr[i].len, \
+            i, db.key_arr[i].type\
         );
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);
     }
+    return db.Header.EntryCount;
 KVDB_DBObject_open_load_keys_failed_cleanup:
     if (!db.key_arr) return -1;
     for (int i = 0; i < db.Header.EntryCapacity; ++i) {
@@ -200,13 +198,20 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
     }
 
     int ret = KVDB_DBObject_open_load_keys(&db);
-    if (ret < 0) goto KVDB_DBObject_open_failed_cleanup;
+    if (ret < 0) {
+        print_err_msg("KVDB_DBObject_open_load_keys failed\n");
+        goto KVDB_DBObject_open_failed_cleanup;
+    }
 
     db.htObj = HASH_INDEX_LIB_HTObject_create(db.Header.EntryCapacity);
-    if (!db.htObj) goto KVDB_DBObject_open_failed_cleanup;
+    if (!db.htObj) {
+        print_err_msg("HASH_INDEX_LIB_HTObject_create failed\n");
+        goto KVDB_DBObject_open_failed_cleanup;
+    }
     for (ulong_t i = 0; i < db.Header.EntryCount; ++i) {
         ret = HASH_INDEX_LIB_HTObject_insert(db.htObj, db.IndexTable[i].KeyHash, i);
         if (ret < 0) {
+            print_err_msg("HASH_INDEX_LIB_HTObject_insert failed\n");
             HASH_INDEX_LIB_HTObject_destroy(db.htObj);
             goto KVDB_DBObject_open_failed_cleanup;
         }
@@ -223,7 +228,7 @@ KVDB_DBObject_open_failed_cleanup:
 void KVDB_DBObject_close_WriteDBHeader(DBObject* dbp);
 void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp);
 void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp);
-void KVDB_DBObject_close_KVDB_DBObject_close(DBObject* dbp) {
+void KVDB_DBObject_close(DBObject* dbp) {
     if (!dbp) return;
     if (DB.db_modified) {
         KVDB_DBObject_close_WriteDBIndexTable(&DB);
@@ -302,7 +307,7 @@ int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
 
     fwrite((unsigned char*)val.data, 1, (size_t)val.len, (FILE*)DB.fp);
 
-    DB.IndexTable[i].KeyHash = kvdb_hash(key.data, key.len);
+    DB.IndexTable[i].KeyHash = fnv_1a_hash(key.data, key.len);
     DB.IndexTable[i].EntryID = i;
     DB.IndexTable[i].Flags |= FLAG_VALID;
     DB.IndexTable[i].Offset = DB.OffsetPtr;

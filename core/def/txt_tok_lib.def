@@ -1,0 +1,7 @@
+LIBRARY txt_tok_lib
+EXPORTS
+	CntTok
+	MarkTokPosMeta
+	CpyTokSrc
+	lstrip
+	rstrip

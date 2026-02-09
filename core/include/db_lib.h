@@ -103,27 +103,15 @@ static inline void PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
 }
 
 
-DBObject* DBInit(const char* filepath, uint32_t MaxEntryCount);
-DBObject* DBOpen(const char* filepath);
-//void WriteDBHeader(DBObject* dbp);
-void CloseDB(DBObject* dbp);
-int InsertEntry(DBObject* dbp, Key key, Val val);
-//void ReadDBEntry(DBObject* dbp, uint32_t EntryID);
-int DeleteEntry(DBObject* dbp, uint32_t EntryID);
-int db_key_to_id(DBObject* dbp, Key key, uint32_t* id);
-//KVPair *ReadDBEntry_legacy(DBObject* dbp, uint32_t EntryID);
-KVPair *ReadDBEntryKey(DBObject* dbp, Key key);
-void DestroyKVPair(KVPair *kv);
-void DeleteDBEntryKey(DBObject* dbp, Key key);
-
-int open_file_hash_table(DBObject* dbp, const char* filepath);
-int init_file_hash_table(DBObject* dbp, const char* filepath);
-void close_file_hash_table(DBObject* dbp);
-
-
-hash_t kvdb_hash(const unsigned char* key, size_t len);
-
-KVPair *ReadDBEntry(DBObject* dbp, uint32_t EntryID);
-void PrintKvPair(KVPair *kv);
-
+int KVDB_conv_key_entry_id(DBObject* dbp, Key key);
+DBObject* KVDB_DBObject_create(const char* filepath, int EntryCapacity);
+DBObject* KVDB_DBObject_open(const char* filepath);
+void KVDB_DBObject_close(DBObject* dbp);
+int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val);
+int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID);
+KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID);
+void KVDB_PrintKvPair(KVPair *kv);
+void KVDB_DestroyKVPair(KVPair *kv);
+KVPair* KVDB_DBObject_get_by_key(DBObject* dbp, Key key);
+int KVDB_DBObject_delete_by_key(DBObject* dbp, Key key);
 #endif

@@ -3,7 +3,7 @@
 #define DB_UTILS_H
 
 #include "global.h"
-#include "hash_table_lib.h"
+#include "hash_index_lib.h"
 
 
 #define MAX_KEY_SIZE            256
@@ -91,21 +91,15 @@ struct DBEOFHeader {
     ubyte_t     EOFMagic[MAGIC_SIZE];
 };
 #pragma pack(pop)
-struct KV {
-    size32_t    size;
-    uint32_t    type;
-    ptr_t       data;
-};
-typedef struct { Key key; Val val; } KVPair;
-
-typedef struct _tlv_obj     TLVDataObject;
-typedef struct _key_tbl_obj KeyTableObject;
-
 struct _tlv_obj {
     size32_t    len;
     ulong_t     type;
     void       *data;
 };
+typedef struct { Key key; Val val; } KVPair;
+
+typedef struct _tlv_obj     TLVDataObject;
+typedef struct _key_tbl_obj KeyTableObject;
 
 struct DBObject {
     FILE           *fp;
