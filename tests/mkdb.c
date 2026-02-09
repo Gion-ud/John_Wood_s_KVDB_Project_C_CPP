@@ -50,7 +50,6 @@ int main(int argc, char *argv[]) {
     int col_cnt = count_csv_cols(fpcsv);
 
     int pk_col_idx = atoi(argv[2]);
-    printerrf("%d\n", pk_col_idx);
     if (pk_col_idx < 0 || pk_col_idx > col_cnt - 1) {
         print_err_msg("primary key col idx out of bound\n");
         fclose(fpcsv);
@@ -70,6 +69,22 @@ int main(int argc, char *argv[]) {
 
     rewind(fpcsv);
 
+    size_t db_filename_len = strlen(argv[3]);
+    char *filename_keys = (char*)malloc(db_filename_len + 16);
+    if (!filename_keys) {
+        printerrf("malloc failed\n");
+        goto section_insert_records;
+    }
+    memcpy(filename_keys, argv[3], db_filename_len);
+    memcpy(filename_keys + db_filename_len, "_keys.txt", 10);
+
+    FILE *fp_keys_txt = fopen(filename_keys, "wb");
+    if (!fp_keys_txt) {
+        perror("fopen failed");
+        goto section_insert_records;
+    }
+
+section_insert_records:
     ubyte_t data_blob[BUFFER_SIZE] = {0};
     ubyte_t *data_blob_p = (ubyte_t*)data_blob;
     for (int i = 0; i < row_cnt; ++i) {
@@ -84,12 +99,16 @@ int main(int argc, char *argv[]) {
             break;
         }
 
-
         key.type = BLOB;
         key.size = tok_info_arr[pk_col_idx].tok_len;
         key.data = line + tok_info_arr[pk_col_idx].tok_off;
 
-        printerrf("%.*s\n", key.size, key.data);
+        if (fp_keys_txt) {
+            fwrite(key.data, 1, key.size, fp_keys_txt);
+            fputc('\n', fp_keys_txt);
+        } else {
+            printf("%.*s\n", key.size, key.data);
+        }
 
         data_blob_p = (ubyte_t*)data_blob;
 
@@ -114,6 +133,7 @@ int main(int argc, char *argv[]) {
     //WriteDBHeader(&db);
 
     fclose(fpcsv);
+    if (fp_keys_txt) fclose(fp_keys_txt);
 
     //close_file_hash_table(&db);
     CloseDB(&db);

@@ -70,7 +70,5 @@ int KEY_TABLE_KeyTableObject_get_entry_id(KeyTableObject *k_tbl_obj, HTObject *h
 };
 
 int KEY_TABLE_KeyTableObject_delete(KeyTableObject *k_tbl_obj, HTObject *ht_obj, const TLVDataObject *key) {
-    hash_t key_hash = hash(key->data, key->len);
-    int idx = key_hash % ht_obj->ht_cap;
 
 };

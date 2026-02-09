@@ -6,6 +6,13 @@
 #define LINE_SIZE   64
 #define KEY_LEN     36
 
+static inline size_t strip_line_crlf(char *line) {
+    size_t line_len = strlen(line);
+    if (line[line_len] == '\n') line[line_len--] = '\0';
+    if (line[line_len] == '\r') line[line_len--] = '\0';
+    return line_len;
+}
+
 int main(int argc, char *argv[]) {
     FILE *fp = fopen("uuid.txt", "r");
     if (!fp) {
@@ -24,10 +31,8 @@ int main(int argc, char *argv[]) {
 {
     int i = 0;
     while (fgets(line, LINE_SIZE, fp)) {
-        line_len = strlen(line);
-        if (line[line_len] == '\n') line[line_len--] = '\0';
-        if (line[line_len] == '\r') line[line_len--] = '\0';
-        memcpy(key[i++], line, KEY_LEN);
+        size_t line_len = strip_line_crlf(line);
+        memcpy((char*)key[i++], line, KEY_LEN);
     }
 }
     for (int i = 0; i < key_cnt; ++i) {
@@ -64,6 +69,7 @@ int main(int argc, char *argv[]) {
 
     HASH_INDEX_LIB_HTObject_destroy(ht_obj);
     KEY_TABLE_KeyTableObject_destroy(kt_obj);
+
     free(key);
     fclose(fp);
     return 0;

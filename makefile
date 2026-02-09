@@ -8,7 +8,7 @@ SHELL := /usr/bin/sh
 
 ifeq ($(OS),Windows_NT)
 	BUILD_DLL_TARGETS = bin/kvdb_lib.dll
-	BUILD_LDYN_EXEC_TARGETS = mkdb_ldll rddb_ldll
+	BUILD_LDYN_EXEC_TARGETS = mkdb_ldll rddb_ldll getdbrec_ldll
 else
 	BUILD_DLL_TARGETS = bin/libkvdb_lib.so
 	BUILD_LDYN_EXEC_TARGETS = mkdb_lso rddb_lso
@@ -99,6 +99,10 @@ mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll | core/include core/src core/lib bin te
 rddb_ldll: tests/rddb.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
 	gcc tests/rddb.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/rddb
 
+getdbrec_ldll: tests/getdbrec.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
+	gcc tests/getdbrec.c -O2 -s -I./core/include -L./core/lib -lkvdb_lib -o bin/get-db-rec
+
+
 mkdb_lso: tests/mkdb.c bin/libkvdb_lib.so core/src/txt_tok_lib.c | core/include core/src bin tests
 	gcc tests/mkdb.c -O2 -I./core/include core/src/txt_tok_lib.c -s -Lbin -lkvdb_lib -Wl,-rpath=./bin -o bin/mkdb
 # -g -fsanitize=address
@@ -118,11 +122,11 @@ cpp-main-linux: core/src/main.cpp core/src/kvdb_lib.cpp bin/libkvdb_lib.so
 	./bin/main
 
 
-new-db: | bin res
+new-db: | bin res database
 #	gcc tests/mkdb.c -O2 -s -Llib -lkvdb_lib -o bin/mkdb
-	./bin/mkdb res/Pokemon.csv database/table0001.db
+	./bin/mkdb res/Pokemon.csv 1 database/table0001.db
 
-read-db: | bin res
+read-db: | bin database
 #	gcc core/src/read.c -O2 -s -Llib -lkvdb_lib -o bin/read
 	./bin/rddb database/table0001.db logs/table0001.db.dump.txt
 
