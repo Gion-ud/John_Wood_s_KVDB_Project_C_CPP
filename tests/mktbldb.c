@@ -32,6 +32,14 @@ static inline int count_csv_cols(FILE *fp) {
 }
 
 int main(int argc, char *argv[]) {
+    if (argc == 1) {
+        printf(
+            "Usage: %s <import csv path> <primary key col idx> <export db path> (<dbg file>)\n",
+            argv[0]
+        );
+        return 0;
+    }
+
     if (argc < 4 || argc > 5) {
         printerrf(
             "Error: Invalid argc (argc=%d)\n"

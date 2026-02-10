@@ -2,10 +2,17 @@
 #include "kvdb_lib.h"
 
 int main(int argc, char *argv[]) {
+    if (argc == 1) {
+        printf(
+            "Usage: %s <kvdb filepath> (<db dump filepath>)\n",
+            argv[0]
+        );
+        return 0;
+    }
     if (argc < 2 || argc > 3) {
         printerrf(
             "Error: Invalid argc (argc=%d)\n"
-            "Usage: %s <kvdb filepath>\n",
+            "Usage: %s <kvdb filepath> (<db dump filepath>)\n",
             argc, argv[0]
         );
         return -1;
@@ -16,7 +23,7 @@ int main(int argc, char *argv[]) {
     } else if (argc == 3) {
         of_fp = fopen(argv[2], "w");
         if (!of_fp) {
-            printerrf("fopen(\"%s\", \"w\") failed: %s\n", argv[2], strerror(errno));
+            printerrf("fopen failed: %s\n", strerror(errno));
             printerrf("Using stdout instead\n");
             of_fp = stdout;
         }
