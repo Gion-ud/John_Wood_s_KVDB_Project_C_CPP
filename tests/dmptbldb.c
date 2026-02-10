@@ -1,3 +1,4 @@
+#include "global.h"
 #include "kvdb_lib.h"
 
 int main(int argc, char *argv[]) {
@@ -20,26 +21,26 @@ int main(int argc, char *argv[]) {
             of_fp = stdout;
         }
     }
-    DBObject* dbp = (DBObject*)DBOpen(argv[1]);
+    DBObject* dbp = (DBObject*)KVDB_DBObject_open(argv[1]);
     if (!dbp) return 1;
 #define db (*dbp)
     PrintDBFileHeader(of_fp, &db);
-    for (int i = 0; i < dbp->Header.EntryCount; i++) {
-        KVPair *kv = ReadDBEntry(&db, i);
+    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
+        KVPair *kv = KVDB_DBObject_get(&db, i);
         if (!kv) continue;
         PrintIndexEntry(of_fp, dbp, i);
-        DestroyKVPair(kv);
+        KVDB_DestroyKVPair(kv);
     }
 
     uint_t val_len = 0;
     uint_t col_len = 0;
     ubyte_t *val_data_p = NULL;
-    for (int i = 0; i < dbp->Header.EntryCount; i++) { 
-        KVPair *kv = ReadDBEntry(&db, i);
+    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) { 
+        KVPair *kv = KVDB_DBObject_get(&db, i);
         if (!kv) continue;
         PrintRecordHeader(of_fp, dbp, i);
-        fprintf(of_fp, "\nkey=\'%.*s\'\n", (int)kv->key.size, (char*)kv->key.data); // keys are literal integers
-        val_len = kv->val.size;
+        fprintf(of_fp, "\nkey=\'%.*s\'\n", (int)kv->key.len, (char*)kv->key.data); // keys are literal integers
+        val_len = kv->val.len;
         val_data_p = (ubyte_t*)kv->val.data;
 
         fprintf(of_fp, "val row%.4d:\n\tlen  data\n", i);
@@ -52,9 +53,9 @@ int main(int argc, char *argv[]) {
             val_len -= col_len;
         }
         fputc('\n', of_fp);
-        DestroyKVPair(kv);
+        KVDB_DestroyKVPair(kv);
     }
-    CloseDB(&db);
+    KVDB_DBObject_close(&db);
     if (argc == 3) fclose(of_fp);
 #undef db
     return 0;

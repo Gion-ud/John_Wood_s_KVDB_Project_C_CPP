@@ -10,7 +10,7 @@ char* conv_bytes_hex(const unsigned char* bytes, size_t size) {
     buffer[0] = '\0';
     char ByteHex[8];
     int len;
-    for (int i = 0; i < size; i++) {
+    for (size_t i = 0; i < size; i++) {
         sprintf(ByteHex, "0x%02X", (unsigned char)bytes[i]);
         if ((i + 1) % 16 != 0 && i < size - 1) {
             // 16 bytes in a row

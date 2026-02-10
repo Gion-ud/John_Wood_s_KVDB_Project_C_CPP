@@ -17,7 +17,7 @@ HTObject *HASH_INDEX_LIB_HTObject_create(int ht_cap) {
         goto NewHashTableObject_failed_cleanup;
     }
 
-    for (size_t i = 0; i < ht_cap; ++i) {
+    for (int i = 0; i < ht_cap; ++i) {
         ht_obj->ht[i].bucket_cap = INIT_BUCKET_CAP;
         ht_obj->ht[i].bucket_size = 0;
         ht_obj->ht[i].bucket = (HashTableEntry*)calloc(INIT_BUCKET_CAP, sizeof(HashTableEntry));
@@ -54,17 +54,25 @@ HTObject* HASH_INDEX_LIB_HTObject_resize(HTObject *ht_obj, int new_cap) {
     if (!ht_obj) return NULL;
     HTObject *ht_obj_new = HASH_INDEX_LIB_HTObject_create(new_cap);
     if (!ht_obj_new) return NULL;
+    int idx = -1;
     for (size_t i = 0; i < ht_obj->ht_cap; ++i) {
         if (!ht_obj->ht[i].bucket) continue;
-        for (size_t j = 0; j < ht_obj->ht[i].bucket_size; j++)
-        if (ht_obj->ht[i].bucket[j].state == HT_ENTRY_INUSE) {
-            HASH_INDEX_LIB_HTObject_insert(
-                ht_obj_new,
-                ht_obj->ht[i].bucket[j].key_hash,
-                ht_obj->ht[i].bucket[j].entry_id
-            );
+        for (size_t j = 0; j < ht_obj->ht[i].bucket_size; j++) {
+            if (ht_obj->ht[i].bucket[j].state == HT_ENTRY_INUSE) {
+                idx = HASH_INDEX_LIB_HTObject_insert(
+                    ht_obj_new,
+                    ht_obj->ht[i].bucket[j].key_hash,
+                    ht_obj->ht[i].bucket[j].entry_id
+                );
+                if (idx < 0) {
+                    print_err_msg(
+                        "HASH_INDEX_LIB_HTObject_insert: failed to insert entry [%zu, %zu]\n",
+                        i, j
+                    );
+                    continue;
+                };
+            }
         }
-
     }
     HASH_INDEX_LIB_HTObject_destroy(ht_obj);
     return ht_obj_new;
@@ -116,16 +124,16 @@ int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t en
 
     for (size_t i = 0; i < ht_obj->ht[h_idx].bucket_size; ++i) {
         if (
-            ht_obj->ht[h_idx].bucket[i].entry_id == entry_id
+            ht_obj->ht[h_idx].bucket[i].entry_id == (int)entry_id
         ) {
             ht_obj->ht[h_idx].bucket[i].entry_id = -1;
             ht_obj->ht[h_idx].bucket[i].key_hash = 0;
             ht_obj->ht[h_idx].bucket[i].state = (ubyte_t)HT_ENTRY_DELETED;
+            --ht_obj->ht_entry_cnt;
+            ++ht_obj->ht_del_cnt;
             return h_idx;
         }
     }
-    --ht_obj->ht_entry_cnt;
-    ++ht_obj->ht_del_cnt;
 
     return -1;
 }

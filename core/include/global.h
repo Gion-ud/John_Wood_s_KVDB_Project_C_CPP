@@ -74,8 +74,7 @@ typedef ulonglong_t         off64_t;
 
 typedef void*           ptr_t;
 #define PRIptr          ".16llx"
-//\
-typedef unsigned long long  ptr_t;
+// typedef unsigned long long  ptr_t;
 typedef unsigned int        uint_t;
 typedef unsigned char       flag_t;
 typedef unsigned long long  ull_t;

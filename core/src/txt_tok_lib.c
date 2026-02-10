@@ -61,7 +61,6 @@ ulong_t lstrip(char **pLine, ulong_t len) {
 
 ulong_t rstrip(char *const *pLine, ulong_t len) {
 #define line (*pLine)
-    char *line_ptr = line;
     while (len > 0) {
         if (!isspace(line[len - 1])) break;
         line[(len--) - 1] = '\0';

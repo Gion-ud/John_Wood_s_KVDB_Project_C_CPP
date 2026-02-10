@@ -78,10 +78,11 @@ int main(int argc, char *argv[]) {
     memcpy(filename_keys, argv[3], db_filename_len);
     memcpy(filename_keys + db_filename_len, "_keys.txt", 10);
 
-    FILE *fp_keys_txt = fopen(filename_keys, "wb");
+    FILE *fp_keys_txt = NULL;
+    fp_keys_txt = fopen(filename_keys, "wb");
     if (!fp_keys_txt) {
-        perror("fopen failed");
-        goto section_insert_records;
+        print_err_msg("fopen failed: %s\nusing stdout instead\n", strerror(errno));
+        fp_keys_txt = stdout;
     }
 
 section_insert_records:
@@ -103,12 +104,8 @@ section_insert_records:
         key.len = tok_info_arr[pk_col_idx].tok_len;
         key.data = line + tok_info_arr[pk_col_idx].tok_off;
 
-        if (fp_keys_txt) {
-            fwrite(key.data, 1, key.len, fp_keys_txt);
-            fputc('\n', fp_keys_txt);
-        } else {
-            printf("%.*s\n", key.len, key.data);
-        }
+        fwrite(key.data, 1, key.len, fp_keys_txt);
+        fputc('\n', fp_keys_txt);
 
         data_blob_p = (ubyte_t*)data_blob;
 
@@ -130,10 +127,21 @@ section_insert_records:
     }
     //PrintIndexTable(stdout, dbp);
 
+    /*
+    KVDB_DBObject_delete(&db, 1);
+    KVDB_DBObject_delete(&db, 10);
+    KVDB_DBObject_delete(&db, 11);
+    KVDB_DBObject_delete(&db, 63);
+    KVDB_DBObject_delete(&db, 189);
+    KVDB_DBObject_delete(&db, 32);
+    KVDB_DBObject_delete(&db, 12000);
+    */
+
+
     //WriteDBHeader(&db);
 
     fclose(fpcsv);
-    if (fp_keys_txt) fclose(fp_keys_txt);
+    if (fp_keys_txt && fp_keys_txt != stdout) fclose(fp_keys_txt);
 
     //close_file_hash_table(&db);
     KVDB_DBObject_close(&db);

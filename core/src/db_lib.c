@@ -6,17 +6,15 @@
 static const ubyte_t DBFileMagic[MAGIC_SIZE] = { 'K', 'V', 'D', 'B', '\r', '\n', ' ', '\0' };
 static const ubyte_t DBEOFMagic[MAGIC_SIZE] = { '\n', '.', 'D', 'B', 'E', 'O', 'F', '\0' };
 
-static const ubyte_t pad_arr[8] = {0};
 
-// # Below are helper functions
+// to be removed
 static inline int find_str_nul(char* buffer, size_t buf_size) {
-//  This function checks if a string is NUL terminated;
     for (size_t i = 0; i < buf_size; i++) {
         if (buffer[i] == '\0') {
-            return i; // returns idx of '\0'(effectively strlen) when NUL is read 
+            return i;
         }
     }
-    return -1; // NUL not found within buf_size
+    return -1;
 }
 
 static inline uint64_t GetDataEntrySize(uint32_t KeySize, uint64_t ValSize) {
@@ -111,7 +109,8 @@ DBObject* KVDB_DBObject_create(const char* filepath, int EntryCapacity) {
     db.OffsetPtr = db.Header.DataSectionOffset;
     return dbp;
 KVDB_DBObject_create_failed_cleanup:
-    if (dbp) KVDB_DBObject_close(&db); return NULL;
+    if (dbp) KVDB_DBObject_close(&db);
+    return NULL;
 #undef db
 }
 
@@ -136,15 +135,15 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
         db.key_arr[i].len = RecHeader.KeySize;
         db.key_arr[i].type = RecHeader.KeyType;
         db.key_arr[i].data = (char*)malloc(RecHeader.KeySize);
-        if (!db.key_arr[i].data) { PRINT_DBG_MSG("(char*)malloc(RecHeader.KeySize) failed\n"); return -1; }
+        if (!db.key_arr[i].data) { print_err_msg("(char*)malloc(RecHeader.KeySize) failed\n"); return -1; }
 
         fread_cnt = fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp);
         if (fread_cnt != 1) {
             print_err_msg("fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp) != 1\n");
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
-
-        //print_dbg_msg(\
+/*
+        print_dbg_msg(\
             "db.key_arr[%u].data='%.*s'\n"\
             "db.key_arr[%u].size=%u\n"\
             "db.key_arr[%u].type=%u\n\n", \
@@ -152,12 +151,14 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             i, db.key_arr[i].len, \
             i, db.key_arr[i].type\
         );
+*/
+
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);
     }
     return db.Header.EntryCount;
 KVDB_DBObject_open_load_keys_failed_cleanup:
     if (!db.key_arr) return -1;
-    for (int i = 0; i < db.Header.EntryCapacity; ++i) {
+    for (ulong_t i = 0; i < db.Header.EntryCapacity; ++i) {
         if (db.key_arr[i].data) free(db.key_arr[i].data);
     }
     free(db.key_arr); db.key_arr = NULL; return -1;
@@ -189,7 +190,7 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
     db.IndexTable = (DBIndexEntry*)calloc(db.Header.EntryCapacity, INDEX_ENTRY_SIZE);
     if (!db.IndexTable) { perror("(DBIndexEntry*)calloc(EntryCapacity * INDEX_ENTRY_SIZE)"); goto KVDB_DBObject_open_failed_cleanup; }
     fseek(db.fp, db.Header.IndexTableOffset, SEEK_SET);
-    for (int i = 0; i < db.Header.EntryCount; i++) {
+    for (ulong_t i = 0; i < db.Header.EntryCount; i++) {
         fread_cnt = fread(&db.IndexTable[i], INDEX_ENTRY_SIZE, 1, db.fp);
         if (fread_cnt != 1) {
             print_err_msg("fread(&db.IndexTable[i], INDEX_ENTRY_SIZE, 1, db.fp) != 1\n");
@@ -221,7 +222,8 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
 
     return dbp;
 KVDB_DBObject_open_failed_cleanup:
-    if (dbp) KVDB_DBObject_close(&db); return NULL;
+    if (dbp) KVDB_DBObject_close(&db);
+    return NULL;
 #undef db
 }
 
@@ -258,14 +260,12 @@ void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp) {
     fwrite(&DBEOFMagic, sizeof(DBEOFHeader), 1, DB.fp);
 }
 void KVDB_DBObject_close_WriteDBHeader(DBObject* dbp) {
-    PRINT_DBG_MSG("WriteDBHeader(%p);\n", (void*)dbp);
     fseek(db.fp, 0, SEEK_SET);
     db.Header.LastModified = (qword_t)time(NULL);
     fwrite(&db.Header, HEADER_SIZE, 1, db.fp);
 }
 
 void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp) {
-    PRINT_DBG_MSG("WriteDBIndexTable(%p);\n", (void*)dbp);
     fseek(DB.fp, DB.Header.IndexTableOffset, SEEK_SET);
     for (ulong_t i = 0; i < DB.Header.EntryCount; i++) {
         fwrite(&DB.IndexTable[i], INDEX_ENTRY_SIZE, 1, DB.fp);
@@ -322,7 +322,6 @@ int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
 }
 
 int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID) {
-    PRINT_DBG_MSG("DeleteEntry(%p, %u);\n", (void*)dbp, EntryID);
     if (EntryID >= DB.Header.EntryCount) {
         print_err_msg("Error: Invalid EntryID\n");
         return -1;
@@ -390,12 +389,12 @@ KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
 
     fread_cnt = fread(key, RecordHeader.KeySize, 1, DB.fp);
     if (fread_cnt != 1) {
-        print_dbg_msg("fread(key, RecordHeader.KeySize, 1, DB.fp) != 1\n");
+        print_err_msg("fread(key, RecordHeader.KeySize, 1, DB.fp) != 1\n");
         goto KVDB_DBObject_get_failed_cleanup;
     }
     fread_cnt = fread(val, RecordHeader.ValSize, 1, DB.fp);
     if (fread_cnt != 1) {
-        print_dbg_msg("fread(val, RecordHeader.ValSize, 1, DB.fp) != 1\n");
+        print_err_msg("fread(val, RecordHeader.ValSize, 1, DB.fp) != 1\n");
         goto KVDB_DBObject_get_failed_cleanup;
     }
 
@@ -456,7 +455,7 @@ void KVDB_DestroyKVPair(KVPair *kv) {
 
 
 KVPair* KVDB_DBObject_get_by_key(DBObject* dbp, Key key) {
-    uint32_t id = KVDB_conv_key_entry_id(&DB, key);
+    int id = KVDB_conv_key_entry_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error
         return NULL;
@@ -465,7 +464,7 @@ KVPair* KVDB_DBObject_get_by_key(DBObject* dbp, Key key) {
     return kv;
 }
 int KVDB_DBObject_delete_by_key(DBObject* dbp, Key key) {
-    uint32_t id = KVDB_conv_key_entry_id(&DB, key);
+    int id = KVDB_conv_key_entry_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error
         return -1;

@@ -73,7 +73,7 @@ static inline void PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
 static inline void PrintIndexTable(FILE* fp, DBObject* dbp) {
     fputs("[IndexTable]\n", fp);
     //fseek(db.fp, db.Header.HeaderSize, SEEK_SET);
-    for (int i = 0; i < dbp->Header.EntryCount; i++) {
+    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
         //fread(&db.IndexTable[i], INDEX_ENTRY_SIZE, 1, db.fp);
         PrintIndexEntry(fp, dbp, i);
     };

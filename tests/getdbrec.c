@@ -22,26 +22,26 @@ int main(int argc, char *argv[]) {
     } else if (argc == 4) {
         of_fp = fopen(argv[3], "w");
         if (!of_fp) {
-            printerrf("fopen(\"%s\", \"w\") failed: %s\n", argv[2], strerror(errno));
+            printerrf("fopen failed: %s\n", strerror(errno));
             printerrf("Using stdout instead\n");
             of_fp = stdout;
         }
     }
-    DBObject* dbp = (DBObject*)DBOpen(argv[2]);
+    DBObject* dbp = (DBObject*)KVDB_DBObject_open(argv[2]);
     if (!dbp) return 1;
 #define db (*dbp)
     Key k = { strlen(argv[1]), BLOB, NULL };
-    k.data = (char*)malloc(k.size);
+    k.data = (char*)malloc(k.len);
     if (!k.data) {
         print_err_msg("malloc failed\n");
         goto cleanup;
     }
-    memcpy(k.data, argv[1], k.size);
+    memcpy(k.data, argv[1], k.len);
 
 
-    KVPair *kv = ReadDBEntry(&db, 0);
+    KVPair *kv = KVDB_DBObject_get(&db, 0);
     if (!kv) goto cleanup;
-    ulong_t val_len = kv->val.size;
+    ulong_t val_len = kv->val.len;
     ulong_t col_len;
     ubyte_t *val_data_p = (ubyte_t*)kv->val.data;
     int i = 0;
@@ -57,9 +57,9 @@ int main(int argc, char *argv[]) {
     fputc('\n', of_fp);
     free(kv);
 
-    kv = ReadDBEntryKey(&db, k);
+    kv = KVDB_DBObject_get_by_key(&db, k);
     if (!kv) goto cleanup;
-    val_len = kv->val.size;
+    val_len = kv->val.len;
     val_data_p = (ubyte_t*)kv->val.data;
 
     fprintf(of_fp, "record:\n%8s %4s %4s\n", "col_id", "len", "data");
@@ -73,10 +73,10 @@ int main(int argc, char *argv[]) {
         val_len -= col_len;
     }
     fputc('\n', of_fp);
-    //fwrite((char*)kv->val.data, kv->val.size, 1, of_fp);
+    //fwrite((char*)kv->val.data, kv->val.len, 1, of_fp);
     free(kv);
 cleanup:
-    CloseDB(&db);
+    KVDB_DBObject_close(&db);
     if (argc == 3) fclose(of_fp);
 #undef db
     return 0;
