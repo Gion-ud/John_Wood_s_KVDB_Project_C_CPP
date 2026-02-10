@@ -1,1250 +1,1250 @@
-Name
-Bulbasaur
-Ivysaur
-Venusaur
-Venusaur (Mega Venusaur)
-Venusaur (Gigantamax Venusaur)
-Charmander
-Charmeleon
-Charizard
-Charizard (Mega Charizard X)
-Charizard (Mega Charizard Y)
-Charizard (Gigantamax Charizard)
-Squirtle
-Wartortle
-Blastoise
-Blastoise (Mega Blastoise)
-Blastoise (Gigantamax Blastoise)
-Caterpie
-Metapod
-Butterfree
-Butterfree (Gigantamax Butterfree)
-Weedle
-Kakuna
-Beedrill
-Beedrill (Mega Beedrill)
-Pidgey
-Pidgeotto
-Pidgeot
-Pidgeot (Mega Pidgeot)
-Rattata
-Rattata (Alolan Rattata)
-Raticate
-Raticate (Alolan Raticate)
-Spearow
-Fearow
-Ekans
-Arbok
-Pikachu
-Pikachu (Partner Pikachu)
-Pikachu (Gigantamax Pikachu)
-Raichu
-Raichu (Alolan Raichu)
-Sandshrew
-Sandshrew (Alolan Sandshrew)
-Sandslash
-Sandslash (Alolan Sandslash)
-Nidoran ♀
-Nidorina
-Nidoqueen
-Nidoran ♂
-Nidorino
-Nidoking
-Clefairy
-Clefable
-Vulpix
-Vulpix (Alolan Vulpix)
-Ninetales
-Ninetales (Alolan Ninetales)
-Jigglypuff
-Wigglytuff
-Zubat
-Golbat
-Oddish
-Gloom
-Vileplume
-Paras
-Parasect
-Venonat
-Venomoth
-Diglett
-Diglett (Alolan Diglett)
-Dugtrio
-Dugtrio (Alolan Dugtrio)
-Meowth
-Meowth (Alolan Meowth)
-Meowth (Galarian Meowth)
-Meowth (Gigantamax Meowth)
-Persian
-Persian (Alolan Persian)
-Psyduck
-Golduck
-Mankey
-Primeape
-Growlithe
-Growlithe (Hisuian Growlithe)
-Arcanine
-Arcanine (Hisuian Arcanine)
-Poliwag
-Poliwhirl
-Poliwrath
-Abra
-Kadabra
-Alakazam
-Alakazam (Mega Alakazam)
-Machop
-Machoke
-Machamp
-Machamp (Gigantamax Machamp)
-Bellsprout
-Weepinbell
-Victreebel
-Tentacool
-Tentacruel
-Geodude
-Geodude (Alolan Geodude)
-Graveler
-Graveler (Alolan Graveler)
-Golem
-Golem (Alolan Golem)
-Ponyta
-Ponyta (Galarian Ponyta)
-Rapidash
-Rapidash (Galarian Rapidash)
-Slowpoke
-Slowpoke (Galarian Slowpoke)
-Slowbro
-Slowbro (Mega Slowbro)
-Slowbro (Galarian Slowbro)
-Magnemite
-Magneton
-Farfetch'd
-Farfetch'd (Galarian Farfetch'd)
-Doduo
-Dodrio
-Seel
-Dewgong
-Grimer
-Grimer (Alolan Grimer)
-Muk
-Muk (Alolan Muk)
-Shellder
-Cloyster
-Gastly
-Haunter
-Gengar
-Gengar (Mega Gengar)
-Gengar (Gigantamax Gengar)
-Onix
-Drowzee
-Hypno
-Krabby
-Kingler
-Kingler (Gigantamax Kingler)
-Voltorb
-Voltorb (Hisuian Voltorb)
-Electrode
-Electrode (Hisuian Electrode)
-Exeggcute
-Exeggutor
-Exeggutor (Alolan Exeggutor)
-Cubone
-Marowak
-Marowak (Alolan Marowak)
-Hitmonlee
-Hitmonchan
-Lickitung
-Koffing
-Weezing
-Weezing (Galarian Weezing)
-Rhyhorn
-Rhydon
-Chansey
-Tangela
-Kangaskhan
-Kangaskhan (Mega Kangaskhan)
-Horsea
-Seadra
-Goldeen
-Seaking
-Staryu
-Starmie
-Mr. Mime
-Mr. Mime (Galarian Mr. Mime)
-Scyther
-Jynx
-Electabuzz
-Magmar
-Pinsir
-Pinsir (Mega Pinsir)
-Tauros
-Tauros (Combat Breed)
-Tauros (Blaze Breed)
-Tauros (Aqua Breed)
-Magikarp
-Gyarados
-Gyarados (Mega Gyarados)
-Lapras
-Lapras (Gigantamax Lapras)
-Ditto
-Eevee
-Eevee (Partner Eevee)
-Eevee (Gigantamax Eevee)
-Vaporeon
-Jolteon
-Flareon
-Porygon
-Omanyte
-Omastar
-Kabuto
-Kabutops
-Aerodactyl
-Aerodactyl (Mega Aerodactyl)
-Snorlax
-Snorlax (Gigantamax Snorlax)
-Articuno
-Articuno (Galarian Articuno)
-Zapdos
-Zapdos (Galarian Zapdos)
-Moltres
-Moltres (Galarian Moltres)
-Dratini
-Dragonair
-Dragonite
-Mewtwo
-Mewtwo (Mega Mewtwo X)
-Mewtwo (Mega Mewtwo Y)
-Mew
-Chikorita
-Bayleef
-Meganium
-Cyndaquil
-Quilava
-Typhlosion
-Typhlosion (Hisuian Typhlosion)
-Totodile
-Croconaw
-Feraligatr
-Sentret
-Furret
-Hoothoot
-Noctowl
-Ledyba
-Ledian
-Spinarak
-Ariados
-Crobat
-Chinchou
-Lanturn
-Pichu
-Cleffa
-Igglybuff
-Togepi
-Togetic
-Natu
-Xatu
-Mareep
-Flaaffy
-Ampharos
-Ampharos (Mega Ampharos)
-Bellossom
-Marill
-Azumarill
-Sudowoodo
-Politoed
-Hoppip
-Skiploom
-Jumpluff
-Aipom
-Sunkern
-Sunflora
-Yanma
-Wooper
-Wooper (Paldean Wooper)
-Quagsire
-Espeon
-Umbreon
-Murkrow
-Slowking
-Slowking (Galarian Slowking)
-Misdreavus
-Unown
-Wobbuffet
-Girafarig
-Pineco
-Forretress
-Dunsparce
-Gligar
-Steelix
-Steelix (Mega Steelix)
-Snubbull
-Granbull
-Qwilfish
-Qwilfish (Hisuian Qwilfish)
-Scizor
-Scizor (Mega Scizor)
-Shuckle
-Heracross
-Heracross (Mega Heracross)
-Sneasel
-Sneasel (Hisuian Sneasel)
-Teddiursa
-Ursaring
-Slugma
-Magcargo
-Swinub
-Piloswine
-Corsola
-Corsola (Galarian Corsola)
-Remoraid
-Octillery
-Delibird
-Mantine
-Skarmory
-Houndour
-Houndoom
-Houndoom (Mega Houndoom)
-Kingdra
-Phanpy
-Donphan
-Porygon2
-Stantler
-Smeargle
-Tyrogue
-Hitmontop
-Smoochum
-Elekid
-Magby
-Miltank
-Blissey
-Raikou
-Entei
-Suicune
-Larvitar
-Pupitar
-Tyranitar
-Tyranitar (Mega Tyranitar)
-Lugia
-Ho-oh
-Celebi
-Treecko
-Grovyle
-Sceptile
-Sceptile (Mega Sceptile)
-Torchic
-Combusken
-Blaziken
-Blaziken (Mega Blaziken)
-Mudkip
-Marshtomp
-Swampert
-Swampert (Mega Swampert)
-Poochyena
-Mightyena
-Zigzagoon
-Zigzagoon (Galarian Zigzagoon)
-Linoone
-Linoone (Galarian Linoone)
-Wurmple
-Silcoon
-Beautifly
-Cascoon
-Dustox
-Lotad
-Lombre
-Ludicolo
-Seedot
-Nuzleaf
-Shiftry
-Taillow
-Swellow
-Wingull
-Pelipper
-Ralts
-Kirlia
-Gardevoir
-Gardevoir (Mega Gardevoir)
-Surskit
-Masquerain
-Shroomish
-Breloom
-Slakoth
-Vigoroth
-Slaking
-Nincada
-Ninjask
-Shedinja
-Whismur
-Loudred
-Exploud
-Makuhita
-Hariyama
-Azurill
-Nosepass
-Skitty
-Delcatty
-Sableye
-Sableye (Mega Sableye)
-Mawile
-Mawile (Mega Mawile)
-Aron
-Lairon
-Aggron
-Aggron (Mega Aggron)
-Meditite
-Medicham
-Medicham (Mega Medicham)
-Electrike
-Manectric
-Manectric (Mega Manectric)
-Plusle
-Minun
-Volbeat
-Illumise
-Roselia
-Gulpin
-Swalot
-Carvanha
-Sharpedo
-Sharpedo (Mega Sharpedo)
-Wailmer
-Wailord
-Numel
-Camerupt
-Camerupt (Mega Camerupt)
-Torkoal
-Spoink
-Grumpig
-Spinda
-Trapinch
-Vibrava
-Flygon
-Cacnea
-Cacturne
-Swablu
-Altaria
-Altaria (Mega Altaria)
-Zangoose
-Seviper
-Lunatone
-Solrock
-Barboach
-Whiscash
-Corphish
-Crawdaunt
-Baltoy
-Claydol
-Lileep
-Cradily
-Anorith
-Armaldo
-Feebas
-Milotic
-Castform
-Castform (Sunny Form)
-Castform (Rainy Form)
-Castform (Snowy Form)
-Kecleon
-Shuppet
-Banette
-Banette (Mega Banette)
-Duskull
-Dusclops
-Tropius
-Chimecho
-Absol
-Absol (Mega Absol)
-Wynaut
-Snorunt
-Glalie
-Glalie (Mega Glalie)
-Spheal
-Sealeo
-Walrein
-Clamperl
-Huntail
-Gorebyss
-Relicanth
-Luvdisc
-Bagon
-Shelgon
-Salamence
-Salamence (Mega Salamence)
-Beldum
-Metang
-Metagross
-Metagross (Mega Metagross)
-Regirock
-Regice
-Registeel
-Latias
-Latias (Mega Latias)
-Latios
-Latios (Mega Latios)
-Kyogre
-Kyogre (Primal Kyogre)
-Groudon
-Groudon (Primal Groudon)
-Rayquaza
-Rayquaza (Mega Rayquaza)
-Jirachi
-Deoxys (Normal Forme)
-Deoxys (Attack Forme)
-Deoxys (Defense Forme)
-Deoxys (Speed Forme)
-Turtwig
-Grotle
-Torterra
-Chimchar
-Monferno
-Infernape
-Piplup
-Prinplup
-Empoleon
-Starly
-Staravia
-Staraptor
-Bidoof
-Bibarel
-Kricketot
-Kricketune
-Shinx
-Luxio
-Luxray
-Budew
-Roserade
-Cranidos
-Rampardos
-Shieldon
-Bastiodon
-Burmy (Plant Cloak)
-Burmy (Sandy Cloak)
-Burmy (Trash Cloak)
-Wormadam (Plant Cloak)
-Wormadam (Sandy Cloak)
-Wormadam (Trash Cloak)
-Mothim
-Combee
-Vespiquen
-Pachirisu
-Buizel
-Floatzel
-Cherubi
-Cherrim
-Shellos
-Gastrodon
-Ambipom
-Drifloon
-Drifblim
-Buneary
-Lopunny
-Lopunny (Mega Lopunny)
-Mismagius
-Honchkrow
-Glameow
-Purugly
-Chingling
-Stunky
-Skuntank
-Bronzor
-Bronzong
-Bonsly
-Mime Jr.
-Happiny
-Chatot
-Spiritomb
-Gible
-Gabite
-Garchomp
-Garchomp (Mega Garchomp)
-Munchlax
-Riolu
-Lucario
-Lucario (Mega Lucario)
-Hippopotas
-Hippowdon
-Skorupi
-Drapion
-Croagunk
-Toxicroak
-Carnivine
-Finneon
-Lumineon
-Mantyke
-Snover
-Abomasnow
-Abomasnow (Mega Abomasnow)
-Weavile
-Magnezone
-Lickilicky
-Rhyperior
-Tangrowth
-Electivire
-Magmortar
-Togekiss
-Yanmega
-Leafeon
-Glaceon
-Gliscor
-Mamoswine
-Porygon-Z
-Gallade
-Gallade (Mega Gallade)
-Probopass
-Dusknoir
-Froslass
-Rotom
-Rotom (Heat Rotom)
-Rotom (Wash Rotom)
-Rotom (Frost Rotom)
-Rotom (Fan Rotom)
-Rotom (Mow Rotom)
-Uxie
-Mesprit
-Azelf
-Dialga
-Dialga (Origin Forme)
-Palkia
-Palkia (Origin Forme)
-Heatran
-Regigigas
-Giratina (Altered Forme)
-Giratina (Origin Forme)
-Cresselia
-Phione
-Manaphy
-Darkrai
-Shaymin (Land Forme)
-Shaymin (Sky Forme)
-Arceus
-Victini
-Snivy
-Servine
-Serperior
-Tepig
-Pignite
-Emboar
-Oshawott
-Dewott
-Samurott
-Samurott (Hisuian Samurott)
-Patrat
-Watchog
-Lillipup
-Herdier
-Stoutland
-Purrloin
-Liepard
-Pansage
-Simisage
-Pansear
-Simisear
-Panpour
-Simipour
-Munna
-Musharna
-Pidove
-Tranquill
-Unfezant
-Blitzle
-Zebstrika
-Roggenrola
-Boldore
-Gigalith
-Woobat
-Swoobat
-Drilbur
-Excadrill
-Audino
-Audino (Mega Audino)
-Timburr
-Gurdurr
-Conkeldurr
-Tympole
-Palpitoad
-Seismitoad
-Throh
-Sawk
-Sewaddle
-Swadloon
-Leavanny
-Venipede
-Whirlipede
-Scolipede
-Cottonee
-Whimsicott
-Petilil
-Lilligant
-Lilligant (Hisuian Lilligant)
-Basculin (Red-Striped Form)
-Basculin (Blue-Striped Form)
-Basculin (White-Striped Form)
-Sandile
-Krokorok
-Krookodile
-Darumaka
-Darumaka (Galarian Darumaka)
-Darmanitan (Standard Mode)
-Darmanitan (Zen Mode)
-Darmanitan (Galarian Standard Mode)
-Darmanitan (Galarian Zen Mode)
-Maractus
-Dwebble
-Crustle
-Scraggy
-Scrafty
-Sigilyph
-Yamask
-Yamask (Galarian Yamask)
-Cofagrigus
-Tirtouga
-Carracosta
-Archen
-Archeops
-Trubbish
-Garbodor
-Garbodor (Gigantamax Garbodor)
-Zorua
-Zorua (Hisuian Zorua)
-Zoroark
-Zoroark (Hisuian Zoroark)
-Minccino
-Cinccino
-Gothita
-Gothorita
-Gothitelle
-Solosis
-Duosion
-Reuniclus
-Ducklett
-Swanna
-Vanillite
-Vanillish
-Vanilluxe
-Deerling
-Sawsbuck
-Emolga
-Karrablast
-Escavalier
-Foongus
-Amoonguss
-Frillish
-Jellicent
-Alomomola
-Joltik
-Galvantula
-Ferroseed
-Ferrothorn
-Klink
-Klang
-Klinklang
-Tynamo
-Eelektrik
-Eelektross
-Elgyem
-Beheeyem
-Litwick
-Lampent
-Chandelure
-Axew
-Fraxure
-Haxorus
-Cubchoo
-Beartic
-Cryogonal
-Shelmet
-Accelgor
-Stunfisk
-Stunfisk (Galarian Stunfisk)
-Mienfoo
-Mienshao
-Druddigon
-Golett
-Golurk
-Pawniard
-Bisharp
-Bouffalant
-Rufflet
-Braviary
-Braviary (Hisuian Braviary)
-Vullaby
-Mandibuzz
-Heatmor
-Durant
-Deino
-Zweilous
-Hydreigon
-Larvesta
-Volcarona
-Cobalion
-Terrakion
-Virizion
-Tornadus (Incarnate Forme)
-Tornadus (Therian Forme)
-Thundurus (Incarnate Forme)
-Thundurus (Therian Forme)
-Reshiram
-Zekrom
-Landorus (Incarnate Forme)
-Landorus (Therian Forme)
-Kyurem
-Kyurem (White Kyurem)
-Kyurem (Black Kyurem)
-Keldeo (Ordinary Form)
-Keldeo (Resolute Form)
-Meloetta (Aria Forme)
-Meloetta (Pirouette Forme)
-Genesect
-Chespin
-Quilladin
-Chesnaught
-Fennekin
-Braixen
-Delphox
-Froakie
-Frogadier
-Greninja
-Greninja (Ash-Greninja)
-Bunnelby
-Diggersby
-Fletchling
-Fletchinder
-Talonflame
-Scatterbug
-Spewpa
-Vivillon
-Litleo
-Pyroar
-Flabébé
-Floette
-Florges
-Skiddo
-Gogoat
-Pancham
-Pangoro
-Furfrou
-Espurr
-Meowstic (Male)
-Meowstic (Female)
-Honedge
-Doublade
-Aegislash (Shield Forme)
-Aegislash (Blade Forme)
-Spritzee
-Aromatisse
-Swirlix
-Slurpuff
-Inkay
-Malamar
-Binacle
-Barbaracle
-Skrelp
-Dragalge
-Clauncher
-Clawitzer
-Helioptile
-Heliolisk
-Tyrunt
-Tyrantrum
-Amaura
-Aurorus
-Sylveon
-Hawlucha
-Dedenne
-Carbink
-Goomy
-Sliggoo
-Sliggoo (Hisuian Sliggoo)
-Goodra
-Goodra (Hisuian Goodra)
-Klefki
-Phantump
-Trevenant
-Pumpkaboo (Average Size)
-Pumpkaboo (Small Size)
-Pumpkaboo (Large Size)
-Pumpkaboo (Super Size)
-Gourgeist (Average Size)
-Gourgeist (Small Size)
-Gourgeist (Large Size)
-Gourgeist (Super Size)
-Bergmite
-Avalugg
-Avalugg (Hisuian Avalugg)
-Noibat
-Noivern
-Xerneas
-Yveltal
-Zygarde (50% Forme)
-Zygarde (10% Forme)
-Zygarde (Complete Forme)
-Diancie
-Diancie (Mega Diancie)
-Hoopa (Hoopa Confined)
-Hoopa (Hoopa Unbound)
-Volcanion
-Rowlet
-Dartrix
-Decidueye
-Decidueye (Hisuian Decidueye)
-Litten
-Torracat
-Incineroar
-Popplio
-Brionne
-Primarina
-Pikipek
-Trumbeak
-Toucannon
-Yungoos
-Gumshoos
-Grubbin
-Charjabug
-Vikavolt
-Crabrawler
-Crabominable
-Oricorio (Baile Style)
-Oricorio (Pom-Pom Style)
-Oricorio (Pa'u Style)
-Oricorio (Sensu Style)
-Cutiefly
-Ribombee
-Rockruff
-Rockruff (Own Tempo Rockruff)
-Lycanroc (Midday Form)
-Lycanroc (Midnight Form)
-Lycanroc (Dusk Form)
-Wishiwashi (Solo Form)
-Wishiwashi (School Form)
-Mareanie
-Toxapex
-Mudbray
-Mudsdale
-Dewpider
-Araquanid
-Fomantis
-Lurantis
-Morelull
-Shiinotic
-Salandit
-Salazzle
-Stufful
-Bewear
-Bounsweet
-Steenee
-Tsareena
-Comfey
-Oranguru
-Passimian
-Wimpod
-Golisopod
-Sandygast
-Palossand
-Pyukumuku
-Type: 
-Silvally
-Minior (Meteor Form)
-Minior (Core Form)
-Komala
-Turtonator
-Togedemaru
-Mimikyu
-Bruxish
-Drampa
-Dhelmise
-Jangmo-o
-Hakamo-o
-Kommo-o
-Tapu Koko
-Tapu Lele
-Tapu Bulu
-Tapu Fini
-Cosmog
-Cosmoem
-Solgaleo
-Lunala
-Nihilego
-Buzzwole
-Pheromosa
-Xurkitree
-Celesteela
-Kartana
-Guzzlord
-Necrozma
-Necrozma (Dusk Mane Necrozma)
-Necrozma (Dawn Wings Necrozma)
-Necrozma (Ultra Necrozma)
-Magearna
-Marshadow
-Poipole
-Naganadel
-Stakataka
-Blacephalon
-Zeraora
-Meltan
-Melmetal
-Melmetal (Gigantamax Melmetal)
-Grookey
-Thwackey
-Rillaboom
-Rillaboom (Gigantamax Rillaboom)
-Scorbunny
-Raboot
-Cinderace
-Cinderace (Gigantamax Cinderace)
-Sobble
-Drizzile
-Inteleon
-Inteleon (Gigantamax Inteleon)
-Skwovet
-Greedent
-Rookidee
-Corvisquire
-Corviknight
-Corviknight (Gigantamax Corviknight)
-Blipbug
-Dottler
-Orbeetle
-Orbeetle (Gigantamax Orbeetle)
-Nickit
-Thievul
-Gossifleur
-Eldegoss
-Wooloo
-Dubwool
-Chewtle
-Drednaw
-Drednaw (Gigantamax Drednaw)
-Yamper
-Boltund
-Rolycoly
-Carkol
-Coalossal
-Coalossal (Gigantamax Coalossal)
-Applin
-Flapple
-Flapple (Gigantamax Flapple)
-Appletun
-Appletun (Gigantamax Appletun)
-Silicobra
-Sandaconda
-Sandaconda (Gigantamax Sandaconda)
-Cramorant
-Arrokuda
-Barraskewda
-Toxel
-Toxtricity (Amped Form)
-Toxtricity (Gigantamax Toxtricity Amped Form)
-Toxtricity (Low Key Form)
-Toxtricity (Gigantamax Toxtricity Low Key Form)
-Sizzlipede
-Centiskorch
-Centiskorch (Gigantamax Centiskorch)
-Clobbopus
-Grapploct
-Sinistea
-Polteageist
-Hatenna
-Hattrem
-Hatterene
-Hatterene (Gigantamax Hatterene)
-Impidimp
-Morgrem
-Grimmsnarl
-Grimmsnarl (Gigantamax Grimmsnarl)
-Obstagoon
-Perrserker
-Cursola
-Sirfetch'd
-Mr. Rime
-Runerigus
-Milcery
-Alcremie
-Alcremie (Gigantamax Alcremie)
-Falinks
-Pincurchin
-Snom
-Frosmoth
-Stonjourner
-Eiscue (Ice Face)
-Eiscue (Noice Face)
-Indeedee (Male)
-Indeedee (Female)
-Morpeko (Full Belly Mode)
-Morpeko (Hangry Mode)
-Cufant
-Copperajah
-Copperajah (Gigantamax Copperajah)
-Dracozolt
-Arctozolt
-Dracovish
-Arctovish
-Duraludon
-Duraludon (Gigantamax Duraludon)
-Dreepy
-Drakloak
-Dragapult
-Zacian (Hero of Many Battles)
-Zacian (Crowned Sword)
-Zamazenta (Hero of Many Battles)
-Zamazenta (Crowned Shield)
-Eternatus
-Eternatus (Eternamax)
-Kubfu
-Urshifu (Single Strike Style)
-Urshifu (Gigantamax Urshifu Single Strike Style)
-Urshifu (Rapid Strike Style)
-Urshifu (Gigantamax Urshifu Rapid Strike Style)
-Zarude
-Regieleki
-Regidrago
-Glastrier
-Spectrier
-Calyrex
-Calyrex (Ice Rider)
-Calyrex (Shadow Rider)
-Wyrdeer
-Kleavor
-Ursaluna
-Ursaluna (Bloodmoon)
-Basculegion (Male)
-Basculegion (Female)
-Sneasler
-Overqwil
-Enamorus (Incarnate Forme)
-Enamorus (Therian Forme)
-Sprigatito
-Floragato
-Meowscarada
-Fuecoco
-Crocalor
-Skeledirge
-Quaxly
-Quaxwell
-Quaquaval
-Lechonk
-Oinkologne (Male)
-Oinkologne (Female)
-Tarountula
-Spidops
-Nymble
-Lokix
-Pawmi
-Pawmo
-Pawmot
-Tandemaus
-Maushold (Family of Four)
-Maushold (Family of Three)
-Fidough
-Dachsbun
-Smoliv
-Dolliv
-Arboliva
-Squawkabilly (Green Plumage)
-Squawkabilly (Blue Plumage)
-Squawkabilly (Yellow Plumage)
-Squawkabilly (White Plumage)
-Nacli
-Naclstack
-Garganacl
-Charcadet
-Armarouge
-Ceruledge
-Tadbulb
-Bellibolt
-Wattrel
-Kilowattrel
-Maschiff
-Mabosstiff
-Shroodle
-Grafaiai
-Bramblin
-Brambleghast
-Toedscool
-Toedscruel
-Klawf
-Capsakid
-Scovillain
-Rellor
-Rabsca
-Flittle
-Espathra
-Tinkatink
-Tinkatuff
-Tinkaton
-Wiglett
-Wugtrio
-Bombirdier
-Finizen
-Palafin (Zero Form)
-Palafin (Hero Form)
-Varoom
-Revavroom
-Cyclizar
-Orthworm
-Glimmet
-Glimmora
-Greavard
-Houndstone
-Flamigo
-Cetoddle
-Cetitan
-Veluza
-Dondozo
-Tatsugiri (Curly Form)
-Tatsugiri (Droopy Form)
-Tatsugiri (Stretchy Form)
-Annihilape
-Clodsire
-Farigiraf
-Dudunsparce (Two-Segment Form)
-Dudunsparce (Three-Segment Form)
-Kingambit
-Great Tusk
-Scream Tail
-Brute Bonnet
-Flutter Mane
-Slither Wing
-Sandy Shocks
-Iron Treads
-Iron Bundle
-Iron Hands
-Iron Jugulis
-Iron Moth
-Iron Thorns
-Frigibax
-Arctibax
-Baxcalibur
-Gimmighoul (Chest Form)
-Gimmighoul (Roaming Form)
-Gholdengo
-Wo-Chien
-Chien-Pao
-Ting-Lu
-Chi-Yu
-Roaring Moon
-Iron Valiant
-Koraidon
-Miraidon
-Walking Wake
-Iron Leaves
-Dipplin
-Poltchageist
-Sinistcha
-Okidogi
-Munkidori
-Fezandipiti
-Ogerpon (Teal Mask)
-Ogerpon (Wellspring Mask)
-Ogerpon (Hearthflame Mask)
-Ogerpon (Cornerstone Mask)
-Archaludon
-Hydrapple
-Gouging Fire
-Raging Bolt
-Iron Boulder
-Iron Crown
-Terapagos (Normal Form)
-Terapagos (Terastal Form)
-Terapagos (Stellar Form)
-Pecharunt
+0000:Name
+0001:Bulbasaur
+0002:Ivysaur
+0003:Venusaur
+0004:Venusaur (Mega Venusaur)
+0005:Venusaur (Gigantamax Venusaur)
+0006:Charmander
+0007:Charmeleon
+0008:Charizard
+0009:Charizard (Mega Charizard X)
+0010:Charizard (Mega Charizard Y)
+0011:Charizard (Gigantamax Charizard)
+0012:Squirtle
+0013:Wartortle
+0014:Blastoise
+0015:Blastoise (Mega Blastoise)
+0016:Blastoise (Gigantamax Blastoise)
+0017:Caterpie
+0018:Metapod
+0019:Butterfree
+0020:Butterfree (Gigantamax Butterfree)
+0021:Weedle
+0022:Kakuna
+0023:Beedrill
+0024:Beedrill (Mega Beedrill)
+0025:Pidgey
+0026:Pidgeotto
+0027:Pidgeot
+0028:Pidgeot (Mega Pidgeot)
+0029:Rattata
+0030:Rattata (Alolan Rattata)
+0031:Raticate
+0032:Raticate (Alolan Raticate)
+0033:Spearow
+0034:Fearow
+0035:Ekans
+0036:Arbok
+0037:Pikachu
+0038:Pikachu (Partner Pikachu)
+0039:Pikachu (Gigantamax Pikachu)
+0040:Raichu
+0041:Raichu (Alolan Raichu)
+0042:Sandshrew
+0043:Sandshrew (Alolan Sandshrew)
+0044:Sandslash
+0045:Sandslash (Alolan Sandslash)
+0046:Nidoran ♀
+0047:Nidorina
+0048:Nidoqueen
+0049:Nidoran ♂
+0050:Nidorino
+0051:Nidoking
+0052:Clefairy
+0053:Clefable
+0054:Vulpix
+0055:Vulpix (Alolan Vulpix)
+0056:Ninetales
+0057:Ninetales (Alolan Ninetales)
+0058:Jigglypuff
+0059:Wigglytuff
+0060:Zubat
+0061:Golbat
+0062:Oddish
+0063:Gloom
+0064:Vileplume
+0065:Paras
+0066:Parasect
+0067:Venonat
+0068:Venomoth
+0069:Diglett
+0070:Diglett (Alolan Diglett)
+0071:Dugtrio
+0072:Dugtrio (Alolan Dugtrio)
+0073:Meowth
+0074:Meowth (Alolan Meowth)
+0075:Meowth (Galarian Meowth)
+0076:Meowth (Gigantamax Meowth)
+0077:Persian
+0078:Persian (Alolan Persian)
+0079:Psyduck
+0080:Golduck
+0081:Mankey
+0082:Primeape
+0083:Growlithe
+0084:Growlithe (Hisuian Growlithe)
+0085:Arcanine
+0086:Arcanine (Hisuian Arcanine)
+0087:Poliwag
+0088:Poliwhirl
+0089:Poliwrath
+0090:Abra
+0091:Kadabra
+0092:Alakazam
+0093:Alakazam (Mega Alakazam)
+0094:Machop
+0095:Machoke
+0096:Machamp
+0097:Machamp (Gigantamax Machamp)
+0098:Bellsprout
+0099:Weepinbell
+0100:Victreebel
+0101:Tentacool
+0102:Tentacruel
+0103:Geodude
+0104:Geodude (Alolan Geodude)
+0105:Graveler
+0106:Graveler (Alolan Graveler)
+0107:Golem
+0108:Golem (Alolan Golem)
+0109:Ponyta
+0110:Ponyta (Galarian Ponyta)
+0111:Rapidash
+0112:Rapidash (Galarian Rapidash)
+0113:Slowpoke
+0114:Slowpoke (Galarian Slowpoke)
+0115:Slowbro
+0116:Slowbro (Mega Slowbro)
+0117:Slowbro (Galarian Slowbro)
+0118:Magnemite
+0119:Magneton
+0120:Farfetch'd
+0121:Farfetch'd (Galarian Farfetch'd)
+0122:Doduo
+0123:Dodrio
+0124:Seel
+0125:Dewgong
+0126:Grimer
+0127:Grimer (Alolan Grimer)
+0128:Muk
+0129:Muk (Alolan Muk)
+0130:Shellder
+0131:Cloyster
+0132:Gastly
+0133:Haunter
+0134:Gengar
+0135:Gengar (Mega Gengar)
+0136:Gengar (Gigantamax Gengar)
+0137:Onix
+0138:Drowzee
+0139:Hypno
+0140:Krabby
+0141:Kingler
+0142:Kingler (Gigantamax Kingler)
+0143:Voltorb
+0144:Voltorb (Hisuian Voltorb)
+0145:Electrode
+0146:Electrode (Hisuian Electrode)
+0147:Exeggcute
+0148:Exeggutor
+0149:Exeggutor (Alolan Exeggutor)
+0150:Cubone
+0151:Marowak
+0152:Marowak (Alolan Marowak)
+0153:Hitmonlee
+0154:Hitmonchan
+0155:Lickitung
+0156:Koffing
+0157:Weezing
+0158:Weezing (Galarian Weezing)
+0159:Rhyhorn
+0160:Rhydon
+0161:Chansey
+0162:Tangela
+0163:Kangaskhan
+0164:Kangaskhan (Mega Kangaskhan)
+0165:Horsea
+0166:Seadra
+0167:Goldeen
+0168:Seaking
+0169:Staryu
+0170:Starmie
+0171:Mr. Mime
+0172:Mr. Mime (Galarian Mr. Mime)
+0173:Scyther
+0174:Jynx
+0175:Electabuzz
+0176:Magmar
+0177:Pinsir
+0178:Pinsir (Mega Pinsir)
+0179:Tauros
+0180:Tauros (Combat Breed)
+0181:Tauros (Blaze Breed)
+0182:Tauros (Aqua Breed)
+0183:Magikarp
+0184:Gyarados
+0185:Gyarados (Mega Gyarados)
+0186:Lapras
+0187:Lapras (Gigantamax Lapras)
+0188:Ditto
+0189:Eevee
+0190:Eevee (Partner Eevee)
+0191:Eevee (Gigantamax Eevee)
+0192:Vaporeon
+0193:Jolteon
+0194:Flareon
+0195:Porygon
+0196:Omanyte
+0197:Omastar
+0198:Kabuto
+0199:Kabutops
+0200:Aerodactyl
+0201:Aerodactyl (Mega Aerodactyl)
+0202:Snorlax
+0203:Snorlax (Gigantamax Snorlax)
+0204:Articuno
+0205:Articuno (Galarian Articuno)
+0206:Zapdos
+0207:Zapdos (Galarian Zapdos)
+0208:Moltres
+0209:Moltres (Galarian Moltres)
+0210:Dratini
+0211:Dragonair
+0212:Dragonite
+0213:Mewtwo
+0214:Mewtwo (Mega Mewtwo X)
+0215:Mewtwo (Mega Mewtwo Y)
+0216:Mew
+0217:Chikorita
+0218:Bayleef
+0219:Meganium
+0220:Cyndaquil
+0221:Quilava
+0222:Typhlosion
+0223:Typhlosion (Hisuian Typhlosion)
+0224:Totodile
+0225:Croconaw
+0226:Feraligatr
+0227:Sentret
+0228:Furret
+0229:Hoothoot
+0230:Noctowl
+0231:Ledyba
+0232:Ledian
+0233:Spinarak
+0234:Ariados
+0235:Crobat
+0236:Chinchou
+0237:Lanturn
+0238:Pichu
+0239:Cleffa
+0240:Igglybuff
+0241:Togepi
+0242:Togetic
+0243:Natu
+0244:Xatu
+0245:Mareep
+0246:Flaaffy
+0247:Ampharos
+0248:Ampharos (Mega Ampharos)
+0249:Bellossom
+0250:Marill
+0251:Azumarill
+0252:Sudowoodo
+0253:Politoed
+0254:Hoppip
+0255:Skiploom
+0256:Jumpluff
+0257:Aipom
+0258:Sunkern
+0259:Sunflora
+0260:Yanma
+0261:Wooper
+0262:Wooper (Paldean Wooper)
+0263:Quagsire
+0264:Espeon
+0265:Umbreon
+0266:Murkrow
+0267:Slowking
+0268:Slowking (Galarian Slowking)
+0269:Misdreavus
+0270:Unown
+0271:Wobbuffet
+0272:Girafarig
+0273:Pineco
+0274:Forretress
+0275:Dunsparce
+0276:Gligar
+0277:Steelix
+0278:Steelix (Mega Steelix)
+0279:Snubbull
+0280:Granbull
+0281:Qwilfish
+0282:Qwilfish (Hisuian Qwilfish)
+0283:Scizor
+0284:Scizor (Mega Scizor)
+0285:Shuckle
+0286:Heracross
+0287:Heracross (Mega Heracross)
+0288:Sneasel
+0289:Sneasel (Hisuian Sneasel)
+0290:Teddiursa
+0291:Ursaring
+0292:Slugma
+0293:Magcargo
+0294:Swinub
+0295:Piloswine
+0296:Corsola
+0297:Corsola (Galarian Corsola)
+0298:Remoraid
+0299:Octillery
+0300:Delibird
+0301:Mantine
+0302:Skarmory
+0303:Houndour
+0304:Houndoom
+0305:Houndoom (Mega Houndoom)
+0306:Kingdra
+0307:Phanpy
+0308:Donphan
+0309:Porygon2
+0310:Stantler
+0311:Smeargle
+0312:Tyrogue
+0313:Hitmontop
+0314:Smoochum
+0315:Elekid
+0316:Magby
+0317:Miltank
+0318:Blissey
+0319:Raikou
+0320:Entei
+0321:Suicune
+0322:Larvitar
+0323:Pupitar
+0324:Tyranitar
+0325:Tyranitar (Mega Tyranitar)
+0326:Lugia
+0327:Ho-oh
+0328:Celebi
+0329:Treecko
+0330:Grovyle
+0331:Sceptile
+0332:Sceptile (Mega Sceptile)
+0333:Torchic
+0334:Combusken
+0335:Blaziken
+0336:Blaziken (Mega Blaziken)
+0337:Mudkip
+0338:Marshtomp
+0339:Swampert
+0340:Swampert (Mega Swampert)
+0341:Poochyena
+0342:Mightyena
+0343:Zigzagoon
+0344:Zigzagoon (Galarian Zigzagoon)
+0345:Linoone
+0346:Linoone (Galarian Linoone)
+0347:Wurmple
+0348:Silcoon
+0349:Beautifly
+0350:Cascoon
+0351:Dustox
+0352:Lotad
+0353:Lombre
+0354:Ludicolo
+0355:Seedot
+0356:Nuzleaf
+0357:Shiftry
+0358:Taillow
+0359:Swellow
+0360:Wingull
+0361:Pelipper
+0362:Ralts
+0363:Kirlia
+0364:Gardevoir
+0365:Gardevoir (Mega Gardevoir)
+0366:Surskit
+0367:Masquerain
+0368:Shroomish
+0369:Breloom
+0370:Slakoth
+0371:Vigoroth
+0372:Slaking
+0373:Nincada
+0374:Ninjask
+0375:Shedinja
+0376:Whismur
+0377:Loudred
+0378:Exploud
+0379:Makuhita
+0380:Hariyama
+0381:Azurill
+0382:Nosepass
+0383:Skitty
+0384:Delcatty
+0385:Sableye
+0386:Sableye (Mega Sableye)
+0387:Mawile
+0388:Mawile (Mega Mawile)
+0389:Aron
+0390:Lairon
+0391:Aggron
+0392:Aggron (Mega Aggron)
+0393:Meditite
+0394:Medicham
+0395:Medicham (Mega Medicham)
+0396:Electrike
+0397:Manectric
+0398:Manectric (Mega Manectric)
+0399:Plusle
+0400:Minun
+0401:Volbeat
+0402:Illumise
+0403:Roselia
+0404:Gulpin
+0405:Swalot
+0406:Carvanha
+0407:Sharpedo
+0408:Sharpedo (Mega Sharpedo)
+0409:Wailmer
+0410:Wailord
+0411:Numel
+0412:Camerupt
+0413:Camerupt (Mega Camerupt)
+0414:Torkoal
+0415:Spoink
+0416:Grumpig
+0417:Spinda
+0418:Trapinch
+0419:Vibrava
+0420:Flygon
+0421:Cacnea
+0422:Cacturne
+0423:Swablu
+0424:Altaria
+0425:Altaria (Mega Altaria)
+0426:Zangoose
+0427:Seviper
+0428:Lunatone
+0429:Solrock
+0430:Barboach
+0431:Whiscash
+0432:Corphish
+0433:Crawdaunt
+0434:Baltoy
+0435:Claydol
+0436:Lileep
+0437:Cradily
+0438:Anorith
+0439:Armaldo
+0440:Feebas
+0441:Milotic
+0442:Castform
+0443:Castform (Sunny Form)
+0444:Castform (Rainy Form)
+0445:Castform (Snowy Form)
+0446:Kecleon
+0447:Shuppet
+0448:Banette
+0449:Banette (Mega Banette)
+0450:Duskull
+0451:Dusclops
+0452:Tropius
+0453:Chimecho
+0454:Absol
+0455:Absol (Mega Absol)
+0456:Wynaut
+0457:Snorunt
+0458:Glalie
+0459:Glalie (Mega Glalie)
+0460:Spheal
+0461:Sealeo
+0462:Walrein
+0463:Clamperl
+0464:Huntail
+0465:Gorebyss
+0466:Relicanth
+0467:Luvdisc
+0468:Bagon
+0469:Shelgon
+0470:Salamence
+0471:Salamence (Mega Salamence)
+0472:Beldum
+0473:Metang
+0474:Metagross
+0475:Metagross (Mega Metagross)
+0476:Regirock
+0477:Regice
+0478:Registeel
+0479:Latias
+0480:Latias (Mega Latias)
+0481:Latios
+0482:Latios (Mega Latios)
+0483:Kyogre
+0484:Kyogre (Primal Kyogre)
+0485:Groudon
+0486:Groudon (Primal Groudon)
+0487:Rayquaza
+0488:Rayquaza (Mega Rayquaza)
+0489:Jirachi
+0490:Deoxys (Normal Forme)
+0491:Deoxys (Attack Forme)
+0492:Deoxys (Defense Forme)
+0493:Deoxys (Speed Forme)
+0494:Turtwig
+0495:Grotle
+0496:Torterra
+0497:Chimchar
+0498:Monferno
+0499:Infernape
+0500:Piplup
+0501:Prinplup
+0502:Empoleon
+0503:Starly
+0504:Staravia
+0505:Staraptor
+0506:Bidoof
+0507:Bibarel
+0508:Kricketot
+0509:Kricketune
+0510:Shinx
+0511:Luxio
+0512:Luxray
+0513:Budew
+0514:Roserade
+0515:Cranidos
+0516:Rampardos
+0517:Shieldon
+0518:Bastiodon
+0519:Burmy (Plant Cloak)
+0520:Burmy (Sandy Cloak)
+0521:Burmy (Trash Cloak)
+0522:Wormadam (Plant Cloak)
+0523:Wormadam (Sandy Cloak)
+0524:Wormadam (Trash Cloak)
+0525:Mothim
+0526:Combee
+0527:Vespiquen
+0528:Pachirisu
+0529:Buizel
+0530:Floatzel
+0531:Cherubi
+0532:Cherrim
+0533:Shellos
+0534:Gastrodon
+0535:Ambipom
+0536:Drifloon
+0537:Drifblim
+0538:Buneary
+0539:Lopunny
+0540:Lopunny (Mega Lopunny)
+0541:Mismagius
+0542:Honchkrow
+0543:Glameow
+0544:Purugly
+0545:Chingling
+0546:Stunky
+0547:Skuntank
+0548:Bronzor
+0549:Bronzong
+0550:Bonsly
+0551:Mime Jr.
+0552:Happiny
+0553:Chatot
+0554:Spiritomb
+0555:Gible
+0556:Gabite
+0557:Garchomp
+0558:Garchomp (Mega Garchomp)
+0559:Munchlax
+0560:Riolu
+0561:Lucario
+0562:Lucario (Mega Lucario)
+0563:Hippopotas
+0564:Hippowdon
+0565:Skorupi
+0566:Drapion
+0567:Croagunk
+0568:Toxicroak
+0569:Carnivine
+0570:Finneon
+0571:Lumineon
+0572:Mantyke
+0573:Snover
+0574:Abomasnow
+0575:Abomasnow (Mega Abomasnow)
+0576:Weavile
+0577:Magnezone
+0578:Lickilicky
+0579:Rhyperior
+0580:Tangrowth
+0581:Electivire
+0582:Magmortar
+0583:Togekiss
+0584:Yanmega
+0585:Leafeon
+0586:Glaceon
+0587:Gliscor
+0588:Mamoswine
+0589:Porygon-Z
+0590:Gallade
+0591:Gallade (Mega Gallade)
+0592:Probopass
+0593:Dusknoir
+0594:Froslass
+0595:Rotom
+0596:Rotom (Heat Rotom)
+0597:Rotom (Wash Rotom)
+0598:Rotom (Frost Rotom)
+0599:Rotom (Fan Rotom)
+0600:Rotom (Mow Rotom)
+0601:Uxie
+0602:Mesprit
+0603:Azelf
+0604:Dialga
+0605:Dialga (Origin Forme)
+0606:Palkia
+0607:Palkia (Origin Forme)
+0608:Heatran
+0609:Regigigas
+0610:Giratina (Altered Forme)
+0611:Giratina (Origin Forme)
+0612:Cresselia
+0613:Phione
+0614:Manaphy
+0615:Darkrai
+0616:Shaymin (Land Forme)
+0617:Shaymin (Sky Forme)
+0618:Arceus
+0619:Victini
+0620:Snivy
+0621:Servine
+0622:Serperior
+0623:Tepig
+0624:Pignite
+0625:Emboar
+0626:Oshawott
+0627:Dewott
+0628:Samurott
+0629:Samurott (Hisuian Samurott)
+0630:Patrat
+0631:Watchog
+0632:Lillipup
+0633:Herdier
+0634:Stoutland
+0635:Purrloin
+0636:Liepard
+0637:Pansage
+0638:Simisage
+0639:Pansear
+0640:Simisear
+0641:Panpour
+0642:Simipour
+0643:Munna
+0644:Musharna
+0645:Pidove
+0646:Tranquill
+0647:Unfezant
+0648:Blitzle
+0649:Zebstrika
+0650:Roggenrola
+0651:Boldore
+0652:Gigalith
+0653:Woobat
+0654:Swoobat
+0655:Drilbur
+0656:Excadrill
+0657:Audino
+0658:Audino (Mega Audino)
+0659:Timburr
+0660:Gurdurr
+0661:Conkeldurr
+0662:Tympole
+0663:Palpitoad
+0664:Seismitoad
+0665:Throh
+0666:Sawk
+0667:Sewaddle
+0668:Swadloon
+0669:Leavanny
+0670:Venipede
+0671:Whirlipede
+0672:Scolipede
+0673:Cottonee
+0674:Whimsicott
+0675:Petilil
+0676:Lilligant
+0677:Lilligant (Hisuian Lilligant)
+0678:Basculin (Red-Striped Form)
+0679:Basculin (Blue-Striped Form)
+0680:Basculin (White-Striped Form)
+0681:Sandile
+0682:Krokorok
+0683:Krookodile
+0684:Darumaka
+0685:Darumaka (Galarian Darumaka)
+0686:Darmanitan (Standard Mode)
+0687:Darmanitan (Zen Mode)
+0688:Darmanitan (Galarian Standard Mode)
+0689:Darmanitan (Galarian Zen Mode)
+0690:Maractus
+0691:Dwebble
+0692:Crustle
+0693:Scraggy
+0694:Scrafty
+0695:Sigilyph
+0696:Yamask
+0697:Yamask (Galarian Yamask)
+0698:Cofagrigus
+0699:Tirtouga
+0700:Carracosta
+0701:Archen
+0702:Archeops
+0703:Trubbish
+0704:Garbodor
+0705:Garbodor (Gigantamax Garbodor)
+0706:Zorua
+0707:Zorua (Hisuian Zorua)
+0708:Zoroark
+0709:Zoroark (Hisuian Zoroark)
+0710:Minccino
+0711:Cinccino
+0712:Gothita
+0713:Gothorita
+0714:Gothitelle
+0715:Solosis
+0716:Duosion
+0717:Reuniclus
+0718:Ducklett
+0719:Swanna
+0720:Vanillite
+0721:Vanillish
+0722:Vanilluxe
+0723:Deerling
+0724:Sawsbuck
+0725:Emolga
+0726:Karrablast
+0727:Escavalier
+0728:Foongus
+0729:Amoonguss
+0730:Frillish
+0731:Jellicent
+0732:Alomomola
+0733:Joltik
+0734:Galvantula
+0735:Ferroseed
+0736:Ferrothorn
+0737:Klink
+0738:Klang
+0739:Klinklang
+0740:Tynamo
+0741:Eelektrik
+0742:Eelektross
+0743:Elgyem
+0744:Beheeyem
+0745:Litwick
+0746:Lampent
+0747:Chandelure
+0748:Axew
+0749:Fraxure
+0750:Haxorus
+0751:Cubchoo
+0752:Beartic
+0753:Cryogonal
+0754:Shelmet
+0755:Accelgor
+0756:Stunfisk
+0757:Stunfisk (Galarian Stunfisk)
+0758:Mienfoo
+0759:Mienshao
+0760:Druddigon
+0761:Golett
+0762:Golurk
+0763:Pawniard
+0764:Bisharp
+0765:Bouffalant
+0766:Rufflet
+0767:Braviary
+0768:Braviary (Hisuian Braviary)
+0769:Vullaby
+0770:Mandibuzz
+0771:Heatmor
+0772:Durant
+0773:Deino
+0774:Zweilous
+0775:Hydreigon
+0776:Larvesta
+0777:Volcarona
+0778:Cobalion
+0779:Terrakion
+0780:Virizion
+0781:Tornadus (Incarnate Forme)
+0782:Tornadus (Therian Forme)
+0783:Thundurus (Incarnate Forme)
+0784:Thundurus (Therian Forme)
+0785:Reshiram
+0786:Zekrom
+0787:Landorus (Incarnate Forme)
+0788:Landorus (Therian Forme)
+0789:Kyurem
+0790:Kyurem (White Kyurem)
+0791:Kyurem (Black Kyurem)
+0792:Keldeo (Ordinary Form)
+0793:Keldeo (Resolute Form)
+0794:Meloetta (Aria Forme)
+0795:Meloetta (Pirouette Forme)
+0796:Genesect
+0797:Chespin
+0798:Quilladin
+0799:Chesnaught
+0800:Fennekin
+0801:Braixen
+0802:Delphox
+0803:Froakie
+0804:Frogadier
+0805:Greninja
+0806:Greninja (Ash-Greninja)
+0807:Bunnelby
+0808:Diggersby
+0809:Fletchling
+0810:Fletchinder
+0811:Talonflame
+0812:Scatterbug
+0813:Spewpa
+0814:Vivillon
+0815:Litleo
+0816:Pyroar
+0817:Flabébé
+0818:Floette
+0819:Florges
+0820:Skiddo
+0821:Gogoat
+0822:Pancham
+0823:Pangoro
+0824:Furfrou
+0825:Espurr
+0826:Meowstic (Male)
+0827:Meowstic (Female)
+0828:Honedge
+0829:Doublade
+0830:Aegislash (Shield Forme)
+0831:Aegislash (Blade Forme)
+0832:Spritzee
+0833:Aromatisse
+0834:Swirlix
+0835:Slurpuff
+0836:Inkay
+0837:Malamar
+0838:Binacle
+0839:Barbaracle
+0840:Skrelp
+0841:Dragalge
+0842:Clauncher
+0843:Clawitzer
+0844:Helioptile
+0845:Heliolisk
+0846:Tyrunt
+0847:Tyrantrum
+0848:Amaura
+0849:Aurorus
+0850:Sylveon
+0851:Hawlucha
+0852:Dedenne
+0853:Carbink
+0854:Goomy
+0855:Sliggoo
+0856:Sliggoo (Hisuian Sliggoo)
+0857:Goodra
+0858:Goodra (Hisuian Goodra)
+0859:Klefki
+0860:Phantump
+0861:Trevenant
+0862:Pumpkaboo (Average Size)
+0863:Pumpkaboo (Small Size)
+0864:Pumpkaboo (Large Size)
+0865:Pumpkaboo (Super Size)
+0866:Gourgeist (Average Size)
+0867:Gourgeist (Small Size)
+0868:Gourgeist (Large Size)
+0869:Gourgeist (Super Size)
+0870:Bergmite
+0871:Avalugg
+0872:Avalugg (Hisuian Avalugg)
+0873:Noibat
+0874:Noivern
+0875:Xerneas
+0876:Yveltal
+0877:Zygarde (50% Forme)
+0878:Zygarde (10% Forme)
+0879:Zygarde (Complete Forme)
+0880:Diancie
+0881:Diancie (Mega Diancie)
+0882:Hoopa (Hoopa Confined)
+0883:Hoopa (Hoopa Unbound)
+0884:Volcanion
+0885:Rowlet
+0886:Dartrix
+0887:Decidueye
+0888:Decidueye (Hisuian Decidueye)
+0889:Litten
+0890:Torracat
+0891:Incineroar
+0892:Popplio
+0893:Brionne
+0894:Primarina
+0895:Pikipek
+0896:Trumbeak
+0897:Toucannon
+0898:Yungoos
+0899:Gumshoos
+0900:Grubbin
+0901:Charjabug
+0902:Vikavolt
+0903:Crabrawler
+0904:Crabominable
+0905:Oricorio (Baile Style)
+0906:Oricorio (Pom-Pom Style)
+0907:Oricorio (Pa'u Style)
+0908:Oricorio (Sensu Style)
+0909:Cutiefly
+0910:Ribombee
+0911:Rockruff
+0912:Rockruff (Own Tempo Rockruff)
+0913:Lycanroc (Midday Form)
+0914:Lycanroc (Midnight Form)
+0915:Lycanroc (Dusk Form)
+0916:Wishiwashi (Solo Form)
+0917:Wishiwashi (School Form)
+0918:Mareanie
+0919:Toxapex
+0920:Mudbray
+0921:Mudsdale
+0922:Dewpider
+0923:Araquanid
+0924:Fomantis
+0925:Lurantis
+0926:Morelull
+0927:Shiinotic
+0928:Salandit
+0929:Salazzle
+0930:Stufful
+0931:Bewear
+0932:Bounsweet
+0933:Steenee
+0934:Tsareena
+0935:Comfey
+0936:Oranguru
+0937:Passimian
+0938:Wimpod
+0939:Golisopod
+0940:Sandygast
+0941:Palossand
+0942:Pyukumuku
+0943:Type: 
+0944:Silvally
+0945:Minior (Meteor Form)
+0946:Minior (Core Form)
+0947:Komala
+0948:Turtonator
+0949:Togedemaru
+0950:Mimikyu
+0951:Bruxish
+0952:Drampa
+0953:Dhelmise
+0954:Jangmo-o
+0955:Hakamo-o
+0956:Kommo-o
+0957:Tapu Koko
+0958:Tapu Lele
+0959:Tapu Bulu
+0960:Tapu Fini
+0961:Cosmog
+0962:Cosmoem
+0963:Solgaleo
+0964:Lunala
+0965:Nihilego
+0966:Buzzwole
+0967:Pheromosa
+0968:Xurkitree
+0969:Celesteela
+0970:Kartana
+0971:Guzzlord
+0972:Necrozma
+0973:Necrozma (Dusk Mane Necrozma)
+0974:Necrozma (Dawn Wings Necrozma)
+0975:Necrozma (Ultra Necrozma)
+0976:Magearna
+0977:Marshadow
+0978:Poipole
+0979:Naganadel
+0980:Stakataka
+0981:Blacephalon
+0982:Zeraora
+0983:Meltan
+0984:Melmetal
+0985:Melmetal (Gigantamax Melmetal)
+0986:Grookey
+0987:Thwackey
+0988:Rillaboom
+0989:Rillaboom (Gigantamax Rillaboom)
+0990:Scorbunny
+0991:Raboot
+0992:Cinderace
+0993:Cinderace (Gigantamax Cinderace)
+0994:Sobble
+0995:Drizzile
+0996:Inteleon
+0997:Inteleon (Gigantamax Inteleon)
+0998:Skwovet
+0999:Greedent
+1000:Rookidee
+1001:Corvisquire
+1002:Corviknight
+1003:Corviknight (Gigantamax Corviknight)
+1004:Blipbug
+1005:Dottler
+1006:Orbeetle
+1007:Orbeetle (Gigantamax Orbeetle)
+1008:Nickit
+1009:Thievul
+1010:Gossifleur
+1011:Eldegoss
+1012:Wooloo
+1013:Dubwool
+1014:Chewtle
+1015:Drednaw
+1016:Drednaw (Gigantamax Drednaw)
+1017:Yamper
+1018:Boltund
+1019:Rolycoly
+1020:Carkol
+1021:Coalossal
+1022:Coalossal (Gigantamax Coalossal)
+1023:Applin
+1024:Flapple
+1025:Flapple (Gigantamax Flapple)
+1026:Appletun
+1027:Appletun (Gigantamax Appletun)
+1028:Silicobra
+1029:Sandaconda
+1030:Sandaconda (Gigantamax Sandaconda)
+1031:Cramorant
+1032:Arrokuda
+1033:Barraskewda
+1034:Toxel
+1035:Toxtricity (Amped Form)
+1036:Toxtricity (Gigantamax Toxtricity Amped Form)
+1037:Toxtricity (Low Key Form)
+1038:Toxtricity (Gigantamax Toxtricity Low Key Form)
+1039:Sizzlipede
+1040:Centiskorch
+1041:Centiskorch (Gigantamax Centiskorch)
+1042:Clobbopus
+1043:Grapploct
+1044:Sinistea
+1045:Polteageist
+1046:Hatenna
+1047:Hattrem
+1048:Hatterene
+1049:Hatterene (Gigantamax Hatterene)
+1050:Impidimp
+1051:Morgrem
+1052:Grimmsnarl
+1053:Grimmsnarl (Gigantamax Grimmsnarl)
+1054:Obstagoon
+1055:Perrserker
+1056:Cursola
+1057:Sirfetch'd
+1058:Mr. Rime
+1059:Runerigus
+1060:Milcery
+1061:Alcremie
+1062:Alcremie (Gigantamax Alcremie)
+1063:Falinks
+1064:Pincurchin
+1065:Snom
+1066:Frosmoth
+1067:Stonjourner
+1068:Eiscue (Ice Face)
+1069:Eiscue (Noice Face)
+1070:Indeedee (Male)
+1071:Indeedee (Female)
+1072:Morpeko (Full Belly Mode)
+1073:Morpeko (Hangry Mode)
+1074:Cufant
+1075:Copperajah
+1076:Copperajah (Gigantamax Copperajah)
+1077:Dracozolt
+1078:Arctozolt
+1079:Dracovish
+1080:Arctovish
+1081:Duraludon
+1082:Duraludon (Gigantamax Duraludon)
+1083:Dreepy
+1084:Drakloak
+1085:Dragapult
+1086:Zacian (Hero of Many Battles)
+1087:Zacian (Crowned Sword)
+1088:Zamazenta (Hero of Many Battles)
+1089:Zamazenta (Crowned Shield)
+1090:Eternatus
+1091:Eternatus (Eternamax)
+1092:Kubfu
+1093:Urshifu (Single Strike Style)
+1094:Urshifu (Gigantamax Urshifu Single Strike Style)
+1095:Urshifu (Rapid Strike Style)
+1096:Urshifu (Gigantamax Urshifu Rapid Strike Style)
+1097:Zarude
+1098:Regieleki
+1099:Regidrago
+1100:Glastrier
+1101:Spectrier
+1102:Calyrex
+1103:Calyrex (Ice Rider)
+1104:Calyrex (Shadow Rider)
+1105:Wyrdeer
+1106:Kleavor
+1107:Ursaluna
+1108:Ursaluna (Bloodmoon)
+1109:Basculegion (Male)
+1110:Basculegion (Female)
+1111:Sneasler
+1112:Overqwil
+1113:Enamorus (Incarnate Forme)
+1114:Enamorus (Therian Forme)
+1115:Sprigatito
+1116:Floragato
+1117:Meowscarada
+1118:Fuecoco
+1119:Crocalor
+1120:Skeledirge
+1121:Quaxly
+1122:Quaxwell
+1123:Quaquaval
+1124:Lechonk
+1125:Oinkologne (Male)
+1126:Oinkologne (Female)
+1127:Tarountula
+1128:Spidops
+1129:Nymble
+1130:Lokix
+1131:Pawmi
+1132:Pawmo
+1133:Pawmot
+1134:Tandemaus
+1135:Maushold (Family of Four)
+1136:Maushold (Family of Three)
+1137:Fidough
+1138:Dachsbun
+1139:Smoliv
+1140:Dolliv
+1141:Arboliva
+1142:Squawkabilly (Green Plumage)
+1143:Squawkabilly (Blue Plumage)
+1144:Squawkabilly (Yellow Plumage)
+1145:Squawkabilly (White Plumage)
+1146:Nacli
+1147:Naclstack
+1148:Garganacl
+1149:Charcadet
+1150:Armarouge
+1151:Ceruledge
+1152:Tadbulb
+1153:Bellibolt
+1154:Wattrel
+1155:Kilowattrel
+1156:Maschiff
+1157:Mabosstiff
+1158:Shroodle
+1159:Grafaiai
+1160:Bramblin
+1161:Brambleghast
+1162:Toedscool
+1163:Toedscruel
+1164:Klawf
+1165:Capsakid
+1166:Scovillain
+1167:Rellor
+1168:Rabsca
+1169:Flittle
+1170:Espathra
+1171:Tinkatink
+1172:Tinkatuff
+1173:Tinkaton
+1174:Wiglett
+1175:Wugtrio
+1176:Bombirdier
+1177:Finizen
+1178:Palafin (Zero Form)
+1179:Palafin (Hero Form)
+1180:Varoom
+1181:Revavroom
+1182:Cyclizar
+1183:Orthworm
+1184:Glimmet
+1185:Glimmora
+1186:Greavard
+1187:Houndstone
+1188:Flamigo
+1189:Cetoddle
+1190:Cetitan
+1191:Veluza
+1192:Dondozo
+1193:Tatsugiri (Curly Form)
+1194:Tatsugiri (Droopy Form)
+1195:Tatsugiri (Stretchy Form)
+1196:Annihilape
+1197:Clodsire
+1198:Farigiraf
+1199:Dudunsparce (Two-Segment Form)
+1200:Dudunsparce (Three-Segment Form)
+1201:Kingambit
+1202:Great Tusk
+1203:Scream Tail
+1204:Brute Bonnet
+1205:Flutter Mane
+1206:Slither Wing
+1207:Sandy Shocks
+1208:Iron Treads
+1209:Iron Bundle
+1210:Iron Hands
+1211:Iron Jugulis
+1212:Iron Moth
+1213:Iron Thorns
+1214:Frigibax
+1215:Arctibax
+1216:Baxcalibur
+1217:Gimmighoul (Chest Form)
+1218:Gimmighoul (Roaming Form)
+1219:Gholdengo
+1220:Wo-Chien
+1221:Chien-Pao
+1222:Ting-Lu
+1223:Chi-Yu
+1224:Roaring Moon
+1225:Iron Valiant
+1226:Koraidon
+1227:Miraidon
+1228:Walking Wake
+1229:Iron Leaves
+1230:Dipplin
+1231:Poltchageist
+1232:Sinistcha
+1233:Okidogi
+1234:Munkidori
+1235:Fezandipiti
+1236:Ogerpon (Teal Mask)
+1237:Ogerpon (Wellspring Mask)
+1238:Ogerpon (Hearthflame Mask)
+1239:Ogerpon (Cornerstone Mask)
+1240:Archaludon
+1241:Hydrapple
+1242:Gouging Fire
+1243:Raging Bolt
+1244:Iron Boulder
+1245:Iron Crown
+1246:Terapagos (Normal Form)
+1247:Terapagos (Terastal Form)
+1248:Terapagos (Stellar Form)
+1249:Pecharunt

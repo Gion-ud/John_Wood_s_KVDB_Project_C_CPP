@@ -172,8 +172,10 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
 #define db (*dbp)
     db.fp = fopen(filepath, "rb+");
     if (!db.fp) {
-        perror("fopen failed");
-        return NULL;
+        //print_err_msg("fopen failed with rb+\n");
+        KVDB_DBObject_close(&db);
+        dbp = KVDB_DBObject_create(filepath, 4096);
+        return dbp;
     }
 
     size_t fread_cnt = fread(&db.Header, HEADER_SIZE, 1, db.fp);
