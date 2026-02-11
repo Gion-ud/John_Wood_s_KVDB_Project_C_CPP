@@ -143,7 +143,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             print_err_msg("fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp) != 1\n");
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
-
+        /*
         print_dbg_msg(\
             "db.key_arr[%u].data='%.*s'\n"\
             "db.key_arr[%u].size=%u\n"\
@@ -152,6 +152,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             i, db.key_arr[i].len, \
             i, db.key_arr[i].type\
         );
+        */
 
 
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);

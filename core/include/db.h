@@ -1,6 +1,6 @@
 // db_utils.h
-#ifndef DB_UTILS_H
-#define DB_UTILS_H
+#ifndef DB_H
+#define DB_H
 
 #include "global.h"
 #include "hash_index_lib.h"

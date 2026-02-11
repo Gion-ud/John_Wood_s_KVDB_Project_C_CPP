@@ -50,12 +50,13 @@ int main(int argc, char *argv[]) {
         val_len = kv->val.len;
         val_data_p = (ubyte_t*)kv->val.data;
 
-        fprintf(of_fp, "val row%.4d:\n\tlen  data\n", i);
+        fprintf(of_fp, "record%.4u:\n%8s %4s %4s\n", i, "col_id", "len", "data");
+        int j = 0;
         while (val_len > 0) {
             col_len = *(ulong_t*)val_data_p;
             val_data_p += sizeof(ulong_t);
             val_len -= sizeof(ulong_t);
-            fprintf(of_fp, "\t%.4u '%.*s'\n", col_len, col_len, (char*)val_data_p);
+            fprintf(of_fp, "%8u %4u '%.*s'\n", j++, col_len, col_len, (char*)val_data_p);
             val_data_p += col_len;
             val_len -= col_len;
         }

@@ -6,7 +6,6 @@
 
 int kvdb_search_key_id(DBObject* dbp, Key key);
 
-
 static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
 //  This is a helper function that prints the header
     if (fp == stdout) { printf(ESC COLOUR_CYAN); }
