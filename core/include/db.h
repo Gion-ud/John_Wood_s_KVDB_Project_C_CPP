@@ -4,6 +4,7 @@
 
 #include "global.h"
 #include "hash_index_lib.h"
+#include "typeflags.h"
 
 
 #define MAX_KEY_SIZE            256
@@ -38,6 +39,7 @@ enum EntryFlags {
     FLAG_VALID   = (1u << 0),
     FLAG_DELETED = (1u << 1),
 };
+/*
 enum KVDBTypeFlags {
     CHAR        = (1u << 0),
     INT         = (1u << 1),
@@ -54,6 +56,8 @@ enum ModTypeFlags {
     SIGNED      = (1u << 9),
     UNSIGNED    = (1u << 10),
 };
+*/
+
 
 #define LE 0
 

@@ -48,6 +48,7 @@ int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
                 db.key_arr[bucket[i].entry_id].data, key.data, key.len
             ) == 0 &&
             db.key_arr[bucket[i].entry_id].len == key.len &&
+            // type mismatch
             db.key_arr[bucket[i].entry_id].type == key.type
         ) {
             return bucket[i].entry_id;
@@ -142,7 +143,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             print_err_msg("fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp) != 1\n");
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
-/*
+
         print_dbg_msg(\
             "db.key_arr[%u].data='%.*s'\n"\
             "db.key_arr[%u].size=%u\n"\
@@ -151,7 +152,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             i, db.key_arr[i].len, \
             i, db.key_arr[i].type\
         );
-*/
+
 
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);
     }
@@ -413,7 +414,7 @@ void KVDB_PrintKvPair(KVPair *kv) {
     if (!kv || !kv->key.data || !kv->val.data) return;
 
     putchar('\n');
-    if (kv->key.type == TEXT) {
+    if (kv->key.type == TYPE_TEXT) {
         printf("key.data=\"%.*s\"\n", (int)kv->key.len, (char*)kv->key.data);
     } else {
         char* buffer = (char*)malloc(kv->key.len * 8ull + 256);
@@ -432,7 +433,7 @@ void KVDB_PrintKvPair(KVPair *kv) {
         return;
     }
 
-    if (kv->val.type == TEXT) {
+    if (kv->val.type == TYPE_TEXT) {
         printf("val.data=\"%.*s\"\n", (int)kv->val.len, (char*)kv->val.data);
     } else {
         char* buffer = (char*)malloc(kv->val.len * 8ull + 256);

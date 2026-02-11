@@ -85,6 +85,7 @@ enum DerivedTypeFlags { // only applies for val
     TYPE_UNION      = 0xc0,
 };
 
+/*
 // Regular type encoding: [data]
 // Array encoding:  (ubyte_t)TYPE_ARRAY, [item_type][item_size][item_count] \
                     [item[0]][item[1]]...[item[item_count - 1]]
@@ -101,6 +102,6 @@ enum DerivedTypeFlags { // only applies for val
                 }
 
 //(or just allocate a buffer)
-
+*/
 
 #endif

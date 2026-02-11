@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(argv[2]);
     if (!dbp) return 1;
 #define db (*dbp)
-    Key k = { strlen(argv[1]), BLOB, NULL };
+    Key k = { strlen(argv[1]), TYPE_TEXT, NULL };
     k.data = (char*)malloc(k.len);
     if (!k.data) {
         print_err_msg("malloc failed\n");
@@ -58,7 +58,11 @@ int main(int argc, char *argv[]) {
     free(kv);
 
     kv = KVDB_DBObject_get_by_key(&db, k);
-    if (!kv) goto cleanup;
+    if (!kv) {
+        printerrf("KVDB_DBObject_get_by_key failed\n");
+        //kv = KVDB_DBObject_get(&db, 336);
+        goto cleanup;
+    }
     val_len = kv->val.len;
     val_data_p = (ubyte_t*)kv->val.data;
 

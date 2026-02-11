@@ -68,7 +68,9 @@ int main(int argc, char *argv[]) {
     char *line = (char*)line_buf;
     ulong_t line_len = 0;
 
-    DBObject* dbp = (DBObject*)KVDB_DBObject_open(argv[3]);
+    DBObject* dbp = NULL;
+    //dbp = (DBObject*)KVDB_DBObject_open(argv[3]);
+    dbp = (DBObject*)KVDB_DBObject_create(argv[3], DB_ENTRY_CAP);
     if (!dbp) return -1;
 
 #define db (*dbp)
@@ -108,7 +110,7 @@ section_insert_records:
             break;
         }
 
-        key.type = BLOB;
+        key.type = TYPE_TEXT;
         key.len = tok_info_arr[pk_col_idx].tok_len;
         key.data = line + tok_info_arr[pk_col_idx].tok_off;
 
@@ -128,7 +130,7 @@ section_insert_records:
 
         val.len = data_blob_p - (ubyte_t*)data_blob;
         val.data = (void*)data_blob;
-        val.type = BLOB;
+        val.type = TYPE_BLOB;
 
         KVDB_DBObject_insert(&db, key, val);
 
@@ -136,17 +138,27 @@ section_insert_records:
     }
     //PrintIndexTable(stdout, dbp);
 
-    KVDB_DBObject_delete(&db, 1);
-    KVDB_DBObject_delete(&db, 10);
-    KVDB_DBObject_delete(&db, 11);
-    KVDB_DBObject_delete(&db, 63);
-    KVDB_DBObject_delete(&db, 189);
-    KVDB_DBObject_delete(&db, 32);
-    KVDB_DBObject_delete(&db, 12000);
-    KVDB_DBObject_delete(&db, 32);
-    KVDB_DBObject_delete(&db, 1200);
-    KVDB_DBObject_delete(&db, 848);
-    KVDB_DBObject_delete(&db, 934);
+///*
+#define db_delete(dbp, id) KVDB_DBObject_delete(dbp, id); printf("Entry %d is deleted\n", (ulong_t)id);
+    db_delete(&db, 10);
+    db_delete(&db, 11);
+    db_delete(&db, 63);
+    db_delete(&db, 189);
+    db_delete(&db, 32);
+    //db_delete(&db, 12000);
+    db_delete(&db, 32);
+    db_delete(&db, 1200);
+    db_delete(&db, 848);
+    db_delete(&db, 934);
+    db_delete(&db, 1);
+    db_delete(&db, 727);
+    db_delete(&db, 667);
+    db_delete(&db, 1023);
+    db_delete(&db, 313);
+    db_delete(&db, 1);
+#undef db_delete
+//*/
+
 
 
     //WriteDBHeader(&db);
