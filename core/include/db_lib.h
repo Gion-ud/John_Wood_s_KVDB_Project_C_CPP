@@ -79,7 +79,7 @@ static inline void PrintIndexTable(FILE* fp, DBObject* dbp) {
 }
 static inline void PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) {
     if (fp == stderr) { PRINT_DBG_MSG(ESC COLOUR_MAGENTA); }
-    fprintf(fp, "# db.Record%.4u\n", EntryID);
+    fprintf(fp, "# db.record%.4u\n", EntryID);
     DataEntryHeader RecordHeader = {0};
     fseek(dbp->fp, dbp->IndexTable[EntryID].Offset, SEEK_SET);
     size_t fread_ret = fread(&RecordHeader, sizeof(RecordHeader), 1, dbp->fp);
@@ -89,10 +89,10 @@ static inline void PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
     }
     fprintf(
         fp,
-        "db.Record%.4u.KeySize=%u\n"
-        "db.Record%.4u.KeyType=0x%.08x\n"
-        "db.Record%.4u.ValSize=%u\n"
-        "db.Record%.4u.ValType=0x%.08x\n",
+        "db.record%.4u.key_len=%u\n"
+        "db.record%.4u.key_type=0x%.08x\n"
+        "db.record%.4u.val_len=%u\n"
+        "db.record%.4u.val_type=0x%.08x\n",
         EntryID,RecordHeader.KeySize,
         EntryID,RecordHeader.KeyType,
         EntryID,RecordHeader.ValSize,
