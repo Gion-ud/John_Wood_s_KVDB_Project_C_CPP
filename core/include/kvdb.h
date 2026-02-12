@@ -55,13 +55,13 @@ static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
 }
 static inline void PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
     if (fp == stderr) { PRINT_DBG_MSG(ESC COLOUR_CYAN); }
-    fprintf(fp, "# db.IndexTableEntry%.4u\n", EntryID);
+    //fprintf(fp, "# db.IndexTableEntry%.4u\n", EntryID);
     fprintf(
         fp,
-        "db.IndexTableEntry%.4u.KeyHash=0x%.16llx\n"
-        "db.IndexTableEntry%.4u.Flags=0x%.08x\n"
-        "db.IndexTableEntry%.4u.EntryID=%.4u\n"
-        "db.IndexTableEntry%.4u.Offset=0x%.16llx\n\n",
+        "db.index_entry%.4u.key_hash=0x%.16llx\n"
+        "db.index_entry%.4u.flags=0x%.08x\n"
+        "db.index_entry%.4u.entry_id=%.4u\n"
+        "db.index_entry%.4u.offset=0x%.16llx\n\n",
         EntryID, (uqword_t)dbp->IndexTable[EntryID].KeyHash,
         EntryID, dbp->IndexTable[EntryID].Flags,
         EntryID, dbp->IndexTable[EntryID].EntryID,
@@ -70,7 +70,7 @@ static inline void PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
     if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
 }
 static inline void PrintIndexTable(FILE* fp, DBObject* dbp) {
-    fputs("[IndexTable]\n", fp);
+    fputs("# IndexTable\n", fp);
     //fseek(db.fp, db.Header.HeaderSize, SEEK_SET);
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
         //fread(&db.IndexTable[i], INDEX_ENTRY_SIZE, 1, db.fp);

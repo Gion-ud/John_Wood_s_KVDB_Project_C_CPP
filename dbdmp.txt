@@ -1,0 +1,266 @@
+[36m# db.FileHeader
+db.FileHeader.Magic=0x4B,0x56,0x44,0x42,0x0D,0x0A,0x20,0x00
+db.FileHeader.Version=5
+db.FileHeader.ByteOrder=0x00
+db.FileHeader.HeaderSize=72
+db.FileHeader.IndexEntrySize=24
+db.FileHeader.EntryCapacity=32
+db.FileHeader.EntryCount=19
+db.FileHeader.ValidEntryCount=17
+db.FileHeader.DataEntryHeaderSize=16
+db.FileHeader.IndexTableOffset=0x00000000000003c6
+db.FileHeader.DataSectionOffset=0x0000000000000048
+db.FileHeader.EOFHeaderOffset=0x000000000000058e
+db.FileHeader.LastModified=2026-02-13 00:16:12
+
+[0m[IndexTable]
+# db.IndexTableEntry0000
+db.IndexTableEntry0000.KeyHash=0xe730d51f42796836
+db.IndexTableEntry0000.Flags=0x00000001
+db.IndexTableEntry0000.EntryID=0000
+db.IndexTableEntry0000.Offset=0x0000000000000048
+
+# db.IndexTableEntry0001
+db.IndexTableEntry0001.KeyHash=0x5656990447ceecdf
+db.IndexTableEntry0001.Flags=0x00000001
+db.IndexTableEntry0001.EntryID=0001
+db.IndexTableEntry0001.Offset=0x0000000000000061
+
+# db.IndexTableEntry0002
+db.IndexTableEntry0002.KeyHash=0x0000000000000000
+db.IndexTableEntry0002.Flags=0x00000002
+db.IndexTableEntry0002.EntryID=0002
+db.IndexTableEntry0002.Offset=0x0000000000000000
+
+# db.IndexTableEntry0003
+db.IndexTableEntry0003.KeyHash=0xe2befb2d33c805a3
+db.IndexTableEntry0003.Flags=0x00000001
+db.IndexTableEntry0003.EntryID=0003
+db.IndexTableEntry0003.Offset=0x00000000000000ae
+
+# db.IndexTableEntry0004
+db.IndexTableEntry0004.KeyHash=0x1e8baf971ed0a932
+db.IndexTableEntry0004.Flags=0x00000001
+db.IndexTableEntry0004.EntryID=0004
+db.IndexTableEntry0004.Offset=0x00000000000000dc
+
+# db.IndexTableEntry0005
+db.IndexTableEntry0005.KeyHash=0x11255140da33cbb2
+db.IndexTableEntry0005.Flags=0x00000001
+db.IndexTableEntry0005.EntryID=0005
+db.IndexTableEntry0005.Offset=0x000000000000010b
+
+# db.IndexTableEntry0006
+db.IndexTableEntry0006.KeyHash=0x106723bac43ed719
+db.IndexTableEntry0006.Flags=0x00000001
+db.IndexTableEntry0006.EntryID=0006
+db.IndexTableEntry0006.Offset=0x000000000000013c
+
+# db.IndexTableEntry0007
+db.IndexTableEntry0007.KeyHash=0x405218d1384d7384
+db.IndexTableEntry0007.Flags=0x00000001
+db.IndexTableEntry0007.EntryID=0007
+db.IndexTableEntry0007.Offset=0x0000000000000170
+
+# db.IndexTableEntry0008
+db.IndexTableEntry0008.KeyHash=0x529580961eb57c58
+db.IndexTableEntry0008.Flags=0x00000001
+db.IndexTableEntry0008.EntryID=0008
+db.IndexTableEntry0008.Offset=0x0000000000000190
+
+# db.IndexTableEntry0009
+db.IndexTableEntry0009.KeyHash=0x3f17c65005575071
+db.IndexTableEntry0009.Flags=0x00000001
+db.IndexTableEntry0009.EntryID=0009
+db.IndexTableEntry0009.Offset=0x00000000000001bd
+
+# db.IndexTableEntry0010
+db.IndexTableEntry0010.KeyHash=0xbba907ce8ab07e35
+db.IndexTableEntry0010.Flags=0x00000001
+db.IndexTableEntry0010.EntryID=0010
+db.IndexTableEntry0010.Offset=0x00000000000001f4
+
+# db.IndexTableEntry0011
+db.IndexTableEntry0011.KeyHash=0xbfe95c6d85babed4
+db.IndexTableEntry0011.Flags=0x00000001
+db.IndexTableEntry0011.EntryID=0011
+db.IndexTableEntry0011.Offset=0x0000000000000227
+
+# db.IndexTableEntry0012
+db.IndexTableEntry0012.KeyHash=0x7e232c45670fcbe7
+db.IndexTableEntry0012.Flags=0x00000001
+db.IndexTableEntry0012.EntryID=0012
+db.IndexTableEntry0012.Offset=0x0000000000000262
+
+# db.IndexTableEntry0013
+db.IndexTableEntry0013.KeyHash=0x5ac8aadc459d7e8b
+db.IndexTableEntry0013.Flags=0x00000001
+db.IndexTableEntry0013.EntryID=0013
+db.IndexTableEntry0013.Offset=0x0000000000000280
+
+# db.IndexTableEntry0014
+db.IndexTableEntry0014.KeyHash=0xf9a29d494c6f354a
+db.IndexTableEntry0014.Flags=0x00000001
+db.IndexTableEntry0014.EntryID=0014
+db.IndexTableEntry0014.Offset=0x00000000000002ab
+
+# db.IndexTableEntry0015
+db.IndexTableEntry0015.KeyHash=0x0bbc3fa472a40b4a
+db.IndexTableEntry0015.Flags=0x00000001
+db.IndexTableEntry0015.EntryID=0015
+db.IndexTableEntry0015.Offset=0x00000000000002e2
+
+# db.IndexTableEntry0016
+db.IndexTableEntry0016.KeyHash=0x647f22f852f37371
+db.IndexTableEntry0016.Flags=0x00000001
+db.IndexTableEntry0016.EntryID=0016
+db.IndexTableEntry0016.Offset=0x0000000000000316
+
+# db.IndexTableEntry0017
+db.IndexTableEntry0017.KeyHash=0x0000000000000000
+db.IndexTableEntry0017.Flags=0x00000002
+db.IndexTableEntry0017.EntryID=0017
+db.IndexTableEntry0017.Offset=0x0000000000000000
+
+# db.IndexTableEntry0018
+db.IndexTableEntry0018.KeyHash=0x68eca6b78bab5b21
+db.IndexTableEntry0018.Flags=0x00000001
+db.IndexTableEntry0018.EntryID=0018
+db.IndexTableEntry0018.Offset=0x000000000000038a
+
+# db.record0000
+db.record0000.key_len=9
+db.record0000.key_type=0x00000001
+db.record0000.val_len=0
+db.record0000.val_type=0x00000001
+db.record0000.key=hitsounds
+db.record0000.val=
+
+# db.record0001
+db.record0001.key_len=14
+db.record0001.key_type=0x00000001
+db.record0001.val_len=0
+db.record0001.val_type=0x00000001
+db.record0001.key=hitsounds/drum
+db.record0001.val=
+
+# db.record0003
+db.record0003.key_len=22
+db.record0003.key_type=0x00000001
+db.record0003.val_len=8
+db.record0003.val_type=0x00000001
+db.record0003.key=hitsounds/drum/hitclap
+db.record0003.val=high tom
+
+# db.record0004
+db.record0004.key_len=24
+db.record0004.key_type=0x00000001
+db.record0004.val_len=7
+db.record0004.val_type=0x00000001
+db.record0004.key=hitsounds/drum/hitfinish
+db.record0004.val=low tom
+
+# db.record0005
+db.record0005.key_len=24
+db.record0005.key_type=0x00000001
+db.record0005.val_len=9
+db.record0005.val_type=0x00000001
+db.record0005.key=hitsounds/drum/hitnormal
+db.record0005.val=bass drum
+
+# db.record0006
+db.record0006.key_len=25
+db.record0006.key_type=0x00000001
+db.record0006.val_len=11
+db.record0006.val_type=0x00000001
+db.record0006.key=hitsounds/drum/hitwhistle
+db.record0006.val=open hi-hat
+
+# db.record0007
+db.record0007.key_len=16
+db.record0007.key_type=0x00000001
+db.record0007.val_len=0
+db.record0007.val_type=0x00000001
+db.record0007.key=hitsounds/normal
+db.record0007.val=
+
+# db.record0008
+db.record0008.key_len=24
+db.record0008.key_type=0x00000001
+db.record0008.val_len=5
+db.record0008.val_type=0x00000001
+db.record0008.key=hitsounds/normal/hitclap
+db.record0008.val=snare
+
+# db.record0009
+db.record0009.key_len=26
+db.record0009.key_type=0x00000001
+db.record0009.val_len=13
+db.record0009.val_type=0x00000001
+db.record0009.key=hitsounds/normal/hitfinish
+db.record0009.val=primary crash
+
+# db.record0010
+db.record0010.key_len=26
+db.record0010.key_type=0x00000001
+db.record0010.val_len=9
+db.record0010.val_type=0x00000001
+db.record0010.key=hitsounds/normal/hitnormal
+db.record0010.val=bass drum
+
+# db.record0011
+db.record0011.key_len=27
+db.record0011.key_type=0x00000001
+db.record0011.val_len=16
+db.record0011.val_type=0x00000001
+db.record0011.key=hitsounds/normal/hitwhistle
+db.record0011.val=ride cymbal bell
+
+# db.record0012
+db.record0012.key_len=14
+db.record0012.key_type=0x00000001
+db.record0012.val_len=0
+db.record0012.val_type=0x00000001
+db.record0012.key=hitsounds/soft
+db.record0012.val=
+
+# db.record0013
+db.record0013.key_len=22
+db.record0013.key_type=0x00000001
+db.record0013.val_len=5
+db.record0013.val_type=0x00000001
+db.record0013.key=hitsounds/soft/hitclap
+db.record0013.val=snare
+
+# db.record0014
+db.record0014.key_len=24
+db.record0014.key_type=0x00000001
+db.record0014.val_len=15
+db.record0014.val_type=0x00000001
+db.record0014.key=hitsounds/soft/hitfinish
+db.record0014.val=secondary crash
+
+# db.record0015
+db.record0015.key_len=24
+db.record0015.key_type=0x00000001
+db.record0015.val_len=12
+db.record0015.val_type=0x00000001
+db.record0015.key=hitsounds/soft/hitnormal
+db.record0015.val=close hi-hat
+
+# db.record0016
+db.record0016.key_len=25
+db.record0016.key_type=0x00000001
+db.record0016.val_len=15
+db.record0016.val_type=0x00000001
+db.record0016.key=hitsounds/soft/hitwhistle
+db.record0016.val=ride cymbal bow
+
+# db.record0018
+db.record0018.key_len=29
+db.record0018.key_type=0x00000001
+db.record0018.val_len=15
+db.record0018.val_type=0x00000001
+db.record0018.key=hitsounds/soft/hitwhistle0000
+db.record0018.val=ride cymbal bow
+

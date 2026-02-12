@@ -1,4 +1,4 @@
-build-bin: add_bin_to_path bin/libkvdb.so mkdb_lso dmpdb_lso dbget_lso
+build-bin: add_bin_to_path bin/libkvdb.so mkdb_lso dmpdb_lso dbget_lso dblskeys_lso
 # mktbldb_lso dmptbldb_lso gettbldbrec_lso
 add_bin_to_path:
 	echo 'export PATH="$$PATH:./bin"'
@@ -39,7 +39,13 @@ dmpdb_lso: tests/dmpdb.c bin/libkvdb.so | core/include core/src core/lib bin tes
 	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dmpdb.c core/src/txt_tok_lib.c \
 		-I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/dmpdb
+
 dbget_lso: tests/dbget.c bin/libkvdb.so | core/include core/src core/lib bin tests
 	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dbget.c core/src/txt_tok_lib.c \
 		-I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/dbget
+
+dblskeys_lso: tests/dblskeys.c bin/libkvdb.so | core/include core/src core/lib bin tests
+	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dblskeys.c core/src/txt_tok_lib.c \
+		-I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o bin/dblskeys

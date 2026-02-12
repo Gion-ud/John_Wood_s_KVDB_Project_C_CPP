@@ -4,7 +4,7 @@
 hitsounds
 
 hitsounds/drum
-hitsounds/drum/hitclap=something
+# hitsounds/drum/hitclap=something
 hitsounds/drum/hitclap=high tom
 hitsounds/drum/hitfinish=low tom
 hitsounds/drum/hitnormal=bass drum
@@ -20,8 +20,4 @@ hitsounds/soft
 hitsounds/soft/hitclap=snare
 hitsounds/soft/hitfinish=secondary crash
 hitsounds/soft/hitnormal=close hi-hat
-hitsounds/soft/hitwhistle=ride cymbal bow
-
-
-hitsounds/soft/hitwhistle0000=ride cymbal bow
-hitsounds/soft/hitwhistle0000=ride cymbal bow
+hitsounds/soft/hitwhistle=ride cymbal

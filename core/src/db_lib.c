@@ -380,7 +380,7 @@ KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
         return NULL;
     }
     if (DB.IndexTable[EntryID].Flags & FLAG_DELETED) {
-        print_err_msg(ESC COLOUR_RED "\n# Warning: Entry[%u] was deleted\n" ESC RESET_COLOUR, EntryID);
+        print_err_msg(ESC COLOUR_RED "# Warning: Entry[%u] was deleted\n" ESC RESET_COLOUR, EntryID);
         return NULL;
     }
 
