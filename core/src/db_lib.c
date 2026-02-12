@@ -277,7 +277,7 @@ void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp) {
 }
 #undef db
 
-int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
+int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
 #define i (uint32_t)DB.Header.EntryCount
     if (i >= DB.Header.EntryCapacity) {
         print_err_msg(ESC COLOUR_RED "Error: DB full\n" ESC RESET_COLOUR);
@@ -300,16 +300,18 @@ int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
 
     hash_t key_hash = fnv_1a_hash(key.data, key.len);
     int ret = KVDB_conv_key_entry_id(&DB, key);
-    if (ret < 0) {
-        int h_idx = HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
-        if (h_idx < 0) {
-            print_err_msg("HASH_INDEX_LIB_HTObject_insert failed\n");
+    if (ret >= 0) {
+        ret = KVDB_DBObject_delete_by_key(&DB, key); // del old entry
+        if (ret < 0) {
+            print_err_msg("KVDB_DBObject_delete_by_key failed\n");
             return -1;
-        };
-    } else {
-        print_err_msg("key already exists\n");
-        return -2;
+        }
     }
+    int h_idx = HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
+    if (h_idx < 0) {
+        print_err_msg("HASH_INDEX_LIB_HTObject_insert failed\n");
+        return -1;
+    };
 
     DataEntryHeader RecordHeader = {0};
     RecordHeader.KeySize = key.len;
@@ -378,7 +380,7 @@ KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
         return NULL;
     }
     if (DB.IndexTable[EntryID].Flags & FLAG_DELETED) {
-        print_err_msg(ESC COLOUR_RED "\n[WARN] Entry[%u] was deleted\n" ESC RESET_COLOUR, EntryID);
+        print_err_msg(ESC COLOUR_RED "\n# Warning: Entry[%u] was deleted\n" ESC RESET_COLOUR, EntryID);
         return NULL;
     }
 

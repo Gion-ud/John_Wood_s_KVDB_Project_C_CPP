@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
         val.data = line + tok_info_arr[1].tok_off;
 
 
-        KVDB_DBObject_insert(&db, key, val);
+        KVDB_DBObject_put(&db, key, val);
 
         free(tok_info_arr); tok_info_arr = NULL;
     }

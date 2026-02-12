@@ -132,7 +132,7 @@ section_insert_records:
         val.data = (void*)data_blob;
         val.type = TYPE_BLOB;
 
-        KVDB_DBObject_insert(&db, key, val);
+        KVDB_DBObject_put(&db, key, val);
 
         free(tok_info_arr); tok_info_arr = NULL;
     }

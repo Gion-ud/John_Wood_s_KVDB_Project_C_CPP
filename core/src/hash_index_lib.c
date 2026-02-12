@@ -131,6 +131,7 @@ int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t en
     }
 
 #define bucket_size ht_obj->ht[h_idx].bucket_size
+    print_dbg_msg("entry_id_old=%u\n", ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id);
     ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id = entry_id;
     print_dbg_msg("entry_id=%u\n", entry_id);
 #undef bucket_size

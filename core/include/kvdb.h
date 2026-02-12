@@ -4,7 +4,7 @@
 
 #include "kvdb_types.h"
 
-int kvdb_search_key_id(DBObject* dbp, Key key);
+//int kvdb_search_key_id(DBObject* dbp, Key key);
 
 static inline void PrintDBFileHeader(FILE* fp, DBObject *dbp) {
 //  This is a helper function that prints the header
@@ -106,7 +106,7 @@ int KVDB_conv_key_entry_id(DBObject* dbp, Key key);
 DBObject* KVDB_DBObject_create(const char* filepath, int EntryCapacity);
 DBObject* KVDB_DBObject_open(const char* filepath);
 void KVDB_DBObject_close(DBObject* dbp);
-int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val);
+int KVDB_DBObject_put(DBObject* dbp, Key key, Val val);
 int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID);
 KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID);
 void KVDB_PrintKvPair(KVPair *kv);
