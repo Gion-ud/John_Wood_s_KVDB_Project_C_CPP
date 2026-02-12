@@ -1,4 +1,4 @@
-#include "hash_index_lib.h"
+#include "hash_index.h"
 
 HTObject *HASH_INDEX_LIB_HTObject_create(int ht_cap) {
     HTObject *ht_obj = (HTObject*)malloc(sizeof(HTObject));
@@ -102,17 +102,38 @@ int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t en
         if (ret < 0) return -1;
     }
 
-#define bucket_idx ht_obj->ht[h_idx].bucket_size
-    ht_obj->ht[h_idx].bucket[bucket_idx].entry_id = entry_id;
-    ht_obj->ht[h_idx].bucket[bucket_idx].key_hash = key_hash;
-    ht_obj->ht[h_idx].bucket[bucket_idx].state = (ubyte_t)HT_ENTRY_INUSE;
+#define bucket_size ht_obj->ht[h_idx].bucket_size
+    ht_obj->ht[h_idx].bucket[bucket_size].entry_id = entry_id;
+    ht_obj->ht[h_idx].bucket[bucket_size].key_hash = key_hash;
+    ht_obj->ht[h_idx].bucket[bucket_size].state = (ubyte_t)HT_ENTRY_INUSE;
 
-    ++bucket_idx;
+    ++bucket_size;
     ++ht_obj->ht_slot_used_cnt;
     ++ht_obj->ht_entry_cnt;
 
     ht_obj->ht[h_idx].slot_state = HT_SLOT_INUSE;
-#undef bucket_idx
+#undef bucket_size
+
+    return h_idx;
+}
+
+int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id) {
+    if (!ht_obj) return -1;
+    if (ht_obj->ht_entry_cnt >= ht_obj->ht_cap) {
+        print_err_msg("Error: HashTable full!\n");
+        return -1;
+    }
+
+    int h_idx = key_hash % ht_obj->ht_cap;
+    if (ht_obj->ht[h_idx].bucket_size >= ht_obj->ht[h_idx].bucket_cap) {
+        int ret = HASH_INDEX_LIB_HTObject_resize_bucket(&ht_obj->ht[h_idx], ht_obj->ht[h_idx].bucket_cap * 2);
+        if (ret < 0) return -1;
+    }
+
+#define bucket_size ht_obj->ht[h_idx].bucket_size
+    ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id = entry_id;
+    print_dbg_msg("entry_id=%u\n", entry_id);
+#undef bucket_size
 
     return h_idx;
 }

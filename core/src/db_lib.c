@@ -1,4 +1,4 @@
-#include "db_lib.h"
+#include "kvdb.h"
 
 #define DB (*dbp)
 #define STACK_MEM_SIZE_MAX 1024u * 1024u
@@ -288,6 +288,29 @@ int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
         return -1;
     }
 
+    /*
+
+    hash_t key_hash = fnv_1a_hash(key.data, key.len);
+    int h_idx = HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
+    if (h_idx < 0) {
+        print_err_msg("HASH_INDEX_LIB_HTObject_insert failed");
+        return -1;
+    };
+    */
+
+    hash_t key_hash = fnv_1a_hash(key.data, key.len);
+    int ret = KVDB_conv_key_entry_id(&DB, key);
+    if (ret < 0) {
+        int h_idx = HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
+        if (h_idx < 0) {
+            print_err_msg("HASH_INDEX_LIB_HTObject_insert failed\n");
+            return -1;
+        };
+    } else {
+        print_err_msg("key already exists\n");
+        return -2;
+    }
+
     DataEntryHeader RecordHeader = {0};
     RecordHeader.KeySize = key.len;
     RecordHeader.KeyType = key.type;
@@ -305,9 +328,6 @@ int KVDB_DBObject_insert(DBObject* dbp, Key key, Val val) {
         print_err_msg("malloc(key.len) failed\n"); return -1;
     }
     memcpy(DB.key_arr[i].data, key.data, key.len);
-
-    hash_t key_hash = fnv_1a_hash(key.data, key.len);
-    HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
 
     fwrite((unsigned char*)val.data, 1, (size_t)val.len, (FILE*)DB.fp);
 
@@ -397,8 +417,8 @@ KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
         goto KVDB_DBObject_get_failed_cleanup;
     }
     fread_cnt = fread(val, RecordHeader.ValSize, 1, DB.fp);
-    if (fread_cnt != 1) {
-        print_err_msg("fread(val, RecordHeader.ValSize, 1, DB.fp) != 1\n");
+    if (fread_cnt > 1) {
+        print_err_msg("fread failed: fread_cnt=%zu\n", fread_cnt);
         goto KVDB_DBObject_get_failed_cleanup;
     }
 

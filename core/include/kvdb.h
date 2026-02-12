@@ -1,8 +1,8 @@
 // db_lib.h with APIs
-#ifndef DB_LIB_H
-#define DB_LIB_H
+#ifndef KVDB_H
+#define KVDB_H
 
-#include "db.h"
+#include "kvdb_types.h"
 
 int kvdb_search_key_id(DBObject* dbp, Key key);
 

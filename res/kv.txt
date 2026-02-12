@@ -1,0 +1,27 @@
+# kv.txt
+# Author: John Wood
+
+hitsounds
+
+hitsounds/drum
+hitsounds/drum/hitclap=something
+hitsounds/drum/hitclap=high tom
+hitsounds/drum/hitfinish=low tom
+hitsounds/drum/hitnormal=bass drum
+hitsounds/drum/hitwhistle=open hi-hat
+
+hitsounds/normal
+hitsounds/normal/hitclap=snare
+hitsounds/normal/hitfinish=primary crash
+hitsounds/normal/hitnormal=bass drum
+hitsounds/normal/hitwhistle=ride cymbal bell
+
+hitsounds/soft
+hitsounds/soft/hitclap=snare
+hitsounds/soft/hitfinish=secondary crash
+hitsounds/soft/hitnormal=close hi-hat
+hitsounds/soft/hitwhistle=ride cymbal bow
+
+
+hitsounds/soft/hitwhistle0000=ride cymbal bow
+hitsounds/soft/hitwhistle0000=ride cymbal bow

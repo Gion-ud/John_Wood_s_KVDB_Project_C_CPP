@@ -3,7 +3,7 @@
 #define DB_H
 
 #include "global.h"
-#include "hash_index_lib.h"
+#include "hash_index.h"
 #include "typeflags.h"
 
 

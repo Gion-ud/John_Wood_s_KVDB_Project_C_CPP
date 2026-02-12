@@ -51,6 +51,7 @@ static inline int HASH_INDEX_LIB_HTObject_get_slot_idx(HTObject *ht_obj, hash_t 
 HTObject *HASH_INDEX_LIB_HTObject_create(int ht_cap);
 void HASH_INDEX_LIB_HTObject_destroy(HTObject *ht_obj);
 int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id);
+int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id);
 int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id);
 HTObject* HASH_INDEX_LIB_HTObject_resize(HTObject *ht_obj, int new_cap);
 HTObject* HASH_INDEX_LIB_HTObject_compact(HTObject *ht_obj);

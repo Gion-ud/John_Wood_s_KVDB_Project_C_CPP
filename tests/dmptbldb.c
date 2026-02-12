@@ -1,5 +1,5 @@
 #include "global.h"
-#include "kvdb_lib.h"
+#include "kvdb.h"
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
