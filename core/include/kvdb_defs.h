@@ -1,6 +1,6 @@
 // db_utils.h
-#ifndef DB_H
-#define DB_H
+#ifndef KVDB_DEFS_H
+#define KVDB_DEFS_H
 
 #include "global.h"
 #include "hash_index.h"

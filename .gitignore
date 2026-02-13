@@ -2,7 +2,9 @@
 *.obj
 /build/*
 /bin/*
+/database/*
 /logs/*
+/lib/*
 /.vscode
 /release_build/*
 /thumnails/*

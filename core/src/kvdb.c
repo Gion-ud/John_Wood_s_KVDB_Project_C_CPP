@@ -63,7 +63,7 @@ int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
 // # no more helper functions below
 
 
-void KVDB_DBObject_close(DBObject *dbp);
+//void KVDB_DBObject_close(DBObject *dbp);
 static inline void KVDB_DBObject_create_FillDBFileHeader(DBObject *dbp, int EntryCapacity) {
 #define db (*dbp)
     memcpy((ubyte_t*)db.Header.Magic, DBFileMagic, MAGIC_SIZE);
