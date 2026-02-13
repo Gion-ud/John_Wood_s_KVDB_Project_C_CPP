@@ -29,14 +29,17 @@ int main(int argc, char *argv[]) {
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(import_filepath);
     if (!dbp) return 1;
 #define db (*dbp)
-    char *msg = "# idx type len key\n";
-    fwrite(msg, 1, strlen(msg), of_fp);
-    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
-        fprintf(of_fp,
-            " %4u 0x%.02x %-3u %.*s\n",
-            (int)i, db.key_arr[i].type, db.key_arr[i].len,
-            (int)db.key_arr[i].len, (char*)db.key_arr[i].data
-        );
+    KVDB_DBObject_PrintFileHeader(of_fp, &db);
+    KVDB_DBObject_PrintIndexTable(of_fp, &db);
+    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) { 
+        KVPair *kv = KVDB_DBObject_get(&db, i);
+        if (!kv) continue;
+        KVDB_DBObject_PrintRecordHeader(of_fp, dbp, i);
+
+        fprintf(of_fp, "db.record%.4u.key=%.*s\n", i, (int)kv->key.len,(char*)kv->key.data);
+        fprintf(of_fp, "db.record%.4u.val=%.*s\n\n", i, (int)kv->val.len,(char*)kv->val.data);
+
+        KVDB_DestroyKVPair(kv);
     }
     KVDB_DBObject_close(&db);
     if (argc == 3) fclose(of_fp);

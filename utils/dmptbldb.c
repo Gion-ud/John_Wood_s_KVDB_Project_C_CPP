@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     if (!dbp) return 1;
 #define db (*dbp)
     PrintDBFileHeader(of_fp, &db);
-    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
+    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) {
         KVPair *kv = KVDB_DBObject_get(&db, i);
         if (!kv) continue;
         PrintIndexEntry(of_fp, dbp, i);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     uint_t val_len = 0;
     uint_t col_len = 0;
     ubyte_t *val_data_p = NULL;
-    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) { 
+    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) { 
         KVPair *kv = KVDB_DBObject_get(&db, i);
         if (!kv) continue;
         PrintRecordHeader(of_fp, dbp, i);

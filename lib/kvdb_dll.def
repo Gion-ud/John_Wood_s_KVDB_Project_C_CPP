@@ -1,0 +1,16 @@
+EXPORTS
+    KVDB_DBObject_EntryCount @1
+    KVDB_DBObject_PrintFileHeader @2
+    KVDB_DBObject_PrintIndexEntry @3
+    KVDB_DBObject_PrintIndexTable @4
+    KVDB_DBObject_PrintRecordHeader @5
+    KVDB_DBObject_close @6
+    KVDB_DBObject_create @7
+    KVDB_DBObject_delete @8
+    KVDB_DBObject_delete_by_key @9
+    KVDB_DBObject_get @10
+    KVDB_DBObject_get_by_key @11
+    KVDB_DBObject_open @12
+    KVDB_DBObject_put @13
+    KVDB_DestroyKVPair @14
+    KVDB_PrintKvPair @15

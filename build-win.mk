@@ -1,31 +1,44 @@
-build-bin: bin/kvdb_lib.dll mkdb_ldll rddb_ldll get_db_rec_ldll
+build-bin: add_bin_to_path bin/kvdb.dll mkdb_ldll dmpdb_ldll dbget_ldll dblskeys_ldll
+add_bin_to_path:
+	echo 'set PATH=%CD%\bin;%PATH%'
 
-MODULE_OBJ = build/db_lib.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
+MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
+
+CFLAGS = -O2 -s -Wall -Wextra -Werror
 
 # dll for kvdb
-bin/kvdb_lib.dll: $(MODULE_OBJ) core/def/kvdb_lib.def | build core/src core/lib core/include core/def bin
-	gcc -O2 -s -shared \
-		-I./core/include \
-		$(MODULE_OBJ) core/def/kvdb_lib.def \
-		-o bin/kvdb_lib.dll \
+bin/kvdb.dll: $(MODULE_OBJ) | bin
+	gcc $(CFLAGS) -shared -DDLL_EXPORT $(MODULE_OBJ) \
+		-I./core/include -o $@ \
 		-Wl,--kill-at \
-		-Wl,--out-implib,core/lib/libkvdb_lib.dll.a
-#		-Wl,--output-def,core/lib/kvdb_lib_exports.def
-#	dlltool -D $@ -d core/def/kvdb_lib.def -l core/lib/libkvdb_lib.dll.a
+		-Wl,--out-implib,lib/libkvdb.dll.a \
+		-Wl,--output-def,lib/kvdb_dll.def
 
-
-mkdb_ldll: tests/mkdb.c bin/kvdb_lib.dll build/txt_tok_lib.o build/global_func.o | core/include core/src bin tests
-	gcc tests/mkdb.c build/txt_tok_lib.o build/global_func.o \
-		-O2 -s -I./core/include -Lbin -lkvdb_lib \
-		-Wl,-rpath=./bin -o bin/mkdb
+mktbldb_ldll: utils/mktbldb.c bin/kvdb.dll lib/libkvdb.dll.a build/txt_tok_lib.o | core/include core/src bin tests
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/tbldb-new
 # -g -fsanitize=address
 
-rddb_ldll: tests/rddb.c bin/kvdb_lib.dll build/txt_tok_lib.o build/global_func.o | core/include core/src bin tests
-	gcc tests/rddb.c build/txt_tok_lib.o build/global_func.o \
-		-O2 -s -I./core/include -Lbin -lkvdb_lib \
-		-Wl,-rpath=./bin -o bin/rddb
+dmptbldb_ldll: utils/dmptbldb.c bin/kvdb.dll lib/libkvdb.dll.a build/txt_tok_lib.o | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/tbldb-dump
 
-get_db_rec_ldll: tests/getdbrec.c bin/kvdb_lib.dll | core/include core/src core/lib bin tests
-	gcc tests/getdbrec.c \
-		-O2 -s -I./core/include -L./core/lib -lkvdb_lib \
-		-Wl,-rpath=./bin -o bin/get-db-rec
+gettbldbrec_ldll: utils/gettbldbrec.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+	gcc $(CFLAGS) -fPIC $^ \
+		-I./core/include -Llib -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
+
+mkdb_ldll: utils/mkdb.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/mkdb
+
+dmpdb_ldll: utils/dmpdb.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/dmpdb
+
+dbget_ldll: utils/dbget.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/dbget
+
+dblskeys_ldll: utils/dblskeys.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o bin/dblskeys

@@ -1,28 +1,31 @@
 SHELL := /usr/bin/sh
 
-WARNING_FLAGS = -Wall -Wextra -Werror
+CFLAGS = -O2 -fPIC -Wall -Wextra -Werror
 
-MODULE_OBJ = build/db_lib.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
+MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
 
 all: $(MODULE_OBJ) build/txt_tok_lib.o build-bin
 
 build bin lib database:
 	mkdir -p build bin core/lib database
 
-build/db_lib.o: core/src/db_lib.c | build core/src core/include
-	gcc $(WARNING_FLAGS) -O2 -fPIC -I./core/include -c core/src/db_lib.c -o $@
+build/kvdb.o: core/src/kvdb.c | build
+	gcc $(CFLAGS) -DDLL_EXPORT -I./core/include -c $^ -o $@
 
-build/hash_func_module.o: core/src/hash_func_module.c | build core/src core/include
-	gcc $(WARNING_FLAGS) -O2 -fPIC -I./core/include -c core/src/hash_func_module.c -o $@
+build/kvdb_print.o: core/src/kvdb_print.c | build
+	gcc $(CFLAGS) -DDLL_EXPORT -I./core/include -c $^ -o $@
 
-build/hash_index_lib.o: core/src/hash_index_lib.c | build core/src core/include
-	gcc $(WARNING_FLAGS) -O2 -fPIC -I./core/include -c core/src/hash_index_lib.c -o $@
+build/hash_func_module.o: core/src/hash_func_module.c | build
+	gcc $(CFLAGS) -I./core/include -c $^ -o $@
 
-build/txt_tok_lib.o: core/src/txt_tok_lib.c | build core/src core/include
-	gcc $(WARNING_FLAGS) -O2 -fPIC -I./core/include -c core/src/txt_tok_lib.c -o $@
+build/hash_index_lib.o: core/src/hash_index_lib.c | build
+	gcc $(CFLAGS) -I./core/include -c $^ -o $@
 
-build/global_func.o: core/src/global_func.c | build core/src core/include
-	gcc $(WARNING_FLAGS) -O2 -fPIC -I./core/include -c core/src/global_func.c -o $@
+build/txt_tok_lib.o: core/src/txt_tok_lib.c | build
+	gcc $(CFLAGS) -I./core/include -c $^ -o $@
+
+build/global_func.o: core/src/global_func.c | build
+	gcc $(CFLAGS) -I./core/include -c $^ -o $@
 
 build-bin:
 ifeq ($(OS),Windows_NT)

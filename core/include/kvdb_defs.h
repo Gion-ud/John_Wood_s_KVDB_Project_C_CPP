@@ -95,15 +95,8 @@ struct DBEOFHeader {
     ubyte_t     EOFMagic[MAGIC_SIZE];
 };
 #pragma pack(pop)
-struct _tlv_obj {
-    size32_t    len;
-    ulong_t     type;
-    void       *data;
-};
-typedef struct { Key key; Val val; } KVPair;
 
-typedef struct _tlv_obj     TLVDataObject;
-typedef struct _key_tbl_obj KeyTableObject;
+//typedef struct _key_tbl_obj KeyTableObject;
 
 struct DBObject {
     FILE           *fp;
@@ -115,11 +108,6 @@ struct DBObject {
     char            db_modified;    // 0 or 1
 };
 
-typedef struct KVDBEntry KVDBEntry;
-struct KVDBEntry {
-    DataEntryHeader Header;
-    Key key;
-    Val val;
-};
+
 
 #endif

@@ -4,48 +4,38 @@ add_bin_to_path:
 	echo 'export PATH="$$PATH:./bin"'
 
 
-WARNING_FLAGS = -Wall -Wextra# -Werror
+CFLAGS = -O2 -s -Wall -Wextra -Werror
 
-MODULE_OBJ = build/db_lib.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
+MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
 
-# dll for kvdb
-bin/libkvdb.so: $(MODULE_OBJ) | build core/src core/include bin
-	gcc $(WARNING_FLAGS) -O2 -s -shared $(MODULE_OBJ) -I./core/include -o bin/libkvdb.so
+bin/libkvdb.so: $(MODULE_OBJ) | build utils core/src core/include bin
+	gcc $(CFLAGS) -shared $(MODULE_OBJ) -I./core/include -o $@ -fvisibility=hidden
 
-
-mktbldb_lso: tests/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o build/global_func.o | core/include core/src bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s \
-		tests/mktbldb.c build/txt_tok_lib.o build/global_func.o \
-		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o bin/tbldb-new
-
+mktbldb_lso: utils/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o | core/include core/src bin tests
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o bin/tbldb-new
 # -g -fsanitize=address
 
-dmptbldb_lso: tests/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o build/global_func.o | core/include core/src bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s \
-		tests/dmptbldb.c build/txt_tok_lib.o build/global_func.o \
-		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o bin/tbldb-dump
+dmptbldb_lso: utils/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o bin/tbldb-dump
 
-gettbldbrec_lso: tests/gettbldbrec.c bin/libkvdb.so | core/include core/src core/lib bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/gettbldbrec.c \
-		-I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/tbldb-get
+gettbldbrec_lso: utils/gettbldbrec.c bin/libkvdb.so | bin
+	gcc $(CFLAGS) -fPIC $^ \
+		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
 
-mkdb_lso: tests/mkdb.c bin/libkvdb.so | core/include core/src core/lib bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/mkdb.c core/src/txt_tok_lib.c \
-		-I./core/include -Lbin -lkvdb \
+mkdb_lso: utils/mkdb.c build/txt_tok_lib.o bin/libkvdb.so | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/mkdb
 
-dmpdb_lso: tests/dmpdb.c bin/libkvdb.so | core/include core/src core/lib bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dmpdb.c core/src/txt_tok_lib.c \
-		-I./core/include -Lbin -lkvdb \
+dmpdb_lso: utils/dmpdb.c bin/libkvdb.so | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/dmpdb
 
-dbget_lso: tests/dbget.c bin/libkvdb.so | core/include core/src core/lib bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dbget.c core/src/txt_tok_lib.c \
-		-I./core/include -Lbin -lkvdb \
+dbget_lso: utils/dbget.c build/txt_tok_lib.o bin/libkvdb.so | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/dbget
 
-dblskeys_lso: tests/dblskeys.c bin/libkvdb.so | core/include core/src core/lib bin tests
-	gcc $(WARNING_FLAGS) -fPIC -O2 -s tests/dblskeys.c core/src/txt_tok_lib.c \
-		-I./core/include -Lbin -lkvdb \
+dblskeys_lso: utils/dblskeys.c bin/libkvdb.so | bin
+	gcc $(CFLAGS) -fPIC $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/dblskeys

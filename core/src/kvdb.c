@@ -1,4 +1,5 @@
 #include "kvdb.h"
+#include "kvdb_defs.h"
 
 #define DB (*dbp)
 #define STACK_MEM_SIZE_MAX 1024u * 1024u
@@ -231,16 +232,16 @@ KVDB_DBObject_open_failed_cleanup:
 #undef db
 }
 
-void KVDB_DBObject_close_WriteDBHeader(DBObject* dbp);
-void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp);
-void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp);
+static void KVDB_DBObject_close_WriteDBFileHeader(DBObject* dbp);
+static void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp);
+static void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp);
 void KVDB_DBObject_close(DBObject* dbp) {
     if (!dbp) return;
     if (DB.db_modified) {
         KVDB_DBObject_close_WriteDBIndexTable(&DB);
         KVDB_DBObject_close_WriteDBEOFHeader(&DB);
-        KVDB_DBObject_close_WriteDBHeader(&DB);
-        PrintDBFileHeader(stdout, dbp);
+        KVDB_DBObject_close_WriteDBFileHeader(&DB);
+        KVDB_DBObject_PrintFileHeader(stdout, dbp);
     }
     if (DB.key_arr) {
         for (uint32_t i = 0; i < DB.Header.EntryCapacity; i++) {
@@ -256,26 +257,29 @@ void KVDB_DBObject_close(DBObject* dbp) {
 }
 
 #define db (*dbp)
-void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp) {
+static void KVDB_DBObject_close_WriteDBFileHeader(DBObject* dbp) {
+    fseek(db.fp, 0, SEEK_SET);
+    db.Header.LastModified = (qword_t)time(NULL);
+    fwrite(&db.Header, HEADER_SIZE, 1, db.fp);
+}
+static void KVDB_DBObject_close_WriteDBEOFHeader(DBObject* dbp) {
     db.Header.EOFHeaderOffset =
         db.Header.IndexTableOffset +
         db.Header.EntryCount * db.Header.IndexEntrySize;
     fseek(db.fp, db.Header.EOFHeaderOffset, SEEK_SET);
     fwrite(&DBEOFMagic, sizeof(DBEOFHeader), 1, DB.fp);
 }
-void KVDB_DBObject_close_WriteDBHeader(DBObject* dbp) {
-    fseek(db.fp, 0, SEEK_SET);
-    db.Header.LastModified = (qword_t)time(NULL);
-    fwrite(&db.Header, HEADER_SIZE, 1, db.fp);
-}
-
-void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp) {
+static void KVDB_DBObject_close_WriteDBIndexTable(DBObject* dbp) {
     fseek(DB.fp, DB.Header.IndexTableOffset, SEEK_SET);
     for (ulong_t i = 0; i < DB.Header.EntryCount; i++) {
         fwrite(&DB.IndexTable[i], INDEX_ENTRY_SIZE, 1, DB.fp);
     }
 }
 #undef db
+
+ulong_t KVDB_DBObject_EntryCount(DBObject* dbp) {
+    return dbp->Header.EntryCount;
+}
 
 int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
 #define i (uint32_t)DB.Header.EntryCount
