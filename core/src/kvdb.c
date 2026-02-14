@@ -8,34 +8,10 @@ static const ubyte_t DBFileMagic[MAGIC_SIZE] = { 'K', 'V', 'D', 'B', '\r', '\n',
 static const ubyte_t DBEOFMagic[MAGIC_SIZE] = { '\n', '.', 'D', 'B', 'E', 'O', 'F', '\0' };
 
 
-// to be removed
-static inline int find_str_nul(char* buffer, size_t buf_size) {
-    for (size_t i = 0; i < buf_size; i++) {
-        if (buffer[i] == '\0') {
-            return i;
-        }
-    }
-    return -1;
-}
-
-static inline uint64_t GetDataEntrySize(uint32_t KeySize, uint64_t ValSize) {
-    return (uint64_t) sizeof(DataEntryHeader) + KeySize + ValSize;
-}
-static inline uint64_t GetIndexEntryOffset(DBObject db, uint32_t EntryID) {
-    return (uint64_t) db.Header.IndexTableOffset + EntryID * db.Header.IndexEntrySize;
-}
-
 static inline void append_str_hex(char** dest, unsigned char* src, size_t src_size) {
     char* tmp = (char*)conv_bytes_hex(src, src_size);
     strcat(*dest, tmp);
     free(tmp);
-}
-
-static inline long get_db_size(DBObject db) {
-    fseek(db.fp, 0, SEEK_END);
-    long db_size = (long)ftell(db.fp);
-    fseek(db.fp, db.OffsetPtr, SEEK_SET);
-    return db_size;
 }
 
 int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
@@ -342,7 +318,7 @@ int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
     DB.IndexTable[i].Flags |= FLAG_VALID;
     DB.IndexTable[i].Offset = DB.OffsetPtr;
 
-    ulonglong_t DataEntrySize = GetDataEntrySize(key.len, val.len);
+    ulonglong_t DataEntrySize = sizeof(DataEntryHeader) + key.len + val.len;
     DB.OffsetPtr += DataEntrySize;
     DB.Header.ValidEntryCount++;
     DB.db_modified = 1;

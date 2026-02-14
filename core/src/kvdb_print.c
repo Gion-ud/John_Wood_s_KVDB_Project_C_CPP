@@ -96,3 +96,15 @@ void KVDB_DBObject_PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
     if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
 }
 
+void KVDB_DBObject_PrintFileHeader_stdout(DBObject *dbp) {
+    KVDB_DBObject_PrintFileHeader(stdout, dbp);
+}
+void KVDB_DBObject_PrintIndexEntry_stdout(DBObject *dbp, uint32_t EntryID) {
+    KVDB_DBObject_PrintIndexEntry(stdout, dbp, EntryID);
+}
+void KVDB_DBObject_PrintIndexTable_stdout(DBObject* dbp) {
+    KVDB_DBObject_PrintIndexTable(stdout, dbp);
+}
+void KVDB_DBObject_PrintRecordHeader_stdout(DBObject *dbp, uint32_t EntryID) {
+    KVDB_DBObject_PrintRecordHeader(stdout, dbp, EntryID);
+}

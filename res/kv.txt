@@ -1,22 +1,16 @@
-# Hitsounds
-# Author: John Wood
-
-hitsounds
-
-hitsounds/drum
-hitsounds/drum/hitclap=high tom,snare,rimshot
-hitsounds/drum/hitfinish=low tom,primary crash
-hitsounds/drum/hitnormal=kick
-hitsounds/drum/hitwhistle=open hi-hat,tambourine
-
-hitsounds/normal
-hitsounds/normal/hitclap=snare,clap
-hitsounds/normal/hitfinish=primary crash,china cymbal
-hitsounds/normal/hitnormal=kick,snare
-hitsounds/normal/hitwhistle=ride cymbal bell,tambourine
-
-hitsounds/soft
-hitsounds/soft/hitclap=snare,clap
-hitsounds/soft/hitfinish=primary crash,secondary crash
-hitsounds/soft/hitnormal=close hi-hat
-hitsounds/soft/hitwhistle=ride cymbal,tambourine
+# KVDB test data with spaces inside values
+username=john doe
+password=s3cr3t P@ss
+email=john.doe@example.com
+age=17
+height_cm=172
+is_admin=false
+theme=dark mode
+last_login=2026-02-14 18:00:00
+max_connections=10
+pi_value=3.14159
+welcome_message=Hello John!
+enable_notifications=true
+favorite_colors=red,green,blue
+permissions=read,write,execute
+recent_scores=100,95,87,92
