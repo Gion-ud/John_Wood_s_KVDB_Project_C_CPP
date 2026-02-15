@@ -47,6 +47,10 @@ int main(int argc, char *argv[]) {
             printerrf("MarkTokPosMeta failed\n");
             break;
         }
+        printf("%.*s=%.*s\n",
+            (int)tok_info_arr[0].tok_len, (char*)line + tok_info_arr[0].tok_off,
+            (int)tok_info_arr[1].tok_len, (char*)line + tok_info_arr[1].tok_off
+        );
 
         key.type = TYPE_TEXT;
         key.len = tok_info_arr[0].tok_len;
@@ -57,7 +61,7 @@ int main(int argc, char *argv[]) {
         val.data = line + tok_info_arr[1].tok_off;
 
 
-        KVDB_DBObject_put(&db, key, val);
+        KVDB_DBObject_put(&db, &key, &val);
 
         free(tok_info_arr); tok_info_arr = NULL;
     }

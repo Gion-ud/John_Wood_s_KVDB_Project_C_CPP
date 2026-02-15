@@ -31,18 +31,23 @@ int main(int argc, char *argv[]) {
 #define db (*dbp)
     KVDB_DBObject_PrintFileHeader(of_fp, &db);
     KVDB_DBObject_PrintIndexTable(of_fp, &db);
-    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) { 
-        KVPair *kv = KVDB_DBObject_get(&db, i);
-        if (!kv) continue;
+    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) {
+        Key *key = KVDB_DBObject_get_key(&db, i);
+        if (!key) continue;
+        Val *val = KVDB_DBObject_get(&db, i);
+        if (!val) continue;
+
         KVDB_DBObject_PrintRecordHeader(of_fp, dbp, i);
 
-        fprintf(of_fp, "db.record%.4u.key=%.*s\n", i, (int)kv->key.len,(char*)kv->key.data);
-        fprintf(of_fp, "db.record%.4u.val=%.*s\n\n", i, (int)kv->val.len,(char*)kv->val.data);
+        fprintf(of_fp, "db.record%.4u.key=%.*s\n", i, (int)key->len,(char*)key->data);
+        fprintf(of_fp, "db.record%.4u.val=%.*s\n\n", i, (int)val->len,(char*)val->data);
 
-        KVDB_DestroyKVPair(kv);
+        // Destroy KV!!
+        KVDB_TLVDataObject_destroy(key);
+        KVDB_TLVDataObject_destroy(val);
     }
     KVDB_DBObject_close(&db);
-    if (argc == 3) fclose(of_fp);
+    if (of_fp && of_fp != stdout) fclose(of_fp);
 #undef db
     return 0;
 }

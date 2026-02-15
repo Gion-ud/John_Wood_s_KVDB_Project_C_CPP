@@ -44,7 +44,7 @@ clean:
 	rm build/* bin/* core/lib/*
 
 clean-all:
-	rm database/* bin/* build/* core/lib/* logs/* && rm -rf tmp/*
+	rm database/* bin/* build/* lib/* logs/* *.db && rm -rf tmp/*
 
 lsdir:
 	./scripts/ls_dir.py

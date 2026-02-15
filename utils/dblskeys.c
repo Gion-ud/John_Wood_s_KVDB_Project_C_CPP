@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
         );
     }
     KVDB_DBObject_close(&db);
-    if (argc == 3) fclose(of_fp);
+    if (of_fp && of_fp != stdout) fclose(of_fp);
 #undef db
     return 0;
 }

@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     fputc('\n', of_fp);
     free(kv);
 
-    kv = KVDB_DBObject_get_by_key(&db, k);
+    kv = KVDB_DBObject_get_by_key(&db, &k);
     if (!kv) {
         printerrf("KVDB_DBObject_get_by_key failed\n");
         //kv = KVDB_DBObject_get(&db, 336);

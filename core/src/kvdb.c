@@ -104,6 +104,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
     fseek(db.fp, db.Header.DataSectionOffset, SEEK_SET);
     DataEntryHeader RecHeader = {0};
     for (uint32_t i = 0; i < db.Header.EntryCount; i++) {
+        if (db.IndexTable[i].Flags & FLAG_DELETED) continue;
         size_t fread_cnt = fread(&RecHeader, sizeof(DataEntryHeader), 1, db.fp);
         if (fread_cnt != 1) {
             print_err_msg("fread(&RecHeader, sizeof(DataEntryHeader), 1, db.fp) != 1\n");
@@ -117,10 +118,13 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
 
         fread_cnt = fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp);
         if (fread_cnt != 1) {
-            print_err_msg("fread(db.key_arr[i].data, RecHeader.KeySize, 1, db.fp) != 1\n");
+            print_err_msg(
+                "fread(db.key_arr[%u].data, RecHeader.KeySize, 1, db.fp) failed: fread_cnt=%zu\n",
+                i, fread_cnt
+            );
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
-        /*
+        //*
         print_dbg_msg(\
             "db.key_arr[%u].data='%.*s'\n"\
             "db.key_arr[%u].size=%u\n"\
@@ -129,7 +133,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             i, db.key_arr[i].len, \
             i, db.key_arr[i].type\
         );
-        */
+        //*/
 
 
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);
@@ -159,7 +163,7 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
 
     size_t fread_cnt = fread(&db.Header, HEADER_SIZE, 1, db.fp);
     if (fread_cnt != 1) {
-        print_err_msg("fread(&db.Header, HEADER_SIZE, 1, db.fp) != 1\n");
+        print_err_msg("fread(&db.Header, HEADER_SIZE, 1, db.fp) != 1: fread_cnt=%zu\n", fread_cnt);
         goto KVDB_DBObject_open_failed_cleanup;
     }
 
@@ -199,7 +203,7 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
         }
     }
 
-    db.OffsetPtr = db.Header.DataSectionOffset;
+    db.OffsetPtr = db.Header.IndexTableOffset;
 
     return dbp;
 KVDB_DBObject_open_failed_cleanup:
@@ -257,7 +261,9 @@ ulong_t KVDB_DBObject_EntryCount(DBObject* dbp) {
     return dbp->Header.EntryCount;
 }
 
-int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
+int KVDB_DBObject_put(DBObject* dbp, const Key* key_p, const Val* val_p) {
+#define key (*key_p)
+#define val (*val_p)
 #define i (uint32_t)DB.Header.EntryCount
     if (i >= DB.Header.EntryCapacity) {
         print_err_msg(ESC COLOUR_RED "Error: DB full\n" ESC RESET_COLOUR);
@@ -269,7 +275,6 @@ int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
     }
 
     /*
-
     hash_t key_hash = fnv_1a_hash(key.data, key.len);
     int h_idx = HASH_INDEX_LIB_HTObject_insert(DB.htObj, key_hash, i);
     if (h_idx < 0) {
@@ -281,7 +286,7 @@ int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
     hash_t key_hash = fnv_1a_hash(key.data, key.len);
     int ret = KVDB_conv_key_entry_id(&DB, key);
     if (ret >= 0) {
-        ret = KVDB_DBObject_delete_by_key(&DB, key); // del old entry
+        ret = KVDB_DBObject_delete_by_key(&DB, &key); // del old entry
         if (ret < 0) {
             print_err_msg("KVDB_DBObject_delete_by_key failed\n");
             return -1;
@@ -319,12 +324,15 @@ int KVDB_DBObject_put(DBObject* dbp, Key key, Val val) {
     DB.IndexTable[i].Offset = DB.OffsetPtr;
 
     ulonglong_t DataEntrySize = sizeof(DataEntryHeader) + key.len + val.len;
+
     DB.OffsetPtr += DataEntrySize;
     DB.Header.ValidEntryCount++;
     DB.db_modified = 1;
     DB.Header.IndexTableOffset += DataEntrySize;
     return i++;
 #undef i
+#undef key
+#undef val
 }
 
 int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID) {
@@ -354,7 +362,7 @@ int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID) {
     return EntryID;
 }
 
-KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
+Val *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
     if (EntryID >= DB.Header.EntryCapacity) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid EntryID\n" ESC RESET_COLOUR);
         return NULL;
@@ -376,106 +384,123 @@ KVPair *KVDB_DBObject_get(DBObject* dbp, uint32_t EntryID) {
         return NULL;
     }
 
-    KVPair *kv = (KVPair*)calloc(1, sizeof(KVPair));
-    if (!kv) { print_err_msg("(KVPair*)calloc(1, sizeof(KVPair)) failed\n"); return NULL; }
-    void* key = (void*)malloc(RecordHeader.KeySize * sizeof(char));
-    void* val = (void*)malloc(RecordHeader.ValSize * sizeof(char));
-    if (!key || !val) {
+    Val *val = (Val*)malloc(sizeof(Val));
+    if (!val) { print_err_msg("malloc failed\n"); return NULL; }
+    void* val_data = (void*)malloc(RecordHeader.ValSize);
+    if (!val_data) {
         perror("malloc");
         goto KVDB_DBObject_get_failed_cleanup;
     }
 
-    kv->key.len = RecordHeader.KeySize;
-    kv->key.type = RecordHeader.KeyType;
-    kv->val.len = RecordHeader.ValSize;
-    kv->val.type = RecordHeader.ValType;
+    fseek(DB.fp, RecordHeader.KeySize, SEEK_CUR); // skip key
 
-    kv->key.data = key;
-    kv->val.data = val;
+    val->len = RecordHeader.ValSize;
+    val->type = RecordHeader.ValType;
+    val->data = val_data;
 
-    fread_cnt = fread(key, RecordHeader.KeySize, 1, DB.fp);
-    if (fread_cnt != 1) {
-        print_err_msg("fread(key, RecordHeader.KeySize, 1, DB.fp) != 1\n");
-        goto KVDB_DBObject_get_failed_cleanup;
-    }
-    fread_cnt = fread(val, RecordHeader.ValSize, 1, DB.fp);
+    fread_cnt = fread(val_data, RecordHeader.ValSize, 1, DB.fp);
     if (fread_cnt > 1) {
         print_err_msg("fread failed: fread_cnt=%zu\n", fread_cnt);
         goto KVDB_DBObject_get_failed_cleanup;
     }
 
-    return kv;
+    return val;
 KVDB_DBObject_get_failed_cleanup:
-    if (key) free(key);
-    if (val) free(val);
-    free(kv);
+    if (val_data) free(val);
+    free(val);
     return NULL;
 #undef MAX_VAL_SIZE
 }
 
-void KVDB_PrintKvPair(KVPair *kv) {
-    if (!kv || !kv->key.data || !kv->val.data) return;
-
-    putchar('\n');
-    if (kv->key.type == TYPE_TEXT) {
-        printf("key.data=\"%.*s\"\n", (int)kv->key.len, (char*)kv->key.data);
-    } else {
-        char* buffer = (char*)malloc(kv->key.len * 8ull + 256);
-        if (!buffer) { perror("malloc failed"); return; }
-
-        unsigned char* _key = (unsigned char*)kv->key.data;
-        strcpy(buffer, "key.data=");
-        append_str_hex(&buffer, _key, kv->key.len);
-        fputs(buffer, stdout);
-
-        free(buffer);
+Val *KVDB_DBObject_get_key(DBObject* dbp, uint32_t EntryID) {
+    if (EntryID >= DB.Header.EntryCapacity) {
+        print_err_msg(ESC COLOUR_RED "Error: Invalid EntryID\n" ESC RESET_COLOUR);
+        return NULL;
     }
-#define MAX_VAL_SIZE 1024u
-    if (!(kv->val.len < MAX_VAL_SIZE)) {
-        printf(ESC COLOUR_YELLOW "# [WARN] val.data cannot be printed: val.len exceeds %u\n" ESC RESET_COLOUR, MAX_VAL_SIZE);
-        return;
+    if (DB.IndexTable[EntryID].Flags & FLAG_DELETED) {
+        print_err_msg(ESC COLOUR_RED "# Warning: Entry[%u] was deleted\n" ESC RESET_COLOUR, EntryID);
+        return NULL;
     }
 
-    if (kv->val.type == TYPE_TEXT) {
-        printf("val.data=\"%.*s\"\n", (int)kv->val.len, (char*)kv->val.data);
+    fseek(DB.fp, DB.IndexTable[EntryID].Offset, SEEK_SET);
+    DataEntryHeader RecordHeader = {0};
+    size_t fread_cnt = fread(&RecordHeader, sizeof(DataEntryHeader), 1, DB.fp);
+    if (fread_cnt != 1) {
+        print_err_msg("[ERROR] fread(&RecordHeader, sizeof(DataEntryHeader), 1, DB.fp) != 1\n");
+        return NULL;
+    }
+    if (RecordHeader.KeySize > MAX_KEY_SIZE) {
+        print_err_msg("[ERROR] Invalid Entry: RecordHeader.KeySize > MAX_KEY_SIZE\n");
+        return NULL;
+    }
+
+    Val *key = (Key*)malloc(sizeof(Key));
+    if (!key) { print_err_msg("malloc failed\n"); return NULL; }
+    void* key_data = (void*)malloc(RecordHeader.KeySize);
+    if (!key_data) {
+        printerrf("malloc failed\n");
+        goto KVDB_DBObject_get_failed_cleanup;
+    }
+
+    key->len = RecordHeader.KeySize;
+    key->type = RecordHeader.KeyType;
+    key->data = key_data;
+
+    fread_cnt = fread(key_data, RecordHeader.KeySize, 1, DB.fp);
+    if (fread_cnt > 1) {
+        print_err_msg("fread failed: fread_cnt=%zu\n", fread_cnt);
+        goto KVDB_DBObject_get_failed_cleanup;
+    }
+
+    return key;
+KVDB_DBObject_get_failed_cleanup:
+    if (key_data) free(key);
+    free(key);
+    return NULL;
+#undef MAX_VAL_SIZE
+}
+
+void KVDB_TLVDataObject_print(TLVDataObject *tlv) {
+    if (!tlv || !tlv->data) return;
+
+    if (tlv->type == TYPE_TEXT) {
+        printf("%.*s\n", (int)tlv->len, (char*)tlv->data);
     } else {
-        char* buffer = (char*)malloc(kv->val.len * 8ull + 256);
+        char* buffer = (char*)malloc(tlv->len * 8ull);
         if (!buffer) { perror("malloc failed"); return; }
-
-        unsigned char* _val = (unsigned char*)kv->val.data;
-        strcpy(buffer, "val.data=\\\n");
-        append_str_hex(&buffer, _val, kv->val.len);
-        strputc('\n', buffer);
         fputs(buffer, stdout);
-
         free(buffer);
     }
 }
 
-void KVDB_DestroyKVPair(KVPair *kv) {
-    if (!kv) return;
-    if (kv->key.data) free(kv->key.data);
-    if (kv->val.data) free(kv->val.data);
-    free(kv);
+void KVDB_TLVDataObject_destroy(TLVDataObject *tlv) {
+    if (!tlv) return;
+    if (tlv->data) free(tlv->data);
+    free(tlv);
 }
 
 
-KVPair* KVDB_DBObject_get_by_key(DBObject* dbp, Key key) {
+Val* KVDB_DBObject_get_by_key(DBObject* dbp, const Key *key_p) {
+#define key (*key_p)
     int id = KVDB_conv_key_entry_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error
         return NULL;
     }
-    KVPair *kv = KVDB_DBObject_get(&DB, (unsigned int)id);
-    return kv;
+    Val* val = KVDB_DBObject_get(&DB, (unsigned int)id);
+    return val;
+#undef key
 }
-int KVDB_DBObject_delete_by_key(DBObject* dbp, Key key) {
+
+int KVDB_DBObject_delete_by_key(DBObject* dbp, const Key* key_p) {
+#define key (*key_p)
     int id = KVDB_conv_key_entry_id(&DB, key);
     if (id < 0) {
         print_err_msg(ESC COLOUR_RED "Error: Invalid key\n" ESC RESET_COLOUR); // Error
         return -1;
     }
     return KVDB_DBObject_delete(&DB, (ulong_t)id);
+#undef key
 }
 
 #undef DB

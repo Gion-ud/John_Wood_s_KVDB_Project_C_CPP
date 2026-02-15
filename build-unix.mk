@@ -13,16 +13,16 @@ CC = gcc
 bin/libkvdb.so: $(MODULE_OBJ) | build utils core/src core/include bin
 	$(CC) -shared -s $(MODULE_OBJ) -I./core/include -o $@ -fvisibility=hidden
 
-mktbldb_lso: utils/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o | core/include core/src bin tests
+mktbldb_lso: tbldb-utils/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o | core/include core/src bin tests
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/tbldb-new
 # -g -fsanitize=address
 
-dmptbldb_lso: utils/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o | bin
+dmptbldb_lso: tbldb-utils/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o bin/tbldb-dump
 
-gettbldbrec_lso: utils/gettbldbrec.c bin/libkvdb.so | bin
+gettbldbrec_lso: tbldb-utils/gettbldbrec.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ \
 		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
 
