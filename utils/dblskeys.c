@@ -33,6 +33,7 @@ int main(int argc, char *argv[]) {
     char *msg = "# idx type len key\n";
     fwrite(msg, 1, strlen(msg), of_fp);
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
+        //if (db.IndexTable[i].Flags & FLAG_DELETED) continue;
         fprintf(of_fp,
             " %4u 0x%.02x %-3u %.*s\n",
             (int)i, db.key_arr[i].type, db.key_arr[i].len,
