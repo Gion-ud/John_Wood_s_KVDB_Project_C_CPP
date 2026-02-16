@@ -104,7 +104,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
     fseek(db.fp, db.Header.DataSectionOffset, SEEK_SET);
     DataEntryHeader RecHeader = {0};
     for (uint32_t i = 0; i < db.Header.EntryCount; i++) {
-        if (db.IndexTable[i].Flags & FLAG_DELETED) continue;
+        //if (db.IndexTable[i].Flags & FLAG_DELETED) continue; // do not use this line it breaks the search arr
         size_t fread_cnt = fread(&RecHeader, sizeof(DataEntryHeader), 1, db.fp);
         if (fread_cnt != 1) {
             print_err_msg("fread(&RecHeader, sizeof(DataEntryHeader), 1, db.fp) != 1\n");
@@ -124,7 +124,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             );
             goto KVDB_DBObject_open_load_keys_failed_cleanup;
         }
-        //*
+        /*
         print_dbg_msg(\
             "db.key_arr[%u].data='%.*s'\n"\
             "db.key_arr[%u].size=%u\n"\
@@ -133,7 +133,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
             i, db.key_arr[i].len, \
             i, db.key_arr[i].type\
         );
-        //*/
+        */
 
 
         fseek(db.fp, RecHeader.ValSize, SEEK_CUR);
@@ -347,16 +347,16 @@ int KVDB_DBObject_delete(DBObject* dbp, uint32_t EntryID) {
     );
     if (ret < 0) return -2;
 
-    if (DB.key_arr[EntryID].data) {
-        free(DB.key_arr[EntryID].data);
-        DB.key_arr[EntryID].data = NULL;
-    }
-    DB.key_arr[EntryID].len = 0;
-    DB.key_arr[EntryID].type = 0;
+    //if (DB.key_arr[EntryID].data) {
+    //    free(DB.key_arr[EntryID].data);
+    //    DB.key_arr[EntryID].data = NULL;
+    //}
+    //DB.key_arr[EntryID].len = 0;
+    //DB.key_arr[EntryID].type = 0;
 
-    DB.IndexTable[EntryID].KeyHash = 0;
+    //DB.IndexTable[EntryID].KeyHash = 0;
     DB.IndexTable[EntryID].Flags = FLAG_DELETED;
-    DB.IndexTable[EntryID].Offset = 0;
+    //DB.IndexTable[EntryID].Offset = 0;
 
     DB.Header.ValidEntryCount--;
     return EntryID;
@@ -466,8 +466,8 @@ void KVDB_TLVDataObject_print(TLVDataObject *tlv) {
     if (tlv->type == TYPE_TEXT) {
         printf("%.*s\n", (int)tlv->len, (char*)tlv->data);
     } else {
-        char* buffer = (char*)malloc(tlv->len * 8ull);
-        if (!buffer) { perror("malloc failed"); return; }
+        char* buffer = conv_bytes_hex(tlv->data, (size_t)tlv->len);
+        if (!buffer) { printerrf("conv_bytes_hex failed\n"); return; }
         fputs(buffer, stdout);
         free(buffer);
     }

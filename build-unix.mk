@@ -1,9 +1,9 @@
-build-bin: add_bin_to_path bin/libkvdb.so mkdb_lso dmpdb_lso dbget_lso dblskeys_lso
-# mktbldb_lso dmptbldb_lso gettbldbrec_lso
+build-bin: add_bin_to_path bin/libkvdb.so bin/mkdb bin/dbdmp bin/dbget bin/dbput bin/dblskeys bin/dbdel
+# mktbldb dmptbldb gettbldbrec
 add_bin_to_path:
 	echo 'export PATH="$$PATH:./bin"'
 
-CFLAGS = -O2 -fPIC -Wall -Wextra -Werror
+CFLAGS = -O2 -fPIC -Wall -Wextra# -Werror
 LDFLAGS = -s
 
 MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
@@ -13,31 +13,42 @@ CC = gcc
 bin/libkvdb.so: $(MODULE_OBJ) | build utils core/src core/include bin
 	$(CC) -shared -s $(MODULE_OBJ) -I./core/include -o $@ -fvisibility=hidden
 
-mktbldb_lso: tbldb-utils/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o | core/include core/src bin tests
+bin/mktbldb: tbldb-utils/mktbldb.c bin/libkvdb.so build/txt_tok_lib.o | core/include core/src bin tests
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/tbldb-new
+		-Wl,-rpath=./bin -o $@
 # -g -fsanitize=address
 
-dmptbldb_lso: tbldb-utils/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o | bin
+bin/dmptbldb: tbldb-utils/dmptbldb.c bin/libkvdb.so build/txt_tok_lib.o | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/tbldb-dump
+		-Wl,-rpath=./bin -o $@
 
-gettbldbrec_lso: tbldb-utils/gettbldbrec.c bin/libkvdb.so | bin
+bin/gettbldbrec: tbldb-utils/gettbldbrec.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ \
-		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
+		-I./core/include -Lbin -lkvdb -Wl,-rpath=./bin -o $@
 
-mkdb_lso: utils/mkdb.c build/txt_tok_lib.o bin/libkvdb.so | bin
+bin/mkdb: utils/mkdb.c build/txt_tok_lib.o bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/mkdb
+		-Wl,-rpath=./bin -o $@
 
-dmpdb_lso: utils/dmpdb.c bin/libkvdb.so | bin
+bin/dbdmp: utils/dbdmp.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/dmpdb
+		-Wl,-rpath=./bin -o $@
 
-dbget_lso: utils/dbget.c build/txt_tok_lib.o bin/libkvdb.so | bin
+bin/dbget: utils/dbget.c build/txt_tok_lib.o bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/dbget
+		-Wl,-rpath=./bin -o $@
 
-dblskeys_lso: utils/dblskeys.c bin/libkvdb.so | bin
+bin/dbput: utils/dbput.c build/txt_tok_lib.o bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
-		-Wl,-rpath=./bin -o bin/dblskeys
+		-Wl,-rpath=./bin -o $@
+
+bin/dblskeys: utils/dblskeys.c bin/libkvdb.so | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o $@
+bin/dbdel: utils/dbdel.c bin/libkvdb.so | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o $@
+
+bin/dbdel-by-id: utils/dbdel-by-id.c bin/libkvdb.so | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o $@

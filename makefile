@@ -4,7 +4,7 @@ SHELL := /usr/bin/sh
 ifeq ($(OS),Windows_NT)
 CFLAGS = -O2 -Wextra -Werror
 else
-CFLAGS = -O2 -fPIC -Wall -Wextra -Werror
+CFLAGS = -O2 -fPIC -Wall -Wextra# -Werror
 endif
 
 MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o

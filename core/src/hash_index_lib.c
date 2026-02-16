@@ -37,6 +37,7 @@ NewHashTableObject_failed_cleanup:
         }
         free(ht_obj->ht);
     }
+    free(ht_obj);
     return NULL;
 }
 
@@ -101,6 +102,13 @@ int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t en
         int ret = HASH_INDEX_LIB_HTObject_resize_bucket(&ht_obj->ht[h_idx], ht_obj->ht[h_idx].bucket_cap * 2);
         if (ret < 0) return -1;
     }
+    //if (ht_obj->ht_del_cnt / 2 > ht_obj->ht_entry_cnt) {
+    //    HTObject *ht_obj_tmp = HASH_INDEX_LIB_HTObject_compact(ht_obj);
+    //    if (!ht_obj) return -1;
+    //    ht_obj = ht_obj_tmp;
+    //}
+
+
 
 #define bucket_size ht_obj->ht[h_idx].bucket_size
     ht_obj->ht[h_idx].bucket[bucket_size].entry_id = entry_id;
@@ -131,9 +139,14 @@ int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t en
     }
 
 #define bucket_size ht_obj->ht[h_idx].bucket_size
-    print_dbg_msg("entry_id_old=%u\n", ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id);
-    ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id = entry_id;
-    print_dbg_msg("entry_id=%u\n", entry_id);
+    for (size_t i = 0; i < bucket_size; ++i) {
+        if (ht_obj->ht[h_idx].bucket[i].state == HT_ENTRY_INUSE &&
+            ht_obj->ht[h_idx].bucket[i].key_hash == key_hash) {
+            ht_obj->ht[h_idx].bucket[i].entry_id = entry_id;
+            return h_idx;
+        }
+    }
+    //ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id = entry_id;
 #undef bucket_size
 
     return h_idx;
@@ -146,7 +159,8 @@ int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t en
 
     for (size_t i = 0; i < ht_obj->ht[h_idx].bucket_size; ++i) {
         if (
-            ht_obj->ht[h_idx].bucket[i].entry_id == (int)entry_id
+            ht_obj->ht[h_idx].bucket[i].entry_id == (int)entry_id &&
+            ht_obj->ht[h_idx].bucket[i].key_hash == key_hash
         ) {
             ht_obj->ht[h_idx].bucket[i].entry_id = -1;
             ht_obj->ht[h_idx].bucket[i].key_hash = 0;
@@ -160,9 +174,13 @@ int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t en
     return -1;
 }
 
-HTObject *HASH_INDEX_LIB_HTObject_compact(HTObject *ht_obj) {
+HTObject *HASH_INDEX_LIB_HTObject_compact(HTObject *ht_obj) { // realloc style
     if (!ht_obj) return NULL;
     HTObject *ht_obj_new = HASH_INDEX_LIB_HTObject_create(ht_obj->ht_cap);
+    if (!ht_obj_new) {
+        printerrf("HASH_INDEX_LIB_HTObject_create failed");
+        return NULL;
+    }
     int ret = -1;
     for (size_t i = 0; i < ht_obj->ht_cap; ++i) {
         if (!ht_obj->ht[i].bucket) continue;
