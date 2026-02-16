@@ -33,12 +33,16 @@ int main(int argc, char *argv[]) {
     char *msg = "# idx type len key\n";
     fwrite(msg, 1, strlen(msg), of_fp);
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
-        //if (db.IndexTable[i].Flags & FLAG_DELETED) continue;
         fprintf(of_fp,
-            " %4u 0x%.02x %-3u %.*s\n",
+            " %4u 0x%.02x %-3u %.*s",
             (int)i, db.key_arr[i].type, db.key_arr[i].len,
             (int)db.key_arr[i].len, (char*)db.key_arr[i].data
         );
+        fflush(of_fp);
+        if (db.IndexTable[i].Flags & FLAG_DELETED) {
+            fputs(" # deleted", of_fp);
+        }
+        fputc('\n', of_fp);
     }
     KVDB_DBObject_close(&db);
     if (of_fp && of_fp != stdout) fclose(of_fp);

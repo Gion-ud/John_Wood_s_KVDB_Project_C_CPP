@@ -26,7 +26,8 @@ int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
             ) == 0 &&
             db.key_arr[bucket[i].entry_id].len == key.len &&
             // type mismatch
-            db.key_arr[bucket[i].entry_id].type == key.type
+            db.key_arr[bucket[i].entry_id].type == key.type &&
+            !(db.IndexTable[bucket[i].entry_id].Flags & FLAG_DELETED)
         ) {
             return bucket[i].entry_id;
         }
