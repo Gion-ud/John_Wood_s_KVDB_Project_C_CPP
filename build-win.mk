@@ -1,7 +1,7 @@
-build-bin: add_bin_to_path bin/kvdb.dll bin/mkdb bin/dbdmp bin/dbget bin/dblskeys bin/dbput bin/dbdel bin/dbdel-by-id
+build-bin: add_bin_to_path bin/kvdb.dll bin/newdb bin/mkdb bin/dbdmp bin/dbget bin/dblskeys bin/dbput bin/dbdel bin/dbdel-by-id
 add_bin_to_path:
-	echo 'set PATH=%CD%\bin;%PATH%' # windows
-	echo 'export PATH="$$PATH:./bin"' # unix
+	# set PATH=%CD%\bin;%PATH% 	## windows
+	# export PATH="$$PATH:./bin" 	## unix
 
 MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
 
@@ -32,6 +32,10 @@ gettbldbrec_ldll: utils/gettbldbrec.c bin/kvdb.dll lib/libkvdb.dll.a | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ \
 		-I./core/include -Llib -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
 
+bin/newdb: utils/newdb.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
+		-Wl,-rpath=./bin -o $@
+
 bin/mkdb: utils/mkdb.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
 		-Wl,-rpath=./bin -o $@
@@ -48,11 +52,11 @@ bin/dbput: utils/dbput.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bi
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
 		-Wl,-rpath=./bin -o $@
 
-bin/dblskeys: utils/dblskeys.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+bin/dbdel: utils/dbdel.c bin/kvdb.dll lib/libkvdb.dll.a | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
 		-Wl,-rpath=./bin -o $@
 
-bin/dbdel: utils/dbdel.c bin/kvdb.dll lib/libkvdb.dll.a | bin
+bin/dblskeys: utils/dblskeys.c bin/kvdb.dll lib/libkvdb.dll.a | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
 		-Wl,-rpath=./bin -o $@
 

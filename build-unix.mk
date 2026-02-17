@@ -1,4 +1,4 @@
-build-bin: add_bin_to_path bin/libkvdb.so bin/mkdb bin/dbdmp bin/dbget bin/dbput bin/dblskeys bin/dbdel
+build-bin: add_bin_to_path bin/libkvdb.so bin/mkdb bin/newdb bin/dbdmp bin/dbget bin/dbput bin/dblskeys bin/dbdel
 # mktbldb dmptbldb gettbldbrec
 add_bin_to_path:
 	echo 'export PATH="$$PATH:./bin"'
@@ -30,6 +30,10 @@ bin/mkdb: utils/mkdb.c build/txt_tok_lib.o bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o $@
 
+bin/newdb: utils/newdb.c bin/libkvdb.so | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
+		-Wl,-rpath=./bin -o $@
+
 bin/dbdmp: utils/dbdmp.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o $@
@@ -45,6 +49,7 @@ bin/dbput: utils/dbput.c build/txt_tok_lib.o bin/libkvdb.so | bin
 bin/dblskeys: utils/dblskeys.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o $@
+
 bin/dbdel: utils/dbdel.c bin/libkvdb.so | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Lbin -lkvdb \
 		-Wl,-rpath=./bin -o $@

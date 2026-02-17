@@ -30,11 +30,11 @@ int main(int argc, char *argv[]) {
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(import_filepath);
     if (!dbp) return 1;
 #define db (*dbp)
-    char *msg = "# idx type len key\n";
+    char *msg = "entry_id type  len key\n";
     fwrite(msg, 1, strlen(msg), of_fp);
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
         fprintf(of_fp,
-            " %4u 0x%.02x %-3u %.*s",
+            "%8.4u 0x%.02x %4u %.*s",
             (int)i, db.key_arr[i].type, db.key_arr[i].len,
             (int)db.key_arr[i].len, (char*)db.key_arr[i].data
         );

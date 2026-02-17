@@ -86,6 +86,8 @@ DBObject* KVDB_DBObject_create(const char* filepath, int EntryCapacity) {
     if (!db.htObj) goto KVDB_DBObject_create_failed_cleanup;
 
     db.OffsetPtr = db.Header.DataSectionOffset;
+    db.db_modified = 1;
+
     return dbp;
 KVDB_DBObject_create_failed_cleanup:
     if (dbp) KVDB_DBObject_close(&db);
