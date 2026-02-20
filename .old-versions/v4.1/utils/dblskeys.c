@@ -1,5 +1,6 @@
 #include "global.h"
 #include "kvdb.h"
+#include "kvdb_defs.h"
 
 #define prog_name argv[0]
 #define import_filepath argv[1]
@@ -29,24 +30,19 @@ int main(int argc, char *argv[]) {
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(import_filepath);
     if (!dbp) return 1;
 #define db (*dbp)
-    KVDB_DBObject_PrintFileHeader(of_fp, &db);
-    KVDB_DBObject_PrintIndexTable(of_fp, &db);
-    for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) {
-        Key *key = KVDB_DBObject_get_key(&db, i);
-        if (!key) continue;
-        Val *val = KVDB_DBObject_get(&db, i);
-        if (!val) {
-            KVDB_TLVDataObject_destroy(key); continue;
+    char *msg = "entry_id type  len key\n";
+    fwrite(msg, 1, strlen(msg), of_fp);
+    for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
+        fprintf(of_fp,
+            "%8.4u 0x%.02x %4u %.*s",
+            (int)i, db.key_arr[i].type, db.key_arr[i].len,
+            (int)db.key_arr[i].len, (char*)db.key_arr[i].data
+        );
+        fflush(of_fp);
+        if (db.IndexTable[i].Flags & FLAG_DELETED) {
+            fputs(" # deleted", of_fp);
         }
-
-        KVDB_DBObject_PrintRecordHeader(of_fp, dbp, i);
-
-        fprintf(of_fp, "db.record%.4u.key=%.*s\n", i, (int)key->len,(char*)key->data);
-        fprintf(of_fp, "db.record%.4u.val=%.*s\n\n", i, (int)val->len,(char*)val->data);
-
-        // Destroy KV!!
-        KVDB_TLVDataObject_destroy(key);
-        KVDB_TLVDataObject_destroy(val);
+        fputc('\n', of_fp);
     }
     KVDB_DBObject_close(&db);
     if (of_fp && of_fp != stdout) fclose(of_fp);

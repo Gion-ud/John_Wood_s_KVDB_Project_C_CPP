@@ -35,9 +35,7 @@ int main(int argc, char *argv[]) {
         Key *key = KVDB_DBObject_get_key(&db, i);
         if (!key) continue;
         Val *val = KVDB_DBObject_get(&db, i);
-        if (!val) {
-            KVDB_TLVDataObject_destroy(key); continue;
-        }
+        if (!val) continue;
 
         KVDB_DBObject_PrintRecordHeader(of_fp, dbp, i);
 

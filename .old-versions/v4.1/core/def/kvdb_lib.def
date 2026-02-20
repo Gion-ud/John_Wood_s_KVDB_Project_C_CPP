@@ -1,0 +1,14 @@
+LIBRARY KVDB_LIB
+EXPORTS
+	KVDB_conv_key_entry_id
+	KVDB_DBObject_create
+	KVDB_DBObject_open
+	KVDB_DBObject_close
+	; KVDB_DBObject_insert
+	KVDB_DBObject_delete
+	KVDB_DBObject_get
+	KVDB_DBObject_put
+	KVDB_PrintKvPair
+	KVDB_DestroyKVPair
+	KVDB_DBObject_get_by_key
+	KVDB_DBObject_delete_by_key

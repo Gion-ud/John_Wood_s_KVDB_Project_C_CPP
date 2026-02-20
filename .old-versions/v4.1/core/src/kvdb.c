@@ -100,7 +100,7 @@ static int KVDB_DBObject_open_load_keys(DBObject *dbp) {
 #define db (*dbp)
     db.key_arr = (Key*)calloc(db.Header.EntryCapacity, sizeof(Key));
     if (!db.key_arr) {
-        print_err_msg("calloc failed\n");
+        print_err_msg("calloc(EntryCapacity, sizeof(Key)) failed\n");
         return -1;
     }
 

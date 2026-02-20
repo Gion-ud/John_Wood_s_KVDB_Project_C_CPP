@@ -1,8 +1,4 @@
-build-bin: add_bin_to_path bin/kvdb.dll bin/newdb bin/mkdb \
-           bin/dbdmp bin/dbget bin/dblskeys bin/dbput \
-           bin/dbdel bin/dbdel-by-id bin/dbresize bin/dbcompact \
-           bin/dbdmpkv
-
+build-bin: add_bin_to_path bin/kvdb.dll bin/newdb bin/mkdb bin/dbdmp bin/dbget bin/dblskeys bin/dbput bin/dbdel bin/dbdel-by-id
 add_bin_to_path:
 	# set PATH=%CD%\bin;%PATH% 	## windows
 	# export PATH="$$PATH:./bin" 	## unix
@@ -61,18 +57,6 @@ bin/dbdel: utils/dbdel.c bin/kvdb.dll lib/libkvdb.dll.a | bin
 		-Wl,-rpath=./bin -o $@
 
 bin/dblskeys: utils/dblskeys.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbresize: utils/dbresize.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbcompact: utils/dbcompact.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbdmpkv: utils/dbdmpkv.c bin/kvdb.dll lib/libkvdb.dll.a | bin
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
 		-Wl,-rpath=./bin -o $@
 

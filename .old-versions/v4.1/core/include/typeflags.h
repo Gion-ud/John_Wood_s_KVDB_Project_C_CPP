@@ -3,7 +3,11 @@
 
 #include "global.h"
 
-static enum _TYPE_FLAGS {
+enum TypeFlags {
+    TYPE_NONE       = 0x00,
+    TYPE_TEXT       = 0x01,
+    TYPE_BLOB       = 0x02,
+
     TYPE_I8         = 0x10,
     TYPE_I16        = 0x11,
     TYPE_I32        = 0x12,
@@ -19,24 +23,19 @@ static enum _TYPE_FLAGS {
     TYPE_F16        = 0x30,
     TYPE_F32        = 0x31,
     TYPE_F64        = 0x32,
-    TYPE_F80_X87    = 0x33,
+    TYPE_F80        = 0x33,
     TYPE_F128       = 0x34,
-};
 
-enum TypeFlags {
-    TYPE_NONE       = 0x00,
-    TYPE_TEXT       = 0x01,
-    TYPE_BLOB       = 0x02,
     TYPE_BOOL       = 0x40,
-
-    TYPE_INT        = TYPE_LONG,
-    TYPE_UINT       = TYPE_ULONG,
-
+};
+enum TypeFlagAliases {
+    TYPE_INT        = TYPE_I32,
     TYPE_CHAR       = TYPE_I8,
     TYPE_SHORT      = TYPE_I16,
     TYPE_LONG       = TYPE_I32,
     TYPE_LONGLONG   = TYPE_I64,
 
+    TYPE_UINT       = TYPE_U32,
     TYPE_UCHAR      = TYPE_U8,
     TYPE_USHORT     = TYPE_U16,
     TYPE_ULONG      = TYPE_U32,
@@ -45,56 +44,9 @@ enum TypeFlags {
     TYPE_HALF       = TYPE_F16,
     TYPE_FLOAT      = TYPE_F32,
     TYPE_DOUBLE     = TYPE_F64,
-//  TYPE_LONGDOUBLE = TYPE_F80_X87,
+    TYPE_LONGDOUBLE = TYPE_F80,
     TYPE_QUAD       = TYPE_F128,
 };
-
-#define TYPE_NONE_symbol        "TYPE_NONE"
-#define TYPE_TEXT_symbol        "TYPE_TEXT"
-#define TYPE_BLOB_symbol        "TYPE_BLOB"
-#define TYPE_BOOL_symbol        "TYPE_BOOL"
-#define TYPE_INT_symbol         "TYPE_INT"
-#define TYPE_UINT_symbol        "TYPE_UINT"
-#define TYPE_CHAR_symbol        "TYPE_CHAR"
-#define TYPE_SHORT_symbol       "TYPE_SHORT"
-#define TYPE_LONG_symbol        "TYPE_LONG"
-#define TYPE_LONGLONG_symbol    "TYPE_LONGLONG"
-#define TYPE_UCHAR_symbol       "TYPE_UCHAR"
-#define TYPE_USHORT_symbol      "TYPE_USHORT"
-#define TYPE_ULONG_symbol       "TYPE_ULONG"
-#define TYPE_ULONGLONG_symbol   "TYPE_ULONGLONG"
-#define TYPE_HALF_symbol        "TYPE_HALF"
-#define TYPE_FLOAT_symbol       "TYPE_FLOAT"
-#define TYPE_DOUBLE_symbol      "TYPE_DOUBLE"
-#define TYPE_QUAD_symbol        "TYPE_QUAD"
-
-enum TypeSize {
-    TYPE_NONE_SIZE  = 0,
-    TYPE_BOOL_SIZE  = 1,
-
-    TYPE_INT_SIZE   = 4,
-    TYPE_UINT_SIZE  = 4,
-
-    TYPE_CHAR_SIZE      = 1,
-    TYPE_SHORT_SIZE     = 2,
-    TYPE_LONG_SIZE      = 4,
-    TYPE_LONGLONG_SIZE  = 8,
-    TYPE_LONGLONG_SIZE  = 8,
-    TYPE_INT128_SIZE    = 16,
-
-    TYPE_UCHAR_SIZE     = 1,
-    TYPE_USHORT_SIZE    = 2,
-    TYPE_ULONG_SIZE     = 4,
-    TYPE_ULONGLONG_SIZE = 8,
-    TYPE_UINT128_SIZE   = 16,
-
-    TYPE_HALF_SIZE      = 2,
-    TYPE_FLOAT_SIZE     = 4,
-    TYPE_DOUBLE_SIZE    = 8,
-//  TYPE_LONGDOUBLE_SIZE = 10,
-    TYPE_QUAD_SIZE      = 16,
-};
-
 enum TypeFlagAliases1 {
     TYPE_INT8       = 0x10,
     TYPE_INT16      = 0x11,
@@ -111,6 +63,7 @@ enum TypeFlagAliases1 {
     TYPE_FLOAT16    = 0x30,
     TYPE_FLOAT32    = 0x31,
     TYPE_FLOAT64    = 0x32,
+    TYPE_FLOAT80    = 0x33,
     TYPE_FLOAT128   = 0x34,
 };
 
@@ -119,6 +72,11 @@ enum TypeFlagAliasesAsm {
     TYPE_WORD       = TYPE_I16,
     TYPE_DWORD      = TYPE_I32,
     TYPE_QWORD      = TYPE_I64,
+
+    TYPE_UBYTE      = TYPE_U8,
+    TYPE_UWORD      = TYPE_U16,
+    TYPE_UDWORD     = TYPE_U32,
+    TYPE_UQWORD     = TYPE_U64,
 };
 
 enum DerivedTypeFlags { // only applies for val
@@ -145,6 +103,5 @@ enum DerivedTypeFlags { // only applies for val
 
 //(or just allocate a buffer)
 */
-
 
 #endif

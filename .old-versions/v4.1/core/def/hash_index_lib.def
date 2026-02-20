@@ -1,0 +1,10 @@
+LIBRARY hash_index_lib
+EXPORTS
+    fnv_1a_hash
+    HASH_INDEX_LIB_HTObject_create
+    HASH_INDEX_LIB_HTObject_destroy
+    HASH_INDEX_LIB_HTObject_insert
+    ; HASH_INDEX_LIB_HTObject_get_entry_id
+    HASH_INDEX_LIB_HTObject_delete
+    HASH_INDEX_LIB_HTObject_resize
+    HASH_INDEX_LIB_HTObject_compact
