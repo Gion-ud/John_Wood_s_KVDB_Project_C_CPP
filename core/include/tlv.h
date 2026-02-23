@@ -26,8 +26,4 @@ struct _tlv_obj {
 };
 
 
-
-
-
-
 #endif

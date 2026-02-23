@@ -10,6 +10,7 @@ HTObject *HASH_INDEX_LIB_HTObject_create(int ht_cap) {
     ht_obj->ht_cap = ht_cap;
     ht_obj->ht_entry_cnt = 0;
     ht_obj->ht_del_cnt = 0;
+    ht_obj->ht_slot_used_cnt = 0;
     ht_obj->ht = (HashTableSlot*)calloc(ht_cap, sizeof(HashTableSlot));
 
     if (!ht_obj->ht) {
@@ -70,7 +71,8 @@ HTObject* HASH_INDEX_LIB_HTObject_resize(HTObject *ht_obj, int new_cap) {
                         "HASH_INDEX_LIB_HTObject_insert: failed to insert entry [%zu, %zu]\n",
                         i, j
                     );
-                    continue;
+                    HASH_INDEX_LIB_HTObject_destroy(ht_obj_new);
+                    return NULL;
                 };
             }
         }
@@ -92,7 +94,7 @@ static inline int HASH_INDEX_LIB_HTObject_resize_bucket(HashTableSlot *ht_slot, 
 
 int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id) {
     if (!ht_obj) return -1;
-    if (ht_obj->ht_entry_cnt >= ht_obj->ht_cap) {
+    if (ht_obj->ht_slot_used_cnt >= ht_obj->ht_cap) {
         print_err_msg("Error: HashTable full!\n");
         return -1;
     }
@@ -116,10 +118,13 @@ int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t en
     ht_obj->ht[h_idx].bucket[bucket_size].state = (ubyte_t)HT_ENTRY_INUSE;
 
     ++bucket_size;
-    ++ht_obj->ht_slot_used_cnt;
+    if (ht_obj->ht[h_idx].slot_state != HT_SLOT_INUSE) {
+        ++ht_obj->ht_slot_used_cnt;
+        ht_obj->ht[h_idx].slot_state = HT_SLOT_INUSE;
+    }
+
     ++ht_obj->ht_entry_cnt;
 
-    ht_obj->ht[h_idx].slot_state = HT_SLOT_INUSE;
 #undef bucket_size
 
     return h_idx;
@@ -133,10 +138,7 @@ int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t en
     }
 
     int h_idx = key_hash % ht_obj->ht_cap;
-    if (ht_obj->ht[h_idx].bucket_size >= ht_obj->ht[h_idx].bucket_cap) {
-        int ret = HASH_INDEX_LIB_HTObject_resize_bucket(&ht_obj->ht[h_idx], ht_obj->ht[h_idx].bucket_cap * 2);
-        if (ret < 0) return -1;
-    }
+    if (ht_obj->ht[h_idx].bucket_size >= ht_obj->ht[h_idx].bucket_cap) return -1;
 
 #define bucket_size ht_obj->ht[h_idx].bucket_size
     for (size_t i = 0; i < bucket_size; ++i) {
@@ -149,7 +151,7 @@ int HASH_INDEX_LIB_HTObject_update(HTObject *ht_obj, hash_t key_hash, ulong_t en
     //ht_obj->ht[h_idx].bucket[bucket_size - 1].entry_id = entry_id;
 #undef bucket_size
 
-    return h_idx;
+    return -1;
 }
 
 int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t entry_id) {
@@ -196,7 +198,8 @@ HTObject *HASH_INDEX_LIB_HTObject_compact(HTObject *ht_obj) { // realloc style
                     "HASH_INDEX_LIB_HTObject_compact: HASH_INDEX_LIB_HTObject_insert failed at entry (i=%zu, j=%zu)\n",
                     i, j
                 );
-                continue;
+                HASH_INDEX_LIB_HTObject_destroy(ht_obj_new);
+                return NULL;
             }
         }
     }

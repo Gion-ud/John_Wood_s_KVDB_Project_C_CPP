@@ -60,13 +60,13 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         case (TYPE_FLOAT):
         {
             if (this->len != sizeof(float)) break;
-            printf("%f", *(uqword_t*)this->data);
+            printf("%f", *(float*)this->data);
             break;
         }
         case (TYPE_DOUBLE):
         {
             if (this->len != sizeof(float)) break;
-            printf("%lf", *(uqword_t*)this->data);
+            printf("%lf", *(double*)this->data);
             break;
         }
         case (TYPE_BOOL):
@@ -77,6 +77,19 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
             } else {
                 fputs("false", stdout);
             }
+            break;
+        }
+        case (TYPE_TEXT):
+        {
+            printf("%.*s", (int)this->len, (ubyte_t*)this->data);
+            break;
+        }
+        default:
+        {
+            char *hexbytestr = conv_bytes_hex(this->data, this->len);
+            if (!hexbytestr) break;
+            fputs(hexbytestr, stdout);
+            free(hexbytestr);
             break;
         }
     }

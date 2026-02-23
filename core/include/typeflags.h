@@ -3,7 +3,7 @@
 
 #include "global.h"
 
-static enum _TYPE_FLAGS {
+enum _TYPE_FLAGS {
     TYPE_I8         = 0x10,
     TYPE_I16        = 0x11,
     TYPE_I32        = 0x12,
@@ -29,8 +29,8 @@ enum TypeFlags {
     TYPE_BLOB       = 0x02,
     TYPE_BOOL       = 0x40,
 
-    TYPE_INT        = TYPE_LONG,
-    TYPE_UINT       = TYPE_ULONG,
+    TYPE_INT        = TYPE_I32,
+    TYPE_UINT       = TYPE_U32,
 
     TYPE_CHAR       = TYPE_I8,
     TYPE_SHORT      = TYPE_I16,
@@ -78,7 +78,6 @@ enum TypeSize {
     TYPE_CHAR_SIZE      = 1,
     TYPE_SHORT_SIZE     = 2,
     TYPE_LONG_SIZE      = 4,
-    TYPE_LONGLONG_SIZE  = 8,
     TYPE_LONGLONG_SIZE  = 8,
     TYPE_INT128_SIZE    = 16,
 
