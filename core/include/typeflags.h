@@ -1,8 +1,6 @@
 #ifndef TYPEFLAGS_H
 #define TYPEFLAGS_H
 
-#include "global.h"
-
 enum _TYPE_FLAGS {
     TYPE_I8         = 0x10,
     TYPE_I16        = 0x11,
