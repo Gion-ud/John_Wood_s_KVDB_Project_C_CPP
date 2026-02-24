@@ -2,7 +2,6 @@
 #ifndef KVDB_H
 #define KVDB_H
 
-#include "global.h"
 #include "typeflags.h"
 
 #if defined(_MSC_VER)

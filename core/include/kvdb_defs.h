@@ -35,9 +35,10 @@ typedef struct DBEOFHeader DBEOFHeader;
 //typedef unsigned char pad_t;
 
 enum EntryFlags {
-    FLAG_UNUSED  = 0u,
-    FLAG_VALID   = (1u << 0),
-    FLAG_DELETED = (1u << 1),
+    FLAG_UNUSED     = 0u,
+    FLAG_VALID      = (1u << 0),
+    FLAG_DELETED    = (1u << 1),
+    FLAG_COMPRESSED = (1u << 2), // zlib
 };
 /*
 enum KVDBTypeFlags {
