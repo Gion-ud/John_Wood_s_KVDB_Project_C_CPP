@@ -26,6 +26,7 @@ public:
             return nullptr;
         }
     }
+    
     ~KVDB() {
         if (this->dbp) {
             KVDB_DBObject_close(this->dbp);
@@ -39,9 +40,16 @@ int main() {
     KVDB db_h;
     if (!db_h.create("images.db", 4)) return -1;
 
-    FILE *fp = fopen("../res/res/images/121200433_p2.jpg", "rb");
+
+    std::FILE *fp = std::fopen("../res/res/images/121200433_p2.jpg", "rb");
+    if (!fp) {
+        std::cerr << "fopen failed\n";
+        return errno;
+    };
 
 
+
+    std::fclose(fp);
 
     return 0;
 }
