@@ -5,7 +5,6 @@
 #include "global.h"
 #include "typeflags.h"
 
-
 #if defined(_MSC_VER)
     #ifdef DLL_EXPORT
         #define KVDB_API __declspec(dllexport)
@@ -48,16 +47,11 @@ KVDB_API void KVDB_TLVDataObject_print(TLVDataObject *tlv);
 KVDB_API void KVDB_TLVDataObject_destroy(TLVDataObject *tlv);
 
 
-KVDB_API void KVDB_DBObject_PrintFileHeader(FILE *fp, DBObject *dbp);
-KVDB_API void KVDB_DBObject_PrintIndexEntry(FILE *fp, DBObject *dbp, uint32_t EntryID);
-KVDB_API void KVDB_DBObject_PrintIndexTable(FILE *fp, DBObject *dbp);
-KVDB_API void KVDB_DBObject_PrintRecordHeader(FILE *fp, DBObject *dbp, uint32_t EntryID);
+KVDB_API void KVDB_DBObject_PrintFileHeader(int fd, DBObject *dbp);
+KVDB_API void KVDB_DBObject_PrintIndexEntry(int fd, DBObject *dbp, uint32_t EntryID);
+KVDB_API void KVDB_DBObject_PrintIndexTable(int fd, DBObject* dbp);
+KVDB_API void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID);
 
-
-KVDB_API void KVDB_DBObject_PrintFileHeader_stdout(DBObject *dbp);
-KVDB_API void KVDB_DBObject_PrintIndexEntry_stdout(DBObject *dbp, uint32_t EntryID);
-KVDB_API void KVDB_DBObject_PrintIndexTable_stdout(DBObject *dbp);
-KVDB_API void KVDB_DBObject_PrintRecordHeader_stdout(DBObject *dbp, uint32_t EntryID);
 
 
 #endif

@@ -1,23 +1,32 @@
 #include "kvdb.h"
 #include "kvdb_defs.h"
 
-void KVDB_DBObject_PrintFileHeader(FILE* fp, DBObject *dbp) {
-//  This is a helper function that prints the header
-    if (fp == stdout) { printf(ESC COLOUR_CYAN); }
-    if (fp == stderr) { print_dbg_msg(ESC COLOUR_MAGENTA); }
+static char buf[BUFFER_SIZE] = {0};
+static size32_t buf_cur = 0;
+static const size32_t buf_size = BUFFER_SIZE;
 
-    fputs("# db.FileHeader\n", fp);
-    fputs("db.FileHeader.Magic=", fp);
+void KVDB_DBObject_PrintFileHeader(int fd, DBObject *dbp) {
+//  This is a helper function that prints the header
+    if (fd == STDOUT_FILENO) { printf(ESC COLOUR_CYAN); }
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC COLOUR_MAGENTA); }
+    buf_cur = 0;
+
+    const char *msg = "db.FileHeader.Magic=";
+    size32_t msg_len = strlen(msg);
+    memcpy((char*)buf + buf_cur, msg, msg_len);
+    buf_cur += strlen(msg);
+
 #define Header (dbp->Header)
-{
-    char* tmp = (char*)conv_bytes_hex(Header.Magic, MAGIC_SIZE);
-    fputs(tmp, fp);
-    free(tmp);
-}
+    msg = (char*)conv_bytes_hex(Header.Magic, MAGIC_SIZE);
+    msg_len = strlen(msg);
+    memcpy((char*)buf + buf_cur, msg, msg_len);
+    buf_cur += strlen(msg);
+
     char timestr[TIME_STR_SIZE] = {0};
     conv_time_str_modptr(&timestr, (uqword_t)Header.LastModified);
-    fprintf(
-        fp,
+    buf_cur += snprintf(
+        (char*)buf + buf_cur,
+        buf_size - buf_cur,
         "db.FileHeader.Version=%u\n"
         "db.FileHeader.ByteOrder=0x%.02x\n"
         "db.FileHeader.HeaderSize=%u\n"
@@ -44,15 +53,19 @@ void KVDB_DBObject_PrintFileHeader(FILE* fp, DBObject *dbp) {
         (uqword_t)Header.EOFHeaderOffset,
         timestr
     );
-    if (fp == stdout) { printf(ESC RESET_COLOUR); }
-    if (fp == stderr) { print_dbg_msg(ESC RESET_COLOUR); }
+    write(fd, (char*)buf, buf_cur);
+    buf_cur = 0;
+    if (fd == STDOUT_FILENO) { printf(ESC RESET_COLOUR); }
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 #undef Header
 }
-void KVDB_DBObject_PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
-    if (fp == stderr) { PRINT_DBG_MSG(ESC COLOUR_CYAN); }
+void KVDB_DBObject_PrintIndexEntry(int fd, DBObject *dbp, uint32_t EntryID) {
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC COLOUR_CYAN); }
     //fprintf(fp, "# db.IndexTableEntry%.4u\n", EntryID);
-    fprintf(
-        fp,
+    buf_cur = 0;
+    buf_cur += snprintf(
+        (char*)buf,
+        BUFFER_SIZE,
         "db.index_entry%.4u.key_hash=0x%.16llx\n"
         "db.index_entry%.4u.flags=0x%.08x\n"
         "db.index_entry%.4u.entry_id=%.4u\n"
@@ -62,19 +75,29 @@ void KVDB_DBObject_PrintIndexEntry(FILE* fp, DBObject *dbp, uint32_t EntryID) {
         EntryID, dbp->IndexTable[EntryID].EntryID,
         EntryID, (uqword_t)dbp->IndexTable[EntryID].Offset
     );
-    if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
+    write(fd, (char*)buf, buf_cur);
+    buf_cur = 0;
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 }
-void KVDB_DBObject_PrintIndexTable(FILE* fp, DBObject* dbp) {
-    fputs("# IndexTable\n", fp);
-    //fseek(db.fp, db.Header.HeaderSize, SEEK_SET);
+void KVDB_DBObject_PrintIndexTable(int fd, DBObject* dbp) {
+    buf_cur = 0;
+    const char *msg = "# IndexTable\n";
+    size32_t msg_len = strlen(msg);
+    write(fd, (char*)msg, msg_len);
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
-        //fread(&db.IndexTable[i], INDEX_ENTRY_SIZE, 1, db.fp);
-        KVDB_DBObject_PrintIndexEntry(fp, dbp, i);
+        KVDB_DBObject_PrintIndexEntry(fd, dbp, i);
     };
+    buf_cur = 0;
 }
-void KVDB_DBObject_PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) {
-    if (fp == stderr) { PRINT_DBG_MSG(ESC COLOUR_MAGENTA); }
-    fprintf(fp, "# db.record%.4u\n", EntryID);
+void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID) {
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC COLOUR_MAGENTA); }
+    buf_cur = 0;
+    buf_cur += snprintf(
+        buf + buf_cur,
+        buf_size - buf_cur,
+        "# db.record%.4u\n",
+        EntryID
+    );
     DataEntryHeader RecordHeader = {0};
     fseek(dbp->fp, dbp->IndexTable[EntryID].Offset, SEEK_SET);
     size_t fread_ret = fread(&RecordHeader, sizeof(RecordHeader), 1, dbp->fp);
@@ -82,8 +105,9 @@ void KVDB_DBObject_PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
         print_err_msg("fread(&RecordHeader, sizeof(RecordHeader), 1, dbp->fp) failed\n");
         return;
     }
-    fprintf(
-        fp,
+    buf_cur += snprintf(
+        buf,
+        buf_size - buf_cur,
         "db.record%.4u.key_len=%u\n"
         "db.record%.4u.key_type=0x%.08x\n"
         "db.record%.4u.val_len=%u\n"
@@ -93,18 +117,6 @@ void KVDB_DBObject_PrintRecordHeader(FILE* fp, DBObject *dbp, uint32_t EntryID) 
         EntryID,RecordHeader.ValSize,
         EntryID,RecordHeader.ValType
     );
-    if (fp == stderr) { PRINT_DBG_MSG(ESC RESET_COLOUR); }
-}
-
-void KVDB_DBObject_PrintFileHeader_stdout(DBObject *dbp) {
-    KVDB_DBObject_PrintFileHeader(stdout, dbp);
-}
-void KVDB_DBObject_PrintIndexEntry_stdout(DBObject *dbp, uint32_t EntryID) {
-    KVDB_DBObject_PrintIndexEntry(stdout, dbp, EntryID);
-}
-void KVDB_DBObject_PrintIndexTable_stdout(DBObject* dbp) {
-    KVDB_DBObject_PrintIndexTable(stdout, dbp);
-}
-void KVDB_DBObject_PrintRecordHeader_stdout(DBObject *dbp, uint32_t EntryID) {
-    KVDB_DBObject_PrintRecordHeader(stdout, dbp, EntryID);
+    write(fd, (char*)buf, buf_cur);
+    if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 }

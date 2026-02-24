@@ -65,10 +65,14 @@ typedef unsigned long long  uqword_t;
 typedef ulong_t             size32_t;
 typedef size_t              size64_t;
 
-#ifndef _WIN32
-typedef ulong_t             off32_t;
-typedef ulonglong_t         off64_t;
+#ifndef __MINGW32__
+typedef long_t              off32_t;
+typedef longlong_t          off64_t;
 #endif
+
+typedef ulong_t             uoff32_t;
+typedef ulonglong_t         uoff64_t;
+
 
 
 

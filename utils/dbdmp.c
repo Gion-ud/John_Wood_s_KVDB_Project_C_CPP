@@ -26,11 +26,13 @@ int main(int argc, char *argv[]) {
             of_fp = stdout;
         }
     }
+    int fd = fileno(of_fp);
+    fflush(of_fp);
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(import_filepath);
     if (!dbp) return 1;
 #define db (*dbp)
-    KVDB_DBObject_PrintFileHeader(of_fp, &db);
-    KVDB_DBObject_PrintIndexTable(of_fp, &db);
+    KVDB_DBObject_PrintFileHeader(fd, &db);
+    KVDB_DBObject_PrintIndexTable(fd, &db);
     for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) {
         Key *key = KVDB_DBObject_get_key(&db, i);
         if (!key) continue;
@@ -39,10 +41,14 @@ int main(int argc, char *argv[]) {
             KVDB_TLVDataObject_destroy(key); continue;
         }
 
-        KVDB_DBObject_PrintRecordHeader(of_fp, dbp, i);
+        KVDB_DBObject_PrintRecordHeader(fd, dbp, i);
 
-        fprintf(of_fp, "db.record%.4u.key=%.*s\n", i, (int)key->len,(char*)key->data);
-        fprintf(of_fp, "db.record%.4u.val=%.*s\n\n", i, (int)val->len,(char*)val->data);
+        fprintf(of_fp,
+            "db.record%.4u.key=%.*s\n"
+            "db.record%.4u.val=%.*s\n\n",
+            i, (int)key->len,(char*)key->data,
+            i, (int)val->len,(char*)val->data
+        );
 
         // Destroy KV!!
         KVDB_TLVDataObject_destroy(key);

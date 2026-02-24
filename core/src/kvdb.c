@@ -158,10 +158,11 @@ DBObject* KVDB_DBObject_open(const char* filepath) {
 #define db (*dbp)
     db.fp = fopen(filepath, "rb+");
     if (!db.fp) {
-        //print_err_msg("fopen failed with rb+\n");
-        KVDB_DBObject_close(&db);
-        dbp = KVDB_DBObject_create(filepath, 4096);
-        return dbp;
+        print_err_msg("fopen failed with rb+\n");
+        //KVDB_DBObject_close(&db);
+        //dbp = KVDB_DBObject_create(filepath, 4096);
+        //return dbp;
+        return NULL;
     }
 
     size_t fread_cnt = fread(&db.Header, HEADER_SIZE, 1, db.fp);
@@ -224,7 +225,7 @@ void KVDB_DBObject_close(DBObject* dbp) {
         KVDB_DBObject_close_WriteDBIndexTable(&DB);
         KVDB_DBObject_close_WriteDBEOFHeader(&DB);
         KVDB_DBObject_close_WriteDBFileHeader(&DB);
-        KVDB_DBObject_PrintFileHeader(stdout, dbp);
+        KVDB_DBObject_PrintFileHeader(STDOUT_FILENO, dbp);
     }
     if (DB.key_arr) {
         for (uint32_t i = 0; i < DB.Header.EntryCapacity; i++) {

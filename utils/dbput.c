@@ -46,8 +46,12 @@ int main(int argc, char *argv[]) {
         printerrf("KVDB_DBObject_put failed: ret=%d\n", ret);
         goto cleanup;
     }
-    fprintf(of_fp, "db.record.key=%.*s\n", (int)key.len,(char*)key.data);
-    fprintf(of_fp, "db.record.val=%.*s\n", (int)val.len,(char*)val.data);
+    fprintf(of_fp,
+        "db.record.key=%.*s\n"
+        "db.record.val=%.*s\n",
+        (int)key.len,(char*)key.data,
+        (int)val.len,(char*)val.data
+    );
 cleanup:
     KVDB_DBObject_close(&db);
     if (of_fp && of_fp != stdout) fclose(of_fp);
