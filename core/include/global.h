@@ -18,14 +18,20 @@
 #include <ctype.h>
 #include <dirent.h>
 
+#ifdef _MSC_VER
+    #include <io.h>
+    #define _write(fd, buf_p, buf_size) write(fd, buf_p, buf_size)
+#else
+    #include <unistd.h>
+#endif
+
 #define print_err_msg(...) fprintf(stderr, __VA_ARGS__)
 #define printerrf(...) fprintf(stderr, __VA_ARGS__)
 
 #define DEBUG
 
 #ifdef DEBUG
-#define print_dbg_msg(...) fprintf(stderr, __VA_ARGS__)
-#define PRINT_DBG_MSG(...) fprintf(stderr, __VA_ARGS__);fflush(stderr)
+#define print_dbg_msg(...) fprintf(stderr, __VA_ARGS__);fflush(stderr)
 #else
 #define print_dbg_msg(...)
 #define PRINT_DBG_MSG(...)
@@ -76,8 +82,8 @@ typedef ulonglong_t         uoff64_t;
 
 
 
-typedef void*           ptr_t;
-#define PRIptr          ".16llx"
+typedef void*   ptr_t;
+#define PRIptr  ".16llx"
 // typedef unsigned long long  ptr_t;
 typedef unsigned int        uint_t;
 typedef unsigned char       flag_t;
