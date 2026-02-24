@@ -3,6 +3,7 @@
 #define KVDB_H
 
 #include "typeflags.h"
+#include "global_int_types.h"
 
 #if defined(_MSC_VER)
     #ifdef DLL_EXPORT
