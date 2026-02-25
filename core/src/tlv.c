@@ -23,14 +23,14 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         }
         case (TYPE_SHORT):
         {
-            if (this->len != sizeof(word_t)) break;
-            printf("%hd", *(word_t*)this->data);
+            if (this->len != sizeof(short_t)) break;
+            printf("%hd", *(short_t*)this->data);
             break;
         }
         case (TYPE_USHORT):
         {
-            if (this->len != sizeof(uword_t)) break;
-            printf("%hu", *(uword_t*)this->data);
+            if (this->len != sizeof(word_t)) break;
+            printf("%hu", *(word_t*)this->data);
             break;
         }
         case (TYPE_LONG):
@@ -47,14 +47,14 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         }
         case (TYPE_LONGLONG):
         {
-            if (this->len != sizeof(qword_t)) break;
-            printf("%lld", *(qword_t*)this->data);
+            if (this->len != sizeof(longlong_t)) break;
+            printf("%lld", *(longlong_t*)this->data);
             break;
         }
         case (TYPE_ULONGLONG):
         {
-            if (this->len != sizeof(uqword_t)) break;
-            printf("%llu", *(uqword_t*)this->data);
+            if (this->len != sizeof(ulonglong_t)) break;
+            printf("%llu", *(ulonglong_t*)this->data);
             break;
         }
         case (TYPE_FLOAT):
@@ -71,8 +71,8 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         }
         case (TYPE_BOOL):
         {
-            if (this->len != sizeof(ubyte_t)) break;
-            if (*(ubyte_t*)this->data) {
+            if (this->len != sizeof(byte_t)) break;
+            if (*(byte_t*)this->data) {
                 fputs("true", stdout);
             } else {
                 fputs("false", stdout);
@@ -81,7 +81,7 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         }
         case (TYPE_TEXT):
         {
-            printf("%.*s", (int)this->len, (ubyte_t*)this->data);
+            printf("%.*s", (int)this->len, (byte_t*)this->data);
             break;
         }
         default:

@@ -5,7 +5,6 @@
 /database/*
 /logs/*
 /lib/*
-/.vscode
 /release_build/*
 /thumnails/*
 nul

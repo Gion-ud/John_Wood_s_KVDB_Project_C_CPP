@@ -23,7 +23,7 @@ void KVDB_DBObject_PrintFileHeader(int fd, DBObject *dbp) {
     buf_cur += strlen(msg);
 
     char timestr[TIME_STR_SIZE] = {0};
-    conv_time_str_modptr(&timestr, (uqword_t)Header.LastModified);
+    conv_time_str_modptr(&timestr, (qword_t)Header.LastModified);
     buf_cur += snprintf(
         (char*)buf + buf_cur,
         buf_size - buf_cur,
@@ -48,9 +48,9 @@ void KVDB_DBObject_PrintFileHeader(int fd, DBObject *dbp) {
         Header.EntryCount,
         Header.ValidEntryCount,
         Header.DataEntryHeaderSize,
-        (uqword_t)Header.IndexTableOffset,
-        (uqword_t)Header.DataSectionOffset,
-        (uqword_t)Header.EOFHeaderOffset,
+        (qword_t)Header.IndexTableOffset,
+        (qword_t)Header.DataSectionOffset,
+        (qword_t)Header.EOFHeaderOffset,
         timestr
     );
     write(fd, (char*)buf, buf_cur);
@@ -70,10 +70,10 @@ void KVDB_DBObject_PrintIndexEntry(int fd, DBObject *dbp, uint32_t EntryID) {
         "db.index_entry%.4u.flags=0x%.08x\n"
         "db.index_entry%.4u.entry_id=%.4u\n"
         "db.index_entry%.4u.offset=0x%.16llx\n\n",
-        EntryID, (uqword_t)dbp->IndexTable[EntryID].KeyHash,
+        EntryID, (qword_t)dbp->IndexTable[EntryID].KeyHash,
         EntryID, dbp->IndexTable[EntryID].Flags,
         EntryID, dbp->IndexTable[EntryID].EntryID,
-        EntryID, (uqword_t)dbp->IndexTable[EntryID].Offset
+        EntryID, (qword_t)dbp->IndexTable[EntryID].Offset
     );
     write(fd, (char*)buf, buf_cur);
     buf_cur = 0;
@@ -118,5 +118,6 @@ void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID) {
         EntryID,RecordHeader.ValType
     );
     write(fd, (char*)buf, buf_cur);
+    write(fd, "something\n\n", 11);
     if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 }

@@ -32,14 +32,14 @@ struct _ht_obj {
 struct _ht_entry {
     hash_t  key_hash;
     int     entry_id;
-    ubyte_t state;
+    byte_t  state;
 };
 
 struct _ht_slot {
     HashTableEntry *bucket;
     size_t  bucket_cap;
     size_t  bucket_size;
-    ubyte_t slot_state;
+    byte_t  slot_state;
 };
 
 static inline int HASH_INDEX_LIB_HTObject_get_slot_idx(HTObject *ht_obj, hash_t key_hash) {

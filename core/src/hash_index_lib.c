@@ -115,7 +115,7 @@ int HASH_INDEX_LIB_HTObject_insert(HTObject *ht_obj, hash_t key_hash, ulong_t en
 #define bucket_size ht_obj->ht[h_idx].bucket_size
     ht_obj->ht[h_idx].bucket[bucket_size].entry_id = entry_id;
     ht_obj->ht[h_idx].bucket[bucket_size].key_hash = key_hash;
-    ht_obj->ht[h_idx].bucket[bucket_size].state = (ubyte_t)HT_ENTRY_INUSE;
+    ht_obj->ht[h_idx].bucket[bucket_size].state = (byte_t)HT_ENTRY_INUSE;
 
     ++bucket_size;
     if (ht_obj->ht[h_idx].slot_state != HT_SLOT_INUSE) {
@@ -166,7 +166,7 @@ int HASH_INDEX_LIB_HTObject_delete(HTObject *ht_obj, hash_t key_hash, ulong_t en
         ) {
             ht_obj->ht[h_idx].bucket[i].entry_id = -1;
             ht_obj->ht[h_idx].bucket[i].key_hash = 0;
-            ht_obj->ht[h_idx].bucket[i].state = (ubyte_t)HT_ENTRY_DELETED;
+            ht_obj->ht[h_idx].bucket[i].state = (byte_t)HT_ENTRY_DELETED;
             --ht_obj->ht_entry_cnt;
             ++ht_obj->ht_del_cnt;
             return h_idx;

@@ -9,10 +9,14 @@ enum {
     ENTRY_DELETED   = 2
 };
 
+typedef unsigned long long  hash_t;
+typedef signed int          hidx_t;
+typedef unsigned int        keysize_t;
+
 typedef struct HashEntry HashEntry;
 typedef struct HashTableObject HashTableObject;
 struct HashEntry {
-    ubyte_t*    key;
+    byte_t*     key;
     keysize_t   key_size;
     hash_t      key_hash;
     flag_t      flag;
@@ -33,15 +37,15 @@ void DestroyHashTableObject(HashTableObject* pObj);
 
 #define INSERT_ENTRY_FAILED -1
 #define HASH_TABLE_FULL     -2
-hidx_t insert_entry(HashTableObject* pObj, const ubyte_t* key, keysize_t key_size);
+hidx_t insert_entry(HashTableObject* pObj, const byte_t* key, keysize_t key_size);
 
 #define KEY_NOT_FOUND -1
 #define SEARCH_KEY_FAILED -2
-hidx_t search_key(HashTableObject* pObj, const ubyte_t* key, keysize_t key_size);
+hidx_t search_key(HashTableObject* pObj, const byte_t* key, keysize_t key_size);
 
 #define DEL_KEY_FAILED -2
 #define DEL_KEY_SUCCESS 0
-hidx_t delete_entry(HashTableObject* pObj, const ubyte_t* key, keysize_t key_size);
+hidx_t delete_entry(HashTableObject* pObj, const byte_t* key, keysize_t key_size);
 
 
 #endif

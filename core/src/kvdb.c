@@ -4,8 +4,8 @@
 #define DB (*dbp)
 #define STACK_MEM_SIZE_MAX 1024u * 1024u
 
-static const ubyte_t DBFileMagic[MAGIC_SIZE] = { 'K', 'V', 'D', 'B', '\r', '\n', ' ', '\0' };
-static const ubyte_t DBEOFMagic[MAGIC_SIZE] = { '\n', '.', 'D', 'B', 'E', 'O', 'F', '\0' };
+static const byte_t DBFileMagic[MAGIC_SIZE] = { 'K', 'V', 'D', 'B', '\r', '\n', ' ', '\0' };
+static const byte_t DBEOFMagic[MAGIC_SIZE] = { '\n', '.', 'D', 'B', 'E', 'O', 'F', '\0' };
 
 
 static inline void append_str_hex(char** dest, unsigned char* src, size_t src_size) {
@@ -43,7 +43,7 @@ int KVDB_conv_key_entry_id(DBObject* dbp, Key key) {
 //void KVDB_DBObject_close(DBObject *dbp);
 static inline void KVDB_DBObject_create_FillDBFileHeader(DBObject *dbp, int EntryCapacity) {
 #define db (*dbp)
-    memcpy((ubyte_t*)db.Header.Magic, DBFileMagic, MAGIC_SIZE);
+    memcpy((byte_t*)db.Header.Magic, DBFileMagic, MAGIC_SIZE);
     db.Header.Version = VERSION;
     db.Header.ByteOrder = LE;
     db.Header.HeaderSize = HEADER_SIZE;

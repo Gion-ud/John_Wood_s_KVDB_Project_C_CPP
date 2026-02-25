@@ -43,12 +43,14 @@ int main(int argc, char *argv[]) {
 
         KVDB_DBObject_PrintRecordHeader(fd, dbp, i);
 
+/*
         fprintf(of_fp,
             "db.record%.4u.key=%.*s\n"
             "db.record%.4u.val=%.*s\n\n",
             i, (int)key->len,(char*)key->data,
             i, (int)val->len,(char*)val->data
         );
+*/
 
         // Destroy KV!!
         KVDB_TLVDataObject_destroy(key);

@@ -65,20 +65,20 @@ enum ModTypeFlags {
 #pragma pack(push, 1)
 
 struct DBFileHeader {
-    ubyte_t     Magic[MAGIC_SIZE];  // 8 bytes
-    uint16_t    Version;            // 2 bytes
-    ubyte_t     ByteOrder;          // 1 byte
+    byte_t      Magic[MAGIC_SIZE];  // 8 bytes
+    word_t      Version;            // 2 bytes
+    byte_t      ByteOrder;          // 1 byte
     size32_t    HeaderSize;         // 4 bytes
     size32_t    IndexEntrySize;     // 4 bytes
     ulong_t     EntryCapacity;      // 4 bytes
     ulong_t     EntryCount;         // 4 bytes
     ulong_t     ValidEntryCount;    // 4 bytes
     size32_t    DataEntryHeaderSize;// 4 bytes
-    off64_t     IndexTableOffset;   // 8 bytes
-    off64_t     DataSectionOffset;  // 8 bytes
-    off64_t     EOFHeaderOffset;    // 8 bytes
-    qword_t     LastModified;       // 8 bytes
-    ubyte_t     Reserved[5];        // 5 bytes of padding...
+    uoff64_t    IndexTableOffset;   // 8 bytes
+    uoff64_t    DataSectionOffset;  // 8 bytes
+    uoff64_t    EOFHeaderOffset;    // 8 bytes
+    ulonglong_t LastModified;       // 8 bytes
+    byte_t      Reserved[5];        // 5 bytes of padding...
 };
 struct DBIndexEntry {
     hash_t      KeyHash;    // 8 bytes
@@ -88,12 +88,12 @@ struct DBIndexEntry {
 };
 struct DataEntryHeader {
     size32_t    KeySize;    // 4 bytes
-    uint32_t    KeyType;    // 4 bytes
+    dword_t     KeyType;    // 4 bytes
     size32_t    ValSize;    // 4 bytes 
-    uint32_t    ValType;    // 4 bytes
+    dword_t     ValType;    // 4 bytes
 };
 struct DBEOFHeader {
-    ubyte_t     EOFMagic[MAGIC_SIZE];
+    byte_t      EOFMagic[MAGIC_SIZE];
 };
 #pragma pack(pop)
 
@@ -106,7 +106,7 @@ struct DBObject {
     DBFileHeader    Header;
     DBIndexEntry   *IndexTable;
     uint64_t        OffsetPtr;
-    char            db_modified;    // 0 or 1
+    byte_t          db_modified;    // 0 or 1
 };
 
 
