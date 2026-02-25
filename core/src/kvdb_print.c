@@ -106,7 +106,7 @@ void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID) {
         return;
     }
     buf_cur += snprintf(
-        buf,
+        buf + buf_cur,
         buf_size - buf_cur,
         "db.record%.4u.key_len=%u\n"
         "db.record%.4u.key_type=0x%.08x\n"
@@ -118,6 +118,7 @@ void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID) {
         EntryID,RecordHeader.ValType
     );
     write(fd, (char*)buf, buf_cur);
-    write(fd, "something\n\n", 11);
+    buf_cur = 0;
+    //write(fd, "something\n\n", 11);
     if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 }

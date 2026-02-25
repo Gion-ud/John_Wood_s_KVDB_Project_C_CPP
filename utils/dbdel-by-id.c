@@ -15,8 +15,6 @@ int main(int argc, char *argv[]) {
         return -1;
     }
 
-    FILE *of_fp = of_fp = stdout;
-
     DBObject* dbp = (DBObject*)KVDB_DBObject_open(import_filepath);
     if (!dbp) return 1;
 #define db (*dbp)
