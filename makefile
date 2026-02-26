@@ -15,24 +15,24 @@ MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o \
 
 CC = gcc
 
-all: $(MODULE_OBJ) build/txt_tok_lib.o build-bin
+all: $(MODULE_OBJ) build/txt_tok.o build-bin
 
 build bin lib database:
 	mkdir -p build bin core/lib database
 
-build/kvdb.o: core/src/kvdb.c | build
+build/kvdb.o: core/src/kvdb/kvdb.c | build
 	$(CC) $(CFLAGS) -DDLL_EXPORT -I./core/include -c $< -o $@
 
-build/kvdb_print.o: core/src/kvdb_print.c | build
+build/kvdb_print.o: core/src/kvdb/kvdb_print.c | build
 	$(CC) $(CFLAGS) -DDLL_EXPORT -I./core/include -c $< -o $@
 
-build/hash_func_module.o: core/src/hash_func_module.c | build
+build/hash_func_module.o: core/src/hash/hash_func_module.c | build
 	$(CC) $(CFLAGS) -I./core/include -c $< -o $@
 
-build/hash_index_lib.o: core/src/hash_index_lib.c | build
+build/hash_index_lib.o: core/src/hash/hash_index.c | build
 	$(CC) $(CFLAGS) -I./core/include -c $< -o $@
 
-build/txt_tok_lib.o: core/src/txt_tok_lib.c | build
+build/txt_tok.o: core/src/strutils/txt_tok.c | build
 	$(CC) $(CFLAGS) -I./core/include -c $< -o $@
 
 build/global_utils.o: core/src/global_utils.c | build
@@ -40,37 +40,37 @@ build/global_utils.o: core/src/global_utils.c | build
 
 
 build/newdb.o: utils/newdb.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/mkdb.o: utils/mkdb.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbdmp.o: utils/dbdmp.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbget.o: utils/dbget.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbput.o: utils/dbput.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbdel.o: utils/dbdel.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dblskeys.o: utils/dblskeys.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbresize.o: utils/dbresize.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbcompact.o: utils/dbcompact.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbdmpkv.o: utils/dbdmpkv.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 build/dbdel-by-id.o: utils/dbdel-by-id.c | build
-	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
+	$(CC) $(CFLAGS) -c $^ -I./core/include -o $@
 
 
 

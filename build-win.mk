@@ -22,35 +22,35 @@ bin/kvdb.dll: $(MODULE_OBJ) | bin
 		-Wl,--output-def,lib/kvdb_dll.def
 
 bin/newdb: build/newdb.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/mkdb: build/mkdb.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+bin/mkdb: build/mkdb.o build/txt_tok.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbdmp: build/dbdmp.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbget: build/dbget.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+bin/dbget: build/dbget.o build/txt_tok.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbput: build/dbput.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+bin/dbput: build/dbput.o build/txt_tok.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbdel: build/dbdel.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dblskeys: build/dblskeys.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbresize: build/dbresize.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbcompact: build/dbcompact.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbdmpkv: build/dbdmpkv.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
 bin/dbdel-by-id: build/dbdel-by-id.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
+	$(CC) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 

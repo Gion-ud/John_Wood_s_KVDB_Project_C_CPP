@@ -1,4 +1,4 @@
-#include "hash_index.h"
+#include <hash/hash_index.h>
 
 HTObject *HASH_INDEX_LIB_HTObject_create(int ht_cap) {
     HTObject *ht_obj = (HTObject*)malloc(sizeof(HTObject));

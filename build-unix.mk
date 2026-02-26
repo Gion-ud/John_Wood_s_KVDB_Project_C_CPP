@@ -5,14 +5,14 @@ add_bin_to_path:
 
 LDFLAGS = -s
 
-MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_utils.o
+MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index.o build/global_utils.o
 CC = gcc
 
 
 bin/libkvdb.so: $(MODULE_OBJ) | build utils core/src core/include bin
 	$(CC) -shared -s $(MODULE_OBJ) -o $@ -fvisibility=hidden
 
-bin/mkdb: build/mkdb.o build/txt_tok_lib.o bin/libkvdb.so | bin
+bin/mkdb: build/mkdb.o build/txt_tok.o bin/libkvdb.so | bin
 	$(CC) $(LDFLAGS) $^ -Lbin -lkvdb -Wl,-rpath=./bin -o $@
 
 bin/newdb: build/newdb.o bin/libkvdb.so | bin
@@ -21,10 +21,10 @@ bin/newdb: build/newdb.o bin/libkvdb.so | bin
 bin/dbdmp: build/dbdmp.o bin/libkvdb.so | bin
 	$(CC) $(LDFLAGS) $^ -Lbin -lkvdb -Wl,-rpath=./bin -o $@
 
-bin/dbget: build/dbget.o build/txt_tok_lib.o bin/libkvdb.so | bin
+bin/dbget: build/dbget.o build/txt_tok.o bin/libkvdb.so | bin
 	$(CC) $(LDFLAGS) $^ -Lbin -lkvdb -Wl,-rpath=./bin -o $@
 
-bin/dbput: build/dbput.o build/txt_tok_lib.o bin/libkvdb.so | bin
+bin/dbput: build/dbput.o build/txt_tok.o bin/libkvdb.so | bin
 	$(CC) $(LDFLAGS) $^ -Lbin -lkvdb -Wl,-rpath=./bin -o $@
 
 bin/dblskeys: build/dblskeys.o bin/libkvdb.so | bin

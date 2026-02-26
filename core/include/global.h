@@ -24,6 +24,8 @@
     #include <io.h>
     #define _write(fd, buf_p, buf_size) write(fd, buf_p, buf_size)
     #define fileno(fp) _fileno(fp)
+    #define STDOUT_FILENO 1
+    #define STDERR_FILENO 2
 #else
     #include <unistd.h>
 #endif

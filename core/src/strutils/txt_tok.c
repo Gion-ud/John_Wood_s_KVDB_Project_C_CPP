@@ -1,4 +1,4 @@
-#include "txt_tok_lib.h"
+#include <strutils/txt_tok.h>
 
 ulong_t CntTok(const char *src, ulong_t src_len, const char delim) {
     if (!src || !src[0]) return 0;

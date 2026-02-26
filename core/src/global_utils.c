@@ -1,4 +1,5 @@
 #include <global.h>
+#include <tlv/tlv.h>
 
 char* conv_bytes_hex(const unsigned char* bytes, size_t size) {
 //  This function converts raw bytes into str "0x??,0x??,0x??,...,0x??"

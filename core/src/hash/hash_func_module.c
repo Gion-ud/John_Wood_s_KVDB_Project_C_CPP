@@ -1,4 +1,4 @@
-#include "hash_func_module.h"
+#include <hash/hash_func_module.h>
 
 hash_t fnv_1a_hash(const byte_t* key, ulong_t size) {
 #define FNV_OFFSET_BASIS 14695981039346656037ULL
