@@ -1,19 +1,28 @@
-#include "tlv.h"
+#include <tlv/tlv.h>
+#include <mem/mem_arena.h>
 
-int TLV_TLVDataObject_init(TLVDataObject *this, uchar_t type, size32_t len, void *data) {
+
+int TLVDataObject_init_arena_alloc(
+    TLVDataObject      *this,
+    struct mem_arena   *mem_arena_p,
+    uchar_t             type,
+    size32_t            len,
+    void               *data
+) {
 // this mush be initialised
     if (!this) return -1;
     this->type = type;
     this->len = len;
-    this->data = malloc(len);
+    this->data = mem_arena_alloc(mem_arena_p, len);
     if (!this->data) {
-        printerrf("malloc failed\n");
+        printerrf("mem_arena_alloc failed\n");
         return -1;
     }
     memcpy(this->data, data, len);
     return (int)len;
 }
-void TLV_TLVDataObject_print(TLVDataObject *this) {
+
+void TLVDataObject_print(TLVDataObject *this) {
     switch(this->type) {
         case (TYPE_CHAR):
         {
@@ -94,10 +103,11 @@ void TLV_TLVDataObject_print(TLVDataObject *this) {
         }
     }
 }
-void TLV_TLVDataObject_deinit(TLVDataObject *this) {
+void TLVDataObject_deinit(TLVDataObject *this) {
     if (!this) return;
     this->type = 0;
     this->len = 0;
-    if (this->data) { free(this->data); this->data = NULL; }
+    //if (this->data) { free(this->data); this->data = NULL; }
+    this->data = NULL;
     return;
 }
