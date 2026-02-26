@@ -42,7 +42,7 @@ build/global_utils.o: core/src/global_utils.c | build
 build/newdb.o: utils/newdb.c | build
 	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
 
-build/mkdb.o: utils/mkdb.c build/txt_tok_lib.o | build
+build/mkdb.o: utils/mkdb.c | build
 	$(CC) $(CFLAGS) $(LDFLAGS) -c $^ -I./core/include -o $@
 
 build/dbdmp.o: utils/dbdmp.c | build
@@ -84,7 +84,7 @@ else
 endif
 
 clean:
-	rm build/* bin/* core/lib/*
+	rm build/*
 
 clean-all:
 	rm database/* bin/* build/* lib/* logs/* *.db && rm -rf tmp/*

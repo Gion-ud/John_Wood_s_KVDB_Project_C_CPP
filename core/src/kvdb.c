@@ -1,5 +1,5 @@
-#include "kvdb.h"
-#include <kvdb_internal.h>
+#include <kvdb/kvdb.h>
+#include <kvdb/kvdb_internal.h>
 
 #define DB (*dbp)
 #define STACK_MEM_SIZE_MAX 1024u * 1024u

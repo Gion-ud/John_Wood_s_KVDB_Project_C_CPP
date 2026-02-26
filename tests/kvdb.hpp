@@ -2,8 +2,8 @@
 #define KVDB_HPP
 
 extern "C" {
-    #include <kvdb.h>
-    #include <kvdb_internal.h>
+    #include <kvdb/kvdb.h>
+    #include <kvdb/kvdb_internal.h>
 }
 #include <iostream>
 

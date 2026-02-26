@@ -1,5 +1,5 @@
-#include <kvdb.h>
-#include <kvdb_internal.h>
+#include <kvdb/kvdb.h>
+#include <kvdb/kvdb_internal.h>
 
 static char buf[BUFFER_SIZE] = {0};
 static size32_t buf_cur = 0;
@@ -53,7 +53,7 @@ void KVDB_DBObject_PrintFileHeader(int fd, DBObject *dbp) {
         (qword_t)Header.EOFHeaderOffset,
         timestr
     );
-    write(fd, (char*)buf, buf_cur);
+    if (write(fd, (char*)buf, buf_cur) < 0) perror("write");
     buf_cur = 0;
     if (fd == STDOUT_FILENO) { printf(ESC RESET_COLOUR); }
     if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
@@ -75,15 +75,15 @@ void KVDB_DBObject_PrintIndexEntry(int fd, DBObject *dbp, uint32_t EntryID) {
         EntryID, dbp->IndexTable[EntryID].EntryID,
         EntryID, (qword_t)dbp->IndexTable[EntryID].Offset
     );
-    write(fd, (char*)buf, buf_cur);
+    if (write(fd, (char*)buf, buf_cur) < 0) perror("write");
     buf_cur = 0;
     if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
 }
 void KVDB_DBObject_PrintIndexTable(int fd, DBObject* dbp) {
     buf_cur = 0;
-    const char *msg = "# IndexTable\n";
-    size32_t msg_len = strlen(msg);
-    write(fd, (char*)msg, msg_len);
+    const char msg[] = "# IndexTable\n";
+    size32_t msg_len = sizeof(msg) - 1;
+    if (write(fd, (char*)msg, msg_len) < 0) perror("write");
     for (ulong_t i = 0; i < dbp->Header.EntryCount; i++) {
         KVDB_DBObject_PrintIndexEntry(fd, dbp, i);
     };
@@ -117,7 +117,7 @@ void KVDB_DBObject_PrintRecordHeader(int fd, DBObject *dbp, uint32_t EntryID) {
         EntryID,RecordHeader.ValSize,
         EntryID,RecordHeader.ValType
     );
-    write(fd, (char*)buf, buf_cur);
+    if (write(fd, (char*)buf, buf_cur) < 0) perror("write");
     buf_cur = 0;
     //write(fd, "something\n\n", 11);
     if (fd == STDERR_FILENO) { print_dbg_msg(ESC RESET_COLOUR); }
