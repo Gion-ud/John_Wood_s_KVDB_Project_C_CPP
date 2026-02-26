@@ -1,15 +1,14 @@
-build-bin: add_bin_to_path bin/kvdb.dll bin/newdb bin/mkdb \
-           bin/dbdmp bin/dbget bin/dblskeys bin/dbput \
-           bin/dbdel bin/dbdel-by-id bin/dbresize bin/dbcompact \
-           bin/dbdmpkv
+all: add_bin_to_path bin/kvdb.dll bin/newdb bin/mkdb \
+     bin/dbdmp bin/dbget bin/dblskeys bin/dbput \
+     bin/dbdel bin/dbdel-by-id bin/dbresize bin/dbcompact \
+     bin/dbdmpkv
 
 add_bin_to_path:
 	# set PATH=%CD%\bin;%PATH% 	## windows
 	# export PATH="$$PATH:./bin" 	## unix
 
-MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_func.o
+MODULE_OBJ = build/kvdb.o build/kvdb_print.o build/hash_func_module.o build/hash_index_lib.o build/global_utils.o
 
-CFLAGS = -O2 -Wall -Wextra -Werror
 LDFLAGS = 
 CC = cc
 
@@ -17,66 +16,41 @@ CC = cc
 # dll for kvdb
 bin/kvdb.dll: $(MODULE_OBJ) | bin
 	$(CC) -shared -s $(MODULE_OBJ) \
-		-I./core/include -o $@ \
+		-o $@ \
 		-Wl,--kill-at \
 		-Wl,--out-implib,lib/libkvdb.dll.a \
 		-Wl,--output-def,lib/kvdb_dll.def
 
-mktbldb_ldll: utils/mktbldb.c bin/kvdb.dll lib/libkvdb.dll.a build/txt_tok_lib.o | core/include core/src bin tests
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o bin/tbldb-new
+bin/newdb: build/newdb.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-# -g -fsanitize=address
+bin/mkdb: build/mkdb.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-dmptbldb_ldll: utils/dmptbldb.c bin/kvdb.dll lib/libkvdb.dll.a build/txt_tok_lib.o | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o bin/tbldb-dump
+bin/dbdmp: build/dbdmp.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-gettbldbrec_ldll: utils/gettbldbrec.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ \
-		-I./core/include -Llib -lkvdb -Wl,-rpath=./bin -o bin/tbldb-get
+bin/dbget: build/dbget.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/newdb: utils/newdb.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbput: build/dbput.o build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/mkdb: utils/mkdb.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbdel: build/dbdel.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbdmp: utils/dbdmp.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dblskeys: build/dblskeys.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbget: utils/dbget.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbresize: build/dbresize.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbput: utils/dbput.c build/txt_tok_lib.o bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbcompact: build/dbcompact.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dbdel: utils/dbdel.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbdmpkv: build/dbdmpkv.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 
-bin/dblskeys: utils/dblskeys.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbresize: utils/dbresize.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbcompact: utils/dbcompact.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbdmpkv: utils/dbdmpkv.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
-
-bin/dbdel-by-id: utils/dbdel-by-id.c bin/kvdb.dll lib/libkvdb.dll.a | bin
-	$(CC) $(CFLAGS) $(LDFLAGS) $^ -I./core/include -Llib -lkvdb \
-		-Wl,-rpath=./bin -o $@
+bin/dbdel-by-id: build/dbdel-by-id.o bin/kvdb.dll lib/libkvdb.dll.a | bin
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ -Llib -lkvdb -o $@
 

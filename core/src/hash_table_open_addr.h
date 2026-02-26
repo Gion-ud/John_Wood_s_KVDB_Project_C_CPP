@@ -19,7 +19,7 @@ struct HashEntry {
     byte_t*     key;
     keysize_t   key_size;
     hash_t      key_hash;
-    flag_t      flag;
+    byte_t      flag;
 };
 struct HashTableObject {
     HashEntry*  hash_entry_arr;

@@ -39,16 +39,16 @@ int main(int argc, char *argv[]) {
         KVDB_DestroyKVPair(kv);
     }
 
-    uint_t val_len = 0;
-    uint_t col_len = 0;
-    ubyte_t *val_data_p = NULL;
+    dword_t val_len = 0;
+    dword_t col_len = 0;
+    byte_t *val_data_p = NULL;
     for (ulong_t i = 0; i < KVDB_DBObject_EntryCount(&db); i++) { 
         KVPair *kv = KVDB_DBObject_get(&db, i);
         if (!kv) continue;
         PrintRecordHeader(of_fp, dbp, i);
         fprintf(of_fp, "\ndb.record%.4u.key=\'%.*s\'\n", i, (int)kv->key.len,(char*)kv->key.data); // keys are literal integers
         val_len = kv->val.len;
-        val_data_p = (ubyte_t*)kv->val.data;
+        val_data_p = (byte_t*)kv->val.data;
 
         fprintf(of_fp, "db.record%.4u.row:\n%8s %4s %4s\n", i, "col_id", "len", "data");
         int j = 0;

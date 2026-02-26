@@ -18,11 +18,12 @@
 #include <ctype.h>
 #include <dirent.h>
 
-#include "global_int_types.h"
+#include "global_intdef.h"
 
 #ifdef _MSC_VER
     #include <io.h>
     #define _write(fd, buf_p, buf_size) write(fd, buf_p, buf_size)
+    #define fileno(fp) _fileno(fp)
 #else
     #include <unistd.h>
 #endif

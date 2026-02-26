@@ -1,6 +1,6 @@
-#include "global.h"
-#include "kvdb.h"
-#include "kvdb_defs.h"
+#include <global.h>
+#include <kvdb.h>
+#include <kvdb_internal.h>
 
 #define prog_name argv[0]
 #define db_filepath argv[1]

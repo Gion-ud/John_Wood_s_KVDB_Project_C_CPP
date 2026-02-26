@@ -19,7 +19,7 @@ tokmeta_t *MarkTokPosMeta(const char* src, ulong_t src_len, ulong_t tok_cnt, con
         return NULL;
     }
     //off_t tok_off_ptr = 0;
-    uint_t tok_len = 0;
+    ulong_t tok_len = 0;
     ulong_t tok_idx = 0;
 
     for (ulong_t i = 0; i < src_len + 1; ++i) {

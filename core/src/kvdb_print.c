@@ -1,5 +1,5 @@
-#include "kvdb.h"
-#include "kvdb_defs.h"
+#include <kvdb.h>
+#include <kvdb_internal.h>
 
 static char buf[BUFFER_SIZE] = {0};
 static size32_t buf_cur = 0;

@@ -1,4 +1,6 @@
-#include "kvdb.h"
+#include <kvdb.h>
+#include <global.h>
+
 
 int main(int argc, char *argv[]) {
     if (argc == 1) {
@@ -43,7 +45,7 @@ int main(int argc, char *argv[]) {
     if (!kv) goto cleanup;
     ulong_t val_len = kv->val.len;
     ulong_t col_len;
-    ubyte_t *val_data_p = (ubyte_t*)kv->val.data;
+    byte_t *val_data_p = (byte_t*)kv->val.data;
     int i = 0;
     fprintf(of_fp, "db_table_header:\n%8s %4s\n", "col_id", "col_name");
     while (val_len > 0) {
@@ -64,7 +66,7 @@ int main(int argc, char *argv[]) {
         goto cleanup;
     }
     val_len = kv->val.len;
-    val_data_p = (ubyte_t*)kv->val.data;
+    val_data_p = (byte_t*)kv->val.data;
 
     fprintf(of_fp, "record:\n%8s %4s %4s\n", "col_id", "len", "data");
     i = 0;

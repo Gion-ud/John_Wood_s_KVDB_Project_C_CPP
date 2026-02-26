@@ -96,8 +96,8 @@ int main(int argc, char *argv[]) {
     }
 
 section_insert_records:
-    ubyte_t data_blob[BUFFER_SIZE] = {0};
-    ubyte_t *data_blob_p = (ubyte_t*)data_blob;
+    byte_t data_blob[BUFFER_SIZE] = {0};
+    byte_t *data_blob_p = (byte_t*)data_blob;
     for (int i = 0; i < row_cnt; ++i) {
         if (!fgets(line, BUFFER_SIZE, fpcsv)) break;
         line_len = strlen(line);
@@ -118,17 +118,17 @@ section_insert_records:
         fwrite(key.data, 1, key.len, fp_keys_txt);
         fputc('\n', fp_keys_txt);
 
-        data_blob_p = (ubyte_t*)data_blob;
+        data_blob_p = (byte_t*)data_blob;
 
         for (int j = 0; j < col_cnt; ++j) {
-            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)&tok_info_arr[j].tok_len, sizeof(ulong_t));
+            memcpy((byte_t*)data_blob_p, (byte_t*)&tok_info_arr[j].tok_len, sizeof(ulong_t));
             data_blob_p += sizeof(ulong_t); // [data_len] at idx j
 
-            memcpy((ubyte_t*)data_blob_p, (ubyte_t*)line + tok_info_arr[j].tok_off, tok_info_arr[j].tok_len);
+            memcpy((byte_t*)data_blob_p, (byte_t*)line + tok_info_arr[j].tok_off, tok_info_arr[j].tok_len);
             data_blob_p += tok_info_arr[j].tok_len;
         }
 
-        val.len = data_blob_p - (ubyte_t*)data_blob;
+        val.len = data_blob_p - (byte_t*)data_blob;
         val.data = (void*)data_blob;
         val.type = TYPE_BLOB;
 

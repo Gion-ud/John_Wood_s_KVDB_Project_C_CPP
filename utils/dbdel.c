@@ -1,5 +1,5 @@
-#include "global.h"
-#include "kvdb.h"
+#include <global.h>
+#include <kvdb.h>
 
 #define prog_name argv[0]
 #define lookup_key argv[1]
