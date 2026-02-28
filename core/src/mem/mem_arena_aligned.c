@@ -12,7 +12,7 @@ void mem_arena_init_aligned(
     this->mem_p = (byte_t*)buf;
     this->mem_align = mem_align;
     this->mem_cur = 0;
-    this->mem_end = MEM_SIZE;
+    this->mem_end = buf_size;
     this->mem_alloc_cnt = 0;
 }
 
@@ -33,7 +33,7 @@ void mem_arena_reset(struct mem_arena *this) {
     memset((byte_t*)this->mem_p, 0, this->mem_end);
 }
 
-
+// mem arena on heap
 struct mem_arena *mem_arena_create_aligned(size32_t mem_size, size32_t mem_align) {
     struct mem_arena *mem_arena = (struct mem_arena*)malloc(sizeof(struct mem_arena));
     if (!mem_arena) {
@@ -55,9 +55,16 @@ struct mem_arena *mem_arena_create_aligned(size32_t mem_size, size32_t mem_align
     return mem_arena;
 }
 
-struct mem_arena *mem_arena_heap_resize(struct mem_arena *this, size32_t mem_size) {
+struct mem_arena *mem_arena_heap_resize(struct mem_arena *this, size32_t new_size) {
     if (!this) return NULL;
-    
+    void *mem_tmp = realloc(this->mem_p, new_size);
+    if (!mem_tmp) {
+        printerrf("realloc failed");
+        return NULL;
+    }
+    this->mem_p = mem_tmp;
+    this->mem_end = new_size;
+    return this;
 }
 
 void mem_arena_destroy(struct mem_arena *this) {

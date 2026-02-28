@@ -38,16 +38,16 @@ static inline void mem_arena_init(struct mem_arena *this, void *buf, size32_t bu
     mem_arena_init_aligned(this, buf, buf_size, MEM_ALIGN_DEFAULT);
 }
 static inline void mem_arena_init_no_alignment(struct mem_arena *this, void *buf, size32_t buf_size) {
-    mem_arena_init_aligned(this, buf, buf_size, 0);
+    mem_arena_init_aligned(this, buf, buf_size, 1);
 }
 static inline void *mem_arena_alloc(struct mem_arena *this, size32_t size) {
-    mem_arena_alloc_aligned(this, size);
+    return mem_arena_alloc_aligned(this, size);
 }
 struct mem_arena *mem_arena_create(size32_t mem_size) {
-    mem_arena_create_aligned(mem_size, MEM_ALIGN_DEFAULT);
+    return mem_arena_create_aligned(mem_size, MEM_ALIGN_DEFAULT);
 }
 struct mem_arena *mem_arena_create_no_alignment(size32_t mem_size) {
-    mem_arena_create_aligned(mem_size, 0);
+    return mem_arena_create_aligned(mem_size, 1);
 }
 
 
